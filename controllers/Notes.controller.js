@@ -23,7 +23,7 @@ exports.GetAllNotes = function (req, res) {
 };
 
 
-exports.addNote = function (req, res) {
+exports.AddNote = function (req, res) {
     console.log("addNote");
     console.log(req.body);
     if (req.body.ClientId == undefined) {
@@ -31,7 +31,7 @@ exports.addNote = function (req, res) {
             "Message": "An error has occurred."
         });
     } else {
-        NotesServices.addNote(req.body).then(function (result) {
+        NotesServices.AddNote(req.body).then(function (result) {
             res.json({
                 "StatusCode": 200,
                 "note_": result,
