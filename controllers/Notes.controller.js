@@ -46,3 +46,23 @@ exports.AddNote = function (req, res) {
         });
     }
 };
+
+
+exports.DeleteNote = function(req, res){
+	console.log("Delete Note");
+    console.log("req.params.NoteId:",req.params.NoteId);
+	var NoteId = (req.params.NoteId)?req.params.NoteId:false;
+  		if(NoteId){
+  			NotesServices.DeleteNote(NoteId).then(function(result){
+  				if(result)
+  				res.json({"StatusCode": 200,"ResponseMessage": "Deleted Note Successfully"});
+  				else
+  				res.json({"Message": "An error has occurred."});	
+  			}).catch(function(err){
+  				res.json({"StatusCode":err.status,"deletenotes":[],"ResponseMessage":err.messages});
+  			});
+			
+  		}else{
+  			res.json({"Message": "No HTTP resource was found that matches the request URI '"+config.webUri+"/Aesthetic/api/Categories/Delete'."});
+  		}
+};

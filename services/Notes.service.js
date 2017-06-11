@@ -5,7 +5,7 @@ var config = require('../config'),
 
 
 exports.GetAllNotes = function (ClientId) {
-    console.log("ClientId:",ClientId);
+    console.log("ClientId:", ClientId);
     var fetchParams = {
         withRelated: ['Clients']
     };
@@ -39,5 +39,19 @@ exports.AddNote = function (params) {
         return noteData;
     }).catch(function (err) {
         console.log(err);
+    });
+};
+
+
+exports.DeleteNote = function (NoteId) {
+    return Notes.forge().query(function (qb) {
+        qb.where({
+            'NoteId': NoteId
+        });
+        qb.del();
+    }).fetch().then(function (result) {
+        return result;
+    }).catch(function (err) {
+        return err;
     });
 };

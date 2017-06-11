@@ -17,8 +17,8 @@ module.exports = function (router) {
   		.get(controller.CategoriesGetById);*/
     router.route('/Aesthetic/api/Notes')
         .post(controller.AddNote)
-    /*router.route('/Aesthetic/api/Notes/:NoteId')
-        .delete(controller.DeleteNote)*/
+    router.route('/Aesthetic/api/Notes/:NoteId')
+        .delete(controller.DeleteNote)
     router.route('/Aesthetic/api/Notes/:ClientId')
         .get(controller.GetAllNotes)
     /*router.route('/Aesthetic/api/Categories/GetCategoriesOrgId')
