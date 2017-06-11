@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>{{{global.web_name}}} - Order Reminder</title>
+</head>
+<body bgcolor="#f6f6f6">
+<table class="body-wrap" bgcolor="#f6f6f6">
+    <tr>
+        <td></td>
+        <td class="container" bgcolor="#FFFFFF">
+            <div class="content">
+                <table>
+                    <tr>
+                        <td align="center" class="padding">
+                            <table class="body-container">
+                                <tr class="header">
+                                    <td>
+                                        <a href="{{{global.urlHome}}}">
+                                            <img src="{{{header.imageLogo}}}" alt="{{{global.web_name}}}" />
+                                        </a>
+                                        <h3>Locally Delicious</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="thanks" align="center">
+                                        <h1>Thanks!</h1>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="message" align="center">
+                                        <p>
+                                            Your order has been placed.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="order-container">
+                                <tr>
+                                    <td class="order-date" align="center">
+                                        <h3>{{{order.date}}}</h3>
+                                        <p>Order #{{{order.id}}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="order-delivery" align="center">
+                                        <p>
+                                            DELIVERING BETWEEN
+                                        </p>
+                                        <h3>
+                                            {{{order.earliestDelivery}}} – {{{order.latestDelivery}}}
+                                        </h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="order-items" align="center">
+                                        <table border="0" cellspacing="0" cellpadding="0">
+                                            {{#each items}}
+                                                <tr class="item">
+                                                    <td class="item-image" align="center">
+                                                        <img src="{{{itemImage}}}" alt="{{{itemTitle}}}" width="80"/>
+                                                    </td>
+                                                    <td class="item-name" align="left">
+                                                        <h3>
+                                                            <a href="{{{itemUrl}}}">
+                                                                {{{itemTitle}}}
+                                                            </a>
+                                                        </h3>
+                                                    </td>
+                                                    <td class="item-quantity" align="center" width="50">
+                                                        <p>
+                                                            <span class="x">x</span> {{{itemQuantity}}}
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            {{/each}}
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="order-track" align="center">
+                                        <table>
+                                            <tr>
+                                                <td align="center">
+                                                    <p>
+                                                        <a href="{{{order.urlTracking}}}" class="btn track">Track Order</a>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="support-container">
+                                <tr>
+                                    <td align="center">
+                                        <p>
+                                            Need Support?
+                                        </p>
+                                        <p>
+                                            Head over to our <a href="{{{global.urlHelpCenter}}}">help centre</a> or <a href="{{{global.urlContactPage}}}">contact us</a>.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="social-container">
+                                <tr>
+                                    <td width="30%">
+                                        &nbsp;
+                                    </td>
+                                    <td class="holder" align="center">
+                                        <a href="{{{footer.urlTwitter}}}">
+                                            <img src="{{{footer.imageTwitter}}}" alt="Twitter" height="20" width="20" />
+                                        </a>
+                                    </td>
+                                    <td class="holder" align="center">
+                                        <a href="{{{footer.urlLinkedIn}}}">
+                                            <img src="{{{footer.imageLinkedIn}}}" alt="LinkedIn" height="20" width="20" />
+                                        </a>
+                                    </td>
+                                    <td class="holder" align="center">
+                                        <a href="{{{footer.urlFacebook}}}">
+                                            <img src="{{{footer.imageFacebook}}}" alt="Facebook" height="20" width="20" />
+                                        </a>
+                                    </td>
+                                    <td class="holder" align="center">
+                                        <a href="{{{footer.urlInstagram}}}">
+                                            <img src="{{{footer.imageInstagram}}}" alt="Instagram" height="20" width="20" />
+                                        </a>
+                                    </td>
+                                    <td width="30%">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="footer" style="background-image: url('{{{footer.imageBackground}}}');">
+                        <td align="center" class="padding">
+                            <table class="footer-container">
+                                <tr>
+                                    <td align="left">
+                                        <a class="home" href="{{{global.urlHome}}}">{{{global.urlHome}}}</a>
+                                    </td>
+                                    <td align="center">
+                                    </td>
+                                    <td align="right">
+                                        <a href="{{{footer.urlPrivacy}}}">Privacy</a>
+                                        <a href="{{{footer.urlTerms}}}">Terms</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- /content -->
+        </td>
+        <td></td>
+    </tr>
+</table>
+</body>
+</html>

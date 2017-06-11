@@ -1,0 +1,300 @@
+/* -------------------------------------
+        Variables
+------------------------------------- */
+$feast-green: #00D9BF;
+$feast-black: #4D2217;
+$feast-brown: #806660;
+$feast-light-brown: #D3C8C5;
+
+$serif: Georgia, serif;
+$san-serif: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+
+/* -------------------------------------
+        Mixins
+------------------------------------- */
+@mixin padding($top:0, $right:0, $bottom:0, $left:0) {
+  padding-top:$top;
+  padding-right:$right;
+  padding-bottom:$bottom;
+  padding-left:$left;
+}
+@mixin margin($top:0, $right:0, $bottom:0, $left:0) {
+  margin-top:$top;
+  margin-right:$right;
+  margin-bottom:$bottom;
+  margin-left:$left;
+}
+
+/* -------------------------------------
+                GLOBAL
+        ------------------------------------- */
+body,h1,h2,h3,h4,h5,h6,p,ol,ul,table,tr,td,span,a {
+  @include margin();
+  @include padding();
+  font-family: $san-serif;
+  font-size: 100%;
+  line-height: 1.6;
+  color: $feast-black;
+}
+
+img {
+  max-width: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: none;
+  width: 100%!important;
+  height: 100%;
+}
+
+/* -------------------------------------
+        BODY
+------------------------------------- */
+table.body-wrap {
+  margin-left:auto;
+  margin-right:auto;
+  width: 100%;
+  max-width: 600px;
+  .container {
+    border: 1px solid #f0f0f0;
+  }
+}
+
+table td {
+  border-collapse: collapse;
+}
+
+/* -------------------------------------
+        TYPOGRAPHY
+------------------------------------- */
+h1, h2, h3 {
+  color: #000;
+  line-height: 1.2;
+  font-weight: 200;
+}
+
+h1 {
+  font-size: 36px;
+}
+h2 {
+  font-size: 28px;
+}
+h3 {
+  font-size: 22px;
+}
+
+p, ul, ol {
+  margin-bottom:10px;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+ul li, ol li {
+  margin-left:5px;
+  list-style-position: inside;
+}
+
+/* ---------------------------------------------------
+        RESPONSIVENESS
+        Nuke it from orbit. It's the only way to be sure.
+------------------------------------------------------ */
+
+/* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
+.container {
+  @include margin(0!important,0!important,0!important,0!important);
+  display: block!important;
+  max-width: 600px!important;
+  clear: both!important;
+}
+
+/* This should also be a block element, so that it will fill 100% of the .container */
+.content {
+  margin-left:auto;
+  margin-right:auto;
+  max-width: 600px;
+  display: block;
+  /* Let's make sure tables in the content area are 100% wide */
+  table {
+    width: 100%;
+  }
+}
+
+/* -------------------------------------
+        CUSTOM
+------------------------------------- */
+tr.header {
+  text-align:center;
+  img {
+    width:200px;
+    font-size:46px;
+    color: $feast-green;
+    line-height:50px;
+    margin-bottom:10px;
+  }
+  h3 {
+    font-size:10px;
+    color: $feast-black;
+    font-weight:bold;
+    text-transform: uppercase;
+    line-height: 13px;
+    letter-spacing: 3px;
+    margin-bottom: 50px;
+  }
+}
+.body-container {
+  .message {
+    padding-bottom: 50px;
+  }
+}
+.content {
+  padding-top:50px;
+  text-align:center;
+  .padding {
+    padding: 0 20px;
+  }
+  h1 {
+    font-family:$serif;
+    font-size:36px;
+    color: $feast-brown;
+    line-height:40px;
+    font-style:italic;
+  }
+  h3 {
+    font-weight: bold;
+    font-size:14px;
+    line-height: 14px;
+    letter-spacing: 2px;
+    color: $feast-black;
+  }
+  p {
+    @include margin(10px, auto, 10px, auto);
+    color: $feast-brown;
+    font-size:18px;
+    line-height: 21px;
+    max-width: 75%;
+  }
+}
+.btn {
+  text-decoration: none;
+  color: #FFFFFF;
+  background-color: $feast-green;
+  border: solid $feast-green;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 4px;
+  text-transform: uppercase;
+  &.track {
+    font-size: 18px;
+    letter-spacing: 3px;
+    line-height: 23px;
+    border-width: 10px 30px;
+    display: block;
+  }
+}
+.order-container {
+  border: 2px solid $feast-light-brown;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  .order-date {
+    @include padding(20px, 0, 10px);
+    background-color:$feast-light-brown;
+    h3 {
+      font-size: 18px;
+      font-family:$serif;
+      line-height: 21px;
+    }
+    p {
+      color: $feast-black;
+      font-size: 10px;
+      line-height: 11px;
+    }
+  }
+  .order-track {
+    display:none;
+    td {
+      display:none;
+      border: 5px solid white;
+    }
+    p {
+      max-width: 100%;
+    }
+  }
+  .order-delivery {
+    @include padding(15px, 0, 25px);
+    h3 {
+      font-family: $serif;
+      font-size: 16px;
+      line-height: 20px;
+    }
+    p {
+      font-size:9px;
+      line-height: 10px;
+      letter-spacing: 2px;
+    }
+  }
+  .item {
+    td {
+      background-color: $feast-light-brown;
+      border-top: 2px solid white;
+      border-bottom: 3px solid white;
+      padding: 10px;
+      &.item-image {
+        border-left: 5px solid white;
+        img {
+          border: 3px solid white;
+        }
+      }
+      &.item-name {
+        padding-left: 10px;
+        h3 {
+          font-size: 16px;
+          font-family: $serif;
+          line-height: 18px;
+        }
+        a {
+          text-decoration: none;
+        }
+      }
+      &.item-quantity {
+        font-size:14px;
+        line-height: 20px;
+        border-right:5px solid white;
+        .x {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
+.support-container {
+  a {
+    text-decoration: none;
+    color: $feast-green;
+  }
+}
+.social-container {
+  .holder {
+    padding-bottom:20px;
+    padding-top:30px;
+  }
+}
+tr.footer {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #F3F0F0;
+  .padding {
+    @include padding(20px, 20px, 20px, 20px);
+  }
+  .home {
+    text-decoration: none;
+  }
+  a {
+    @include padding(10px, 0, 10px);
+    color: $feast-brown;
+    font-size:11px;
+    line-height: 14px;
+  }
+}

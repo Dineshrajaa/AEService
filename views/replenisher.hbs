@@ -1,0 +1,79 @@
+<main class="container">
+    <div class="row">
+        <div class="small-10 columns">
+            <table class="header">
+                <thead>
+                <tr>
+                    <th width="35%">Item name</th>
+                    <th width="25%">
+                        <span data-tooltip aria-haspopup="true" class="has-tip tip-top radius" title="This is the amount of inventory you supplied to the driver"><i class="fa fa-info-circle"></i></span>
+                        What are you giving the driver?
+                    </th>
+                    <th width="25%">
+                        <span data-tooltip aria-haspopup="true" class="has-tip tip-top radius" title="Use this to record if any product has been wasted"><i class="fa fa-info-circle"></i></span>
+                        Any wastage from the driver?
+                    </th>
+                    <th width="15%">
+                        <span data-tooltip aria-haspopup="true" class="has-tip tip-top radius" title="This is the amount of inventory the driver has remaining"><i class="fa fa-info-circle"></i></span>
+                        Remaining?
+                        <i id="refresh" class="fa fa-refresh"></i>
+                    </th>
+                </tr>
+                </thead>
+            </table>
+            <div class="tabs-content">
+                {{#each vehicles as |vehicle vehicleId|}}
+                    <div class="content {{#if @first}}active{{/if}}" role="tabpanel"
+                         aria-hidden="{{#if @first}}false{{else}}true{{/if}}" id="panel-{{id}}">
+                        <table>
+                            {{#each vehicle.items}}
+                                <tr>
+                                    <td width="35%">
+                                        <div>
+                                            <p>{{name}}</p>
+                                            <input class="productId" type="hidden" value="{{product_id}}"/>
+                                        </div>
+                                        <div id="{{vehicle.id}}_{{product_id}}_message" class="item-message">&nbsp;</div>
+                                    </td>
+                                    <td width="25%">
+                                        <input id="{{vehicle.id}}_{{product_id}}_giving" class="driverGiving" type="number" value="0" />
+                                    </td>
+                                    <td width="25%">
+                                        <input id="{{vehicle.id}}_{{product_id}}_waste" class="driverWasting" type="number" min="0" value="0" />
+                                    </td>
+                                    <td id="{{vehicle.id}}_{{product_id}}_remaining" width="15%">
+                                        {{count}}
+                                    </td>
+                                </tr>
+                            {{/each}}
+                        </table>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+        <div class="small-2 columns">
+            <table class="header">
+                <thead>
+                <tr>
+                    <th class="center">
+                        Drivers
+                    </th>
+                </tr>
+                </thead>
+            </table>
+            <ul id="drivers" class="tabs vertical" data-tab role="tablist">
+                {{#each vehicles}}
+                    <li class="tab-title {{#if @first}}active{{/if}}">
+                        <a data-vid="{{id}}" href="#panel-{{id}}" class="list-group-item" role="presentation">
+                            {{driverName}}
+                        </a>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="small-4 small-offset-3 end columns center">
+            <a id="save" class="button radius">Save</a>
+            <p id="message"></p>
+        </div>
+    </div>
+</main>

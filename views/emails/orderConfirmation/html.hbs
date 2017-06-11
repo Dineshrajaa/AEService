@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>{{{global.web_name}}} - Order Confirmation</title>
+</head>
+<body bgcolor="#f6f6f6">
+<table class="body-wrap" bgcolor="#f6f6f6">
+    <tr>
+        <td></td>
+        <td class="container" bgcolor="#FFFFFF">
+            <div class="content">
+                <table>
+                    <tr>
+                        <td align="center" class="padding">
+                            <table class="body-container">
+                                <tr class="header">
+                                    <td>
+                                        <a href="{{{global.urlHome}}}">
+                                            <img src="{{{header.imageLogo}}}" alt="{{{global.web_name}}}" />
+                                        </a>
+                                        <h3>Locally Delicious</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="thanks" align="center">
+                                        <h1>Thanks!</h1>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="message" align="center">
+                                        <p>
+                                            Your order has been placed.
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="beta-survey" align="center">
+                                        <p>
+                                            Thanks for participating in beta.  Please provide your feedback to help us improve your experience with {{{global.web_name}}}.
+                                        </p>
+                                        <table>
+                                            <tr>
+                                                <td align="center">
+                                                    <p><a href="https://surveyplanet.com/5616bb2e8535760f146ef1d5" class="btn beta">Rate Order</a></p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="order-container">
+                                <tr>
+                                    <td class="order-date" align="center">
+                                        <h3>{{{order.date}}}</h3>
+                                        <p>Order #{{{order.id}}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="order-delivery" align="center">
+
+                                        {{#unless order.sla}}
+                                            <p>
+                                                DELIVERING BETWEEN
+                                            </p>
+                                            <h3>
+                                                {{{order.earliestDelivery}}} – {{{order.latestDelivery}}}
+                                            </h3>
+                                        {{/unless}}
+                                        {{#if order.sla}}
+                                            <p>
+                                                DELIVERING IN
+                                            </p>
+                                            <h3>
+                                                {{{order.sla}}} minutes
+                                            </h3>
+                                        {{/if}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="order-items" align="center">
+                                        <table border="0" cellspacing="0" cellpadding="0">
+                                            {{#each items}}
+                                                <tr class="item">
+                                                    <td class="item-image" align="center">
+                                                        <img src="{{{itemImage}}}" alt="{{{itemTitle}}}" width="80"/>
+                                                    </td>
+                                                    <td class="item-name" align="left">
+                                                        <h3>
+                                                            <a href="{{{itemUrl}}}">
+                                                                {{{itemTitle}}}
+                                                            </a>
+                                                        </h3>
+                                                    </td>
+                                                    <td class="item-quantity" align="center" width="50">
+                                                        <p>
+                                                            <span class="x">x</span> {{{itemQuantity}}}
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            {{/each}}
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr style="display:none !important">
+                                    <td class="order-track" align="center">
+                                        <table>
+                                            <tr>
+                                                <td align="center">
+                                                    <p>
+                                                        <a href="{{{order.urlTracking}}}" class="btn track">Track Order</a>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="payment-container">
+                                <tr class="payment-address">
+                                    <td align="center">
+                                        <img src="{{{payment.imageLocation}}}" alt="location" width="22"/>
+                                    </td>
+                                    <td align="left">
+                                        <h3 class="name">
+                                            {{{payment.address.name}}}
+                                        </h3>
+                                        <h4 class="address">
+                                            {{{payment.address.location}}}
+                                        </h4>
+                                        <p class="note">
+                                            {{{payment.address.note}}}
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr class="payment-method">
+                                    <td align="center">
+                                        <img src="{{{payment.imagePayment}}}" alt="payment" width="52"/>
+                                    </td>
+                                    <td align="left">
+                                        <h3 class="card-number">
+                                            •••• •••• •••• {{{payment.user.cardNumber}}} – {{{payment.user.cardExpiration}}}
+                                        </h3>
+                                    </td>
+                                </tr>
+                                <tr class="contact-information">
+                                    <td align="center">
+                                        <img src="{{{payment.imageContact}}}" alt="contact" width="28"/>
+                                    </td>
+                                    <td align="left">
+                                        <h4>
+                                            {{{payment.user.contact}}}
+                                        </h4>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="summary-container">
+                                <tr>
+                                    <td align="left">
+                                        Subtotal
+                                    </td>
+                                    <td align="right">
+                                        ${{{summary.subtotal}}} 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left">
+                                        HST
+                                    </td>
+                                    <td align="right">
+                                        ${{{summary.hst}}}  
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left">
+                                        Delivery
+                                    </td>
+                                    <td align="right">
+                                        {{{summary.delivery}}} 
+                                    </td>
+                                </tr>
+                                {{#if summary.creditApplied}}
+                                    <tr>
+                                        <td align="left">
+                                            Credit Applied
+                                        </td>
+                                        <td align="right">
+                                            -${{{summary.creditApplied}}} 
+                                        </td>
+                                    </tr>
+                                {{/if}}
+                                <tr class="total">
+                                    <td align="left">
+                                        Total
+                                    </td>
+                                    <td align="right">
+                                        ${{{summary.total}}} 
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="support-container">
+                                <tr>
+                                    <td align="center">
+                                        <p>
+                                            Need Support?
+                                        </p>
+                                        <p>
+                                            Head over to our <a href="{{{global.urlHelpCenter}}}">help centre</a> or <a href="{{{global.urlContactPage}}}">contact us</a>.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="social-container">
+                                <tr>
+                                    <td width="30%">
+                                        &nbsp;
+                                    </td>
+                                    <td class="holder" align="center">
+                                        <a href="{{{footer.urlTwitter}}}">
+                                            <img src="{{{footer.imageTwitter}}}" alt="Twitter" height="20" width="20" />
+                                        </a>
+                                    </td>
+                                    <td class="holder" align="center">
+                                        <a href="{{{footer.urlLinkedIn}}}">
+                                            <img src="{{{footer.imageLinkedIn}}}" alt="LinkedIn" height="20" width="20" />
+                                        </a>
+                                    </td>
+                                    <td class="holder" align="center">
+                                        <a href="{{{footer.urlFacebook}}}">
+                                            <img src="{{{footer.imageFacebook}}}" alt="Facebook" height="20" width="20" />
+                                        </a>
+                                    </td>
+                                    <td class="holder" align="center">
+                                        <a href="{{{footer.urlInstagram}}}">
+                                            <img src="{{{footer.imageInstagram}}}" alt="Instagram" height="20" width="20" />
+                                        </a>
+                                    </td>
+                                    <td width="30%">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="footer" style="background-image: url('{{{footer.imageBackground}}}');">
+                        <td align="center" class="padding">
+                            <table class="footer-container">
+                                <tr>
+                                    <td align="left">
+                                        <a class="home" href="{{{global.urlHome}}}">{{{global.urlHome}}}</a>
+                                    </td>
+                                    <td align="center">
+                                    </td>
+                                    <td align="right">
+                                        <a href="{{{footer.urlPrivacy}}}">Privacy</a>
+                                        <a href="{{{footer.urlTerms}}}">Terms</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- /content -->
+        </td>
+        <td></td>
+    </tr>
+</table>
+</body>
+</html>
