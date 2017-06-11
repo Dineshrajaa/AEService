@@ -32,5 +32,6 @@ require('./SubCategory.routes')(router);
 require('./Feedback.routes')(router);
 
 require('./Clients.routes')(router);
+require('./Notes.routes')(router);
 exports.router = router;
 
