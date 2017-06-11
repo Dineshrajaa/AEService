@@ -5,6 +5,7 @@ var config = require('../config'),
 
 
 exports.GetAllNotes = function (ClientId) {
+    console.log("ClientId:",ClientId);
     var fetchParams = {
         withRelated: ['Clients']
     };
@@ -13,7 +14,7 @@ exports.GetAllNotes = function (ClientId) {
             qb.where({
                 'ClientId': ClientId
             });
-    }).fetchAll(fetchParams).then(function (result) {
+    }).fetchAll().then(function (result) {
         return result;
     }).catch(function (err) {
         res.json({
