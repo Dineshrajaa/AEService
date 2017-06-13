@@ -1,5 +1,5 @@
 var Clients = require('../models/Clients.model');
-
+var Consumers = require('../models/UserAccount.model');
 exports.AddClient = function (params) {
     console.log("AddClient");
     var Client = new Clients({
@@ -25,7 +25,7 @@ exports.AddClient = function (params) {
 exports.GetAllClients = function (userId) {
     console.log("Get all clients");
     // var userId = (params.UserId) ? params.UserId : 0;
-    console.log("serviceUserId:",userId);
+    console.log("serviceUserId:", userId);
     return Clients.forge().query(function (qb) {
         if (userId != 0)
             qb.where({
@@ -39,13 +39,30 @@ exports.GetAllClients = function (userId) {
     });
 };
 
-exports.DeleteClient = function(ClientId){
+exports.GetAllConsumers = function () {
+    console.log("Get all Consumers");    
+    return Consumers.forge().query(function (qb) {
+        
+            qb.where({
+                'Role': 'User'
+            });
+
+    }).fetchAll().then(function (Consumers) {
+        return Consumers;
+    }).catch(function (err) {
+        return err;
+    });
+};
+
+exports.DeleteClient = function (ClientId) {
     return Clients.forge().query(function (qb) {
-        qb.where({'ClientId' : ClientId});
+        qb.where({
+            'ClientId': ClientId
+        });
         qb.del();
-    }).fetch().then(function(result) {
+    }).fetch().then(function (result) {
         return result;
-    }).catch(function(err){
+    }).catch(function (err) {
         return err;
     });
 };
