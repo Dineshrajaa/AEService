@@ -9,6 +9,7 @@ var config = require('../config'),
 /*Get all categories*/
 exports.registerUser = function (req, res) {
 	console.log("registerUser");
+	var _this=this;
 	password = helperServices.encryption(req.body.Password, req.body.EmailId);
 	req.body.Password = password;
 
@@ -20,18 +21,16 @@ exports.registerUser = function (req, res) {
 				// This is a business app request so register organization and save it to request
 				UserAccountServices.registerOrganization(req.body).then(function (result) {
 					req.body.OrgId = result;
-					console.log('Internal req.body:', req.body);
-					// this.saveUser(req);
-					sample();
+					exports.saveUser(req,res);
+					
 				}).catch(function (err) {
-					console.log('err:',err);
 					res.json({
 						"StatusCode": err.status,
 						"Organization": [],
 						"ResponseMessage": err.messages
 					});
 				});
-			} else saveUser(req);
+			} else exports.saveUser(req,res);
 		} else {
 			res.json({
 				"StatusCode": 302,
@@ -48,16 +47,11 @@ exports.registerUser = function (req, res) {
 		});
 	});
 }
-exports.sample = function () {
-	console.warn('Sample');
-}
 // save user
-exports.saveUser = function (req) {
+exports.saveUser = function (req,res) {
 	req.body.Fullname = req.body.FirstName + ' ' + req.body.LastName;
 	req.body.ModifyDate = moment().format('YYYY-MM-DD HH:mm:ss');
 	req.body.CreateDate = moment().format('YYYY-MM-DD HH:mm:ss');
-	req.body.OrgId = OrgId;
-	console.log('req.body:', req.body);
 	return UserAccountServices.registerUser(req.body).then(function (result1) {
 		res.json({
 			"StatusCode": 200,
