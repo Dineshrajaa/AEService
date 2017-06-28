@@ -11,33 +11,27 @@ exports.registerUser = function (req, res) {
 	console.log("registerUser");
 	password = helperServices.encryption(req.body.Password, req.body.EmailId);
 	req.body.Password = password;
+
 	UserAccountServices.getUserByEmail(req.body.EmailId).then(function (result) {
 
 		if (result == 0) {
+			var OrgId = null;
 			if (req.body.Role === 'business') {
 				// This is a business app request so register organization and save it to request
 				UserAccountServices.registerOrganization(req.body).then(function (result) {
-					console.warn(result);
-					// req.body.OrgId=result.
+					req.body.OrgId = result;
+					console.log('Internal req.body:', req.body);
+					// this.saveUser(req);
+					sample();
+				}).catch(function (err) {
+					console.log('err:',err);
+					res.json({
+						"StatusCode": err.status,
+						"Organization": [],
+						"ResponseMessage": err.messages
+					});
 				});
-			}
-			req.body.Fullname = req.body.FirstName + ' ' + req.body.LastName;
-			req.body.ModifyDate = moment().format('YYYY-MM-DD HH:mm:ss');
-			req.body.CreateDate = moment().format('YYYY-MM-DD HH:mm:ss');
-			return UserAccountServices.registerUser(req.body).then(function (result1) {
-				res.json({
-					"StatusCode": 200,
-					"user": result1,
-					"ResponseMessage": "New user created successfully!"
-				});
-			}).catch(function (err) {
-				res.json({
-					"StatusCode": err.status,
-					"user": [],
-					"ResponseMessage": err.messages
-				});
-			});
-
+			} else saveUser(req);
 		} else {
 			res.json({
 				"StatusCode": 302,
@@ -50,6 +44,30 @@ exports.registerUser = function (req, res) {
 		res.json({
 			"StatusCode": err.status,
 			"Favourites": [],
+			"ResponseMessage": err.messages
+		});
+	});
+}
+exports.sample = function () {
+	console.warn('Sample');
+}
+// save user
+exports.saveUser = function (req) {
+	req.body.Fullname = req.body.FirstName + ' ' + req.body.LastName;
+	req.body.ModifyDate = moment().format('YYYY-MM-DD HH:mm:ss');
+	req.body.CreateDate = moment().format('YYYY-MM-DD HH:mm:ss');
+	req.body.OrgId = OrgId;
+	console.log('req.body:', req.body);
+	return UserAccountServices.registerUser(req.body).then(function (result1) {
+		res.json({
+			"StatusCode": 200,
+			"user": result1,
+			"ResponseMessage": "New user created successfully!"
+		});
+	}).catch(function (err) {
+		res.json({
+			"StatusCode": err.status,
+			"user": [],
 			"ResponseMessage": err.messages
 		});
 	});

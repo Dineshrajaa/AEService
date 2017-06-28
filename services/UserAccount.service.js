@@ -28,8 +28,7 @@ exports.registerUser = function (params) {
     // Newpassword:(params.Newpassword)?params.Newpassword:null,
     // Fullname:(params.Fullname)?params.Fullname:null,
     // Added for Pro version
-    RegistrationNumber: (params.RegistrationNumber) ? params.RegistrationNumber : null,
-    Profession: (params.Profession) ? params.Profession : null
+    OrgId: (params.OrgId) ? params.OrgId : null
   });
   return User.save(null).tap(function (model) {
     userData = model;
@@ -42,15 +41,30 @@ exports.registerUser = function (params) {
 };
 // register organization
 exports.registerOrganization = function (params) {
-  var Organization = new Organization({
+  var organization = new Organization({
     RegistrationNo: params.RegistrationNo,
-    Profession: params.Profession
+    Profession: params.Profession,
+    OrgName: (params.OrgName) ? params.OrgName : null,
+    OrgImage: (params.OrgImage) ? params.OrgImage : null,
+    OrgAddress: (params.OrgAddress) ? params.OrgAddress : null,
+    OrgTitle: (params.OrgTitle) ? params.OrgTitle : null,
+    OrgPhone: (params.OrgPhone) ? params.OrgPhone : null,
+    OrgDesc: (params.OrgDesc) ? params.OrgDesc : null,
+    City: (params.City) ? params.City : null,
+    Country: (params.Country) ? params.Country : null,
+    Feedback: (params.Feedback) ? params.Feedback : null,
+    Longitude: (params.Longitude) ? params.Longitude : null,
+    Latitude: (params.Latitude) ? params.Latitude : null,
+    OrgOwner: (params.OrgOwner) ? params.OrgOwner : null,
+    OrgCoverImage: (params.OrgCoverImage) ? params.OrgCoverImage : null,
+    CreateDate: (params.CreateDate) ? params.CreateDate : new Date(),
+    ModifyDate: (params.ModifyDate) ? params.ModifyDate : new Date()
   });
-  return Organization.save(null).tap(function (model) {
+  return organization.save(null).tap(function (model) {
     organizationData = model;
-    return organizationData;
+    return organizationData.get('OrgId');
   }).then(function (organizationData) {
-    return organizationData;
+    return organizationData.get('OrgId');
   }).catch(function (err) {
     return err;
   });
