@@ -76,9 +76,9 @@ exports.getUserByEmail = function (email) {
       'EmailId': email
     });
   }).fetch().then(function (User) {
-    if (User)
-      return User.get('UserId');
-    else
+    if (User) {
+      return User;
+    } else
       return 0;
   });
 }
@@ -142,6 +142,30 @@ exports.UpdateUserAccount = function (params, transaction) {
     data.DOB = moment(params.DOB).format('YYYY-MM-DD HH:mm:ss');
 
   console.log(data);
+  return UserAccount.forge().query(function (qb) {
+    if (UserId)
+      qb.where({
+        'UserId': UserId
+      });
+  }).fetch().then(function (fUser) {
+    return fUser.save(data, authUpdateParams);
+  });
+}
+
+exports.reRegisterUser = function (params) {
+  // Method to register user with different role
+  console.log('params:', params);
+  var UserId = (params.UserId) ? params.UserId : false;
+  var data = {
+    "FirstName": (params.FirstName) ? params.FirstName : null,
+    "LastName": (params.LastName) ? params.LastName : null,
+    "Password": (params.Password) ? params.Password : null,
+    "ConfirmPassword": (params.Password) ? params.Password : null,
+    "Role": (params.Role) ? params.Role : null
+  };
+  var authUpdateParams = {
+    patch: true
+  };
   return UserAccount.forge().query(function (qb) {
     if (UserId)
       qb.where({

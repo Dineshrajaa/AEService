@@ -9,20 +9,19 @@ var config = require('../config'),
 /*Get all categories*/
 exports.registerUser = function (req, res) {
 	console.log("registerUser");
-	var _this=this;
+	var _this = this;
 	password = helperServices.encryption(req.body.Password, req.body.EmailId);
 	req.body.Password = password;
 
 	UserAccountServices.getUserByEmail(req.body.EmailId).then(function (result) {
-
 		if (result == 0) {
 			var OrgId = null;
 			if (req.body.Role === 'business') {
 				// This is a business app request so register organization and save it to request
 				UserAccountServices.registerOrganization(req.body).then(function (result) {
 					req.body.OrgId = result;
-					exports.saveUser(req,res);
-					
+					exports.saveUser(req, res);
+
 				}).catch(function (err) {
 					res.json({
 						"StatusCode": err.status,
@@ -30,16 +29,25 @@ exports.registerUser = function (req, res) {
 						"ResponseMessage": err.messages
 					});
 				});
-			} else exports.saveUser(req,res);
+			} else exports.saveUser(req, res);
 		} else {
-			res.json({
-				"StatusCode": 302,
-				"user": [],
-				"ResponseMessage": "User Alredy Exist!!"
-			});
+			var userID=result.get('UserId');
+			if (result.get('Role') === 'business' || result.get('Role') === 'user') {
+				// Already a business profile exist
+				req.body.Role = 'both';
+				req.body.UserId = userID;
+				exports.updateAndSaveUserAccount(req, res);
+			} else {
+				res.json({
+					"StatusCode": 302,
+					"user": [],
+					"ResponseMessage": "User Already Exist!!"
+				});
+			}
 		}
 
 	}).catch(function (err) {
+		console.log(err);
 		res.json({
 			"StatusCode": err.status,
 			"Favourites": [],
@@ -47,8 +55,30 @@ exports.registerUser = function (req, res) {
 		});
 	});
 }
+exports.updateAndSaveUserAccount = function (req, res) {
+	console.log('req.data:',req.body);
+	return UserAccountServices.reRegisterUser(req.body).then(function (result) {
+		if (result) {
+			res.json({
+				"StatusCode": 200,
+				"ResponseMessage": "Registered Successfully!!!"
+			});
+		} else {
+			res.json({
+				"StatusCode": 417,
+				"ResponseMessage": "Object reference not set to an instance of an object."
+			});
+		}
+	}).catch(function () {
+		res.json({
+			"StatusCode": err.status,
+			"Favourites": [],
+			"ResponseMessage": err.messages
+		});
+	})
+}
 // save user
-exports.saveUser = function (req,res) {
+exports.saveUser = function (req, res) {
 	req.body.Fullname = req.body.FirstName + ' ' + req.body.LastName;
 	req.body.ModifyDate = moment().format('YYYY-MM-DD HH:mm:ss');
 	req.body.CreateDate = moment().format('YYYY-MM-DD HH:mm:ss');
