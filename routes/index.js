@@ -31,6 +31,7 @@ require('./Review.routes')(router);
 require('./SubCategory.routes')(router);
 require('./Feedback.routes')(router);
 
+require('./Followers.routes')(router);
 require('./Clients.routes')(router);
 require('./Notes.routes')(router);
 exports.router = router;
