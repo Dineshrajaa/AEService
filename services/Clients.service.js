@@ -3,14 +3,14 @@ var Consumers = require('../models/UserAccount.model');
 exports.AddClient = function (params) {
     console.log("AddClient");
     var Client = new Clients({
-        FirstName: (params.FirstName) ? params.FirstName : null,
-        Gender: (params.Gender) ? params.Gender : null,
-        DOB: (params.DOB) ? params.DOB : null,
-        Address: (params.Address) ? params.Address : null,
-        Town: (params.Town) ? params.Town : null,
-        PostCode: (params.PostCode) ? params.PostCode : null,
-        Profile: (params.Profile) ? params.Profile : null,
-        AddedBy: (params.AddedBy) ? params.AddedBy : null,
+        OrgId: (params.OrgId) ? params.OrgId : null,
+        UserId: (params.UserId) ? params.UserId : null,
+        FavouriteId: (params.FavouriteId) ? params.FavouriteId : null,
+        CreateDate: (params.CreateDate) ? params.CreateDate : null,
+        CreatedBy: (params.CreatedBy) ? params.CreatedBy : null,
+        IsActive: (params.IsActive) ? params.IsActive : true,
+        ModifiedDate: (params.ModifiedDate) ? params.ModifiedDate : null,
+        ModifiedBy: (params.ModifiedBy) ? params.ModifiedBy : null,
     });
     return Client.save(null).tap(function (model) {
         clientData = model;
@@ -22,14 +22,12 @@ exports.AddClient = function (params) {
     });
 };
 
-exports.GetAllClients = function (userId) {
+exports.GetAllClients = function (OrgId) {
     console.log("Get all clients");
-    // var userId = (params.UserId) ? params.UserId : 0;
-    console.log("serviceUserId:", userId);
     return Clients.forge().query(function (qb) {
-        if (userId != 0)
+        if (OrgId != 0)
             qb.where({
-                'AddedBy': userId
+                'OrgId': OrgId
             });
 
     }).fetchAll().then(function (Clients) {

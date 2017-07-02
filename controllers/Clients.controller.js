@@ -58,11 +58,11 @@ exports.DeleteClient = function (req, res) {
 };
 exports.GetAllClients = function (req, res) {
     console.log("List clients");
-    var userId = (req.query.UserId) ? req.query.UserId : false;
-    console.log("userId:", userId);
-    if ((userId != undefined)) {
+    var OrgId = (req.params.OrgId) ? req.params.OrgId : false;
+    console.log("OrgId:", OrgId);
+    if ((OrgId != undefined)) {
 
-        ClientsServices.GetAllClients(userId).then(function (result) {
+        ClientsServices.GetAllClients(OrgId).then(function (result) {
             if (result) {
                 console.log("1");
                 return result;

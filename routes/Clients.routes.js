@@ -15,9 +15,11 @@ module.exports = function (router) {
       .get(controller.GetAllCategories);
   	router.route('/Aesthetic/api/Categories/GetById')
   		.get(controller.CategoriesGetById);*/
+	router.route('/Aesthetic/api/Clients/:OrgId')
+		// .post(controller.AddClient)
+		.get(controller.GetAllClients)
 	router.route('/Aesthetic/api/Clients')
 		.post(controller.AddClient)
-		.get(controller.GetAllClients)
 	router.route('/Aesthetic/api/Clients/:ClientId')
 		.delete(controller.DeleteClient)
 	router.route('/Aesthetic/api/Consumers')
