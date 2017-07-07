@@ -6,8 +6,8 @@ var config = require('../config'),
 
 exports.GetAllFollowers = function (value, field) {
     return Followers.forge().query(function (qb) {
-        qb.select('UserAccount.FirstName', 'UserAccount.LastName', 'UserAccount.DOB',
-        'Favourite.FavouriteId','Favourite.OrgId','Favourite.UserId');
+        qb.select('UserAccount.FirstName', 'UserAccount.LastName', 'UserAccount.DOB', 'UserAccount.UserImage',
+            'Favourite.FavouriteId', 'Favourite.OrgId', 'Favourite.UserId');
         qb.join('UserAccount', function () {
             this.on('Favourite.UserId', '=', 'UserAccount.UserId')
         })

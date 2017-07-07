@@ -11,6 +11,10 @@ exports.AddClient = function (params) {
         IsActive: (params.IsActive) ? params.IsActive : true,
         ModifiedDate: (params.ModifiedDate) ? params.ModifiedDate : null,
         ModifiedBy: (params.ModifiedBy) ? params.ModifiedBy : null,
+        FirstName: (params.FirstName) ? params.FirstName : null,
+        LastName: (params.LastName) ? params.LastName : null,
+        DOB: (params.DOB) ? params.DOB : null
+        // TBD Add Address fields
     });
     return Client.save(null).tap(function (model) {
         clientData = model;
@@ -38,12 +42,12 @@ exports.GetAllClients = function (OrgId) {
 };
 
 exports.GetAllConsumers = function () {
-    console.log("Get all Consumers");    
+    console.log("Get all Consumers");
     return Consumers.forge().query(function (qb) {
-        
-            qb.where({
-                'Role': 'User'
-            });
+
+        qb.where({
+            'Role': 'User'
+        });
 
     }).fetchAll().then(function (Consumers) {
         return Consumers;
