@@ -45,3 +45,20 @@ exports.sendMessage = function (params) {
         fs.writeFile('image.png', buf);
     }*/
 }
+
+
+exports.uploadImage = function (data, ChatId) {
+
+    console.log(data);
+    console.log(ChatId);
+    var authUpdateParams = {
+        patch: true
+    };
+    var authFetchParams = {};
+    return Review.forge().query(function (qb) {
+        if (ChatId)
+            qb.where({ 'Id': ChatId });
+    }).fetch().then(function (Chat) {
+        return Chat.save(data, authUpdateParams);
+    });
+}
