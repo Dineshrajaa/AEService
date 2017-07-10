@@ -1,24 +1,25 @@
-var express        = require('express'),
-	expressHbs     = require('express-handlebars'),
-	config         = require('./config'),
-	app 		   = express(),
-	bodyParser     = require('body-parser'),
-	methodOverride = require('method-override'),
-    errorHandler   = require('errorhandler'),
-    cookieParser   = require('cookie-parser'),
-    session        = require('express-session'),
-    multiLogger    = require('./services/logger.service'),
+var express = require('express'),
+    expressHbs = require('express-handlebars'),
+    config = require('./config'),
+    app = express(),
+    bodyParser = require('body-parser'),
+    multer = require('multer'),
+    methodOverride = require('method-override'),
+    errorHandler = require('errorhandler'),
+    cookieParser = require('cookie-parser'),
+    session = require('express-session'),
+    multiLogger = require('./services/logger.service'),
     passportAuth = require('./authenticate');
-    routes         = require('./routes'),
-    path 		   = require('path'),
+routes = require('./routes'),
+    path = require('path'),
     server = require('http').createServer(app);
 var moment = require('moment');
-var moment= require('moment-timezone');
-app.get('/',function(req,res){
-      res.sendFile(__dirname + "/index.html");
+var moment = require('moment-timezone');
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + "/index.html");
 });
 // allow CORS
-app.all('*', function(req, res, next) {
+app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
@@ -30,10 +31,10 @@ app.all('*', function(req, res, next) {
     }
 });
 
-app.engine('hbs', expressHbs({extname:'hbs', defaultLayout:'layout.hbs'}));
+app.engine('hbs', expressHbs({ extname: 'hbs', defaultLayout: 'layout.hbs' }));
 
-app.use(bodyParser.urlencoded({'extended':'true', 'limit': '50mb'}));
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({ 'extended': 'true', 'limit': '50mb' }));
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
 /**
@@ -44,21 +45,23 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app
-  .use(bodyParser())
-  .use(express.static(path.join(__dirname, 'public')))
-  .use(cookieParser())
-  .use(session({secret: config.session.secret
-    , resave:false
-    , saveUninitialized:false}))
-  .use(passportAuth.initialize())
-  .use(passportAuth.session())
-  .use(routes.router)
-  .use(function (req, res) {
-    res.status(404).render('404', {title: 'Not Found :('});
-  });
+    .use(bodyParser())
+    .use(express.static(path.join(__dirname, 'public')))
+    .use(cookieParser())
+    .use(session({
+        secret: config.session.secret
+        , resave: false
+        , saveUninitialized: false
+    }))
+    .use(passportAuth.initialize())
+    .use(passportAuth.session())
+    .use(routes.router)
+    .use(function (req, res) {
+        res.status(404).render('404', { title: 'Not Found :(' });
+    });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
@@ -71,18 +74,18 @@ app.use(function (err, req, res, next) {
     return res.status(code).json({
         error: true,
         code: code,
-        data: {message: err.message}
+        data: { message: err.message }
     });
 });
 
 var servicesPromises = [];
 
-Promise.all(servicesPromises).then(function() {
-  multiLogger.info('app.js','All services initialized');
-  server.listen(app.get('port'), function () {
-    multiLogger.info('app.js','Express server listening on port ' + app.get('port'));
-  });
+Promise.all(servicesPromises).then(function () {
+    multiLogger.info('app.js', 'All services initialized');
+    server.listen(app.get('port'), function () {
+        multiLogger.info('app.js', 'Express server listening on port ' + app.get('port'));
+    });
 })
-.catch(function(error){
-  multiLogger.error('app.js', 'failed to start Feast API:' + JSON.stringify(error));
-});
+    .catch(function (error) {
+        multiLogger.error('app.js', 'failed to start Feast API:' + JSON.stringify(error));
+    });

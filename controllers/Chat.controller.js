@@ -21,4 +21,17 @@ exports.GetConversation = function (req, res) {
             "ResponseMessage": err.messages
         });
     });
-};
+}
+
+exports.sendMessage = function (req, res) {
+    console.log("Send Message");
+    ChatServices.sendMessage(req.body).then(function (chatSuccess) {
+        if (chatSuccess) {
+            res.json({ "StatusCode": 200, "chat": chatSuccess, "ResponseMessage": "Message sent successfully!" });
+        } else {
+            res.json({ "StatusCode": 404, "Message": "An error has occurred." });
+        }
+    }).catch(function (err) {
+        res.json({ "StatusCode": err.status, "chat": [], "ResponseMessage": err.messages });
+    });
+}
