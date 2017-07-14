@@ -56,6 +56,7 @@ app
     .use(passportAuth.initialize())
     .use(passportAuth.session())
     .use(routes.router)
+    .use('/docs',express.static(path.join(__dirname, 'public/docs/')))
     .use(function (req, res) {
         res.status(404).render('404', { title: 'Not Found :(' });
     });
