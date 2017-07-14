@@ -143,18 +143,41 @@ define({
               "description": "<p>ModifyDate of the user (same as created date)</p>"
             }
           ]
-        },
-        "examples": [
-          {
-            "title": "Authenticate-Example:",
-            "content": "{\n      \"loginEmail\": \"user@email.com\",\n      \"loginPasssword\": \"asecret\"\n}",
-            "type": "json"
-          }
-        ]
-      },
-      
-      "filename": "routes/rest/login.js",
-      "groupTitle": "Signup"
+        }
+      }
+    },{
+      "type": "post",
+      "url": "/Aesthetic/api/Users/Login",
+      "title": "Signin to Aesthetic Pro",
+      "version": "1.0.0",
+      "name": "signin",
+      "group": "Account",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows new user signin</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Email",
+              "description": "<p>Email of user (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Password",
+              "description": "<p>Password of user (required)</p>"
+            }
+          ]
+        }
+      }
     }
   ]
 });
