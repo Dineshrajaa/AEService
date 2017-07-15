@@ -1,8 +1,8 @@
 define({
   "name": "aesthetic",
   "version": "1.0.0",
-  "description": "aesthetic",
-  "sampleUrl": false,
+  "description": "Base URL: http://203.223.189.42:3004/Aesthetic/api",
+  "sampleUrl": "http://203.223.189.42:3004/Aesthetic/api",
   "defaultVersion": "0.0.0",
   "apidoc": "0.3.0",
   "generator": {

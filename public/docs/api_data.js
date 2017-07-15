@@ -2,7 +2,7 @@ define({
   "api": [
     {
       "type": "post",
-      "url": "/Aesthetic/api/Users/",
+      "url": "/Users",
       "title": "Signup with Aesthetic Pro",
       "version": "1.0.0",
       "name": "signup",
@@ -144,10 +144,19 @@ define({
             }
           ]
         }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"user":{"FirstName":"Aesthetic","LastName":"Tester","Password":"+9scs3az8vA3QYQ15qE9pg==","ConfirmPassword":"Test1234?","EmailId":"aesthetictester@gmail.com","Role":"business","UserImage":"upload/user/UserDefault.png","ConfirmEmail":"aesthetictester@gmail.com","Gender":"male","Address":null,"Town":null,"City":null,"PostCode":0,"Profile":null,"TagLine":null,"DOB":null,"IsActive":null,"CreateDate":"2017-07-15 12:08:42","ModifyDate":"2017-07-15 12:08:42","OrgId":42,"UserId":201},"ResponseMessage":"New user created successfully!"}',
+            "type": "json"
+          }
+        ]
       }
-    },{
+    }, {
       "type": "post",
-      "url": "/Aesthetic/api/Users/Login",
+      "url": "/Users/Login",
       "title": "Signin to Aesthetic Pro",
       "version": "1.0.0",
       "name": "signin",
@@ -165,7 +174,7 @@ define({
               "group": "Parameter",
               "type": "String",
               "optional": false,
-              "field": "Email",
+              "field": "EmailId",
               "description": "<p>Email of user (required)</p>"
             },
             {
@@ -178,6 +187,29 @@ define({
           ]
         }
       }
+    }, {
+      "type": "get",
+      "url": "/Followers/:OrgId",
+      "title": "Get Followers list",
+      "version": "1.0.0",
+      "name": "List Followers",
+      "group": "Followers",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Get list of Followers based on the Organization ID</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '[{"FirstName":"Rajkumar","LastName":"rathore","DOB":"1990-05-05T00:00:00.000Z","UserImage":"Upload/User/527575.png","FavouriteId":67,"OrgId":2,"UserId":149},{"FirstName":"Jane","LastName":"Austin","DOB":"2017-10-31T18:30:00.000Z","UserImage":"Upload/User/3d120b76-d6de-4645-aefa-a2caa2c5d272.png","FavouriteId":80,"OrgId":2,"UserId":177}]',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Followers"
     }
   ]
 });
