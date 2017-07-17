@@ -101,6 +101,35 @@ exports.saveBusinessInfo = function (params, transaction) {
     return fOrganization.save(businessData, authUpdateParams);
   });
 }
+
+exports.UpdateBusinessInfoStatus = function (UserId,transaction) {
+  // Method to change the Business info status
+  var UserId = (UserId) ? UserId : false;
+  var authUpdateParams = {
+    patch: true
+  };
+  var authFetchParams = {};
+
+  if (transaction) {
+    authUpdateParams.transacting = transaction;
+    authFetchParams.transacting = transaction;
+  }
+  /* if(params.Fullname || params.Fullname=='' || params.Fullname==null)
+     params.remove('Fullname');*/
+  //console.log(params);
+  var data = {
+    "businessInfoFound": true
+  };
+
+  return UserAccount.forge().query(function (qb) {
+    if (UserId)
+      qb.where({
+        'UserId': UserId
+      });
+  }).fetch().then(function (fUser) {
+    return fUser.save(data, authUpdateParams);
+  });
+}
 //check a user is existed or not
 exports.getUserByEmail = function (email) {
   return UserAccount.forge().query(function (qb) {

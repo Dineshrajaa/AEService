@@ -30,10 +30,11 @@ exports.registerBusinessInfo = function (req, res) {
 					"ResponseMessage": "Object reference not set to an instance of an object."
 				});
 			else
-				res.json({
+				exports.changeBusinessInfoStatus(req,res);
+				/* res.json({
 					"StatusCode": 200,
 					"ResponseMessage": "Saved Business info Successfully!!!"
-				});
+				}); */
 		})
 		.catch(function (err) {
 			res.json({
@@ -267,6 +268,40 @@ exports.updateUserProfile = function (req, res) {
 		});
 }
 
+exports.changeBusinessInfoStatus=function(req,res){
+	// Method to change the Business info available status
+	return orm.bookshelf.transaction(function (trx) {
+		return UserAccountServices.GetUserAccount(req.body.UserId, trx)
+			.then(function (user) {
+				if (user)
+					return UserAccountServices.UpdateBusinessInfoStatus(req.body.UserId, trx);
+				else
+					return false;
+			})
+			.catch(function (err) {
+				console.log(err);
+			});
+	})
+		.then(function (results) {
+			if (!results)
+				res.json({
+					"StatusCode": 417,
+					"ResponseMessage": "Object reference not set to an instance of an object."
+				});
+			else
+				res.json({
+					"StatusCode": 200,
+					"ResponseMessage": "Updated Business Info Successfully!!!"
+				});
+		})
+		.catch(function (err) {
+			res.json({
+				"StatusCode": err.status,
+				"Favourites": [],
+				"ResponseMessage": err.messages
+			});
+		});
+}
 exports.GetUsersImageById = function (req, res) {
 	console.log("GetUsersImageById");
 	var UserId = (req.query.Id) ? req.query.Id : false;

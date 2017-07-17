@@ -267,6 +267,12 @@ define({
               "optional": false,
               "field": "OrgId",
               "description": "<p>Organization ID received during initial signup (required)</p>"
+            }, {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "UserId",
+              "description": "<p>User ID received during initial signup (required)</p>"
             }
           ]
         }
@@ -280,7 +286,7 @@ define({
           }
         ]
       }
-    },{
+    }, {
       "type": "post",
       "url": "/PutUserImage",
       "title": "Update User data after signup",
@@ -330,13 +336,13 @@ define({
               "optional": false,
               "field": "Address",
               "description": "<p>Address of the User (required)</p>"
-            },{
+            }, {
               "group": "Parameter",
               "type": "String",
               "optional": false,
               "field": "Town",
               "description": "<p>Town/City of the User (required)</p>"
-            },{
+            }, {
               "group": "Parameter",
               "type": "String",
               "optional": false,
