@@ -210,6 +210,165 @@ define({
         ]
       },
       "groupTitle": "Followers"
+    }, {
+      "type": "post",
+      "url": "/Organization",
+      "title": "Register Organization data",
+      "version": "1.0.0",
+      "name": "Register Organization",
+      "group": "Organization",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows user to provide business info after signup</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgOwner",
+              "description": "<p>Organization Owner (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgAddress",
+              "description": "<p>Organization Address (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "City",
+              "description": "<p>Organization City (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Country",
+              "description": "<p>Organization Country (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "PostCode",
+              "description": "<p>Organization PostCode (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgId",
+              "description": "<p>Organization ID received during initial signup (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Saved Business info Successfully!!!"}',
+            "type": "json"
+          }
+        ]
+      }
+    },{
+      "type": "post",
+      "url": "/PutUserImage",
+      "title": "Update User data after signup",
+      "version": "1.0.0",
+      "name": "Update User dat",
+      "group": "Account",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows user to update personal info after signup</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "UserId",
+              "description": "<p>UserId of the User (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "FirstName",
+              "description": "<p>FirstName of the User (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "LastName",
+              "description": "<p>LastName of the User (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Gender",
+              "description": "<p>Gender of the User (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Address",
+              "description": "<p>Address of the User (required)</p>"
+            },{
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Town",
+              "description": "<p>Town/City of the User (required)</p>"
+            },{
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "PostCode",
+              "description": "<p>PostCode of the User (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Profile",
+              "description": "<p>Profile of the User (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "DOB",
+              "description": "<p>DOB of the User (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Updated Successfully!!!"}',
+            "type": "json"
+          }
+        ]
+      }
     }
   ]
 });
