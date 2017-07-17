@@ -7,6 +7,42 @@ var config = require('../config'),
 	Promise = require("bluebird"),
 	orm = require('../orm');
 /*Get all categories*/
+exports.registerBusinessInfo = function (req, res) {
+	// Method to register business info
+	console.log("registerBusinessinfo");
+
+	return orm.bookshelf.transaction(function (trx) {
+		return UserAccountServices.GetOrganization(req.body.OrgId, trx)
+			.then(function (organization) {
+				if (organization)
+					return UserAccountServices.saveBusinessInfo(req.body, trx);
+				else
+					return false;
+			})
+			.catch(function (err) {
+				console.log(err);
+			});
+	})
+		.then(function (results) {
+			if (!results)
+				res.json({
+					"StatusCode": 417,
+					"ResponseMessage": "Object reference not set to an instance of an object."
+				});
+			else
+				res.json({
+					"StatusCode": 200,
+					"ResponseMessage": "Saved Business info Successfully!!!"
+				});
+		})
+		.catch(function (err) {
+			res.json({
+				"StatusCode": err.status,
+				"Favourites": [],
+				"ResponseMessage": err.messages
+			});
+		});
+}
 exports.registerUser = function (req, res) {
 	console.log("registerUser");
 	var _this = this;
@@ -31,7 +67,7 @@ exports.registerUser = function (req, res) {
 				});
 			} else exports.saveUser(req, res);
 		} else {
-			var userID=result.get('UserId');
+			var userID = result.get('UserId');
 			if (result.get('Role') === 'business' || result.get('Role') === 'user') {
 				// Already a business profile exist
 				req.body.Role = 'both';
@@ -56,7 +92,7 @@ exports.registerUser = function (req, res) {
 	});
 }
 exports.updateAndSaveUserAccount = function (req, res) {
-	console.log('req.data:',req.body);
+	console.log('req.data:', req.body);
 	return UserAccountServices.reRegisterUser(req.body).then(function (result) {
 		if (result) {
 			res.json({
@@ -199,17 +235,17 @@ exports.updateUserProfile = function (req, res) {
 	}
 
 	return orm.bookshelf.transaction(function (trx) {
-			return UserAccountServices.GetUserAccount(req.body.UserId, trx)
-				.then(function (user) {
-					if (user)
-						return UserAccountServices.UpdateUserAccount(req.body, trx);
-					else
-						return false;
-				})
-				.catch(function (err) {
-					console.log(err);
-				});
-		})
+		return UserAccountServices.GetUserAccount(req.body.UserId, trx)
+			.then(function (user) {
+				if (user)
+					return UserAccountServices.UpdateUserAccount(req.body, trx);
+				else
+					return false;
+			})
+			.catch(function (err) {
+				console.log(err);
+			});
+	})
 		.then(function (results) {
 			if (!results)
 				res.json({

@@ -69,6 +69,38 @@ exports.registerOrganization = function (params) {
     return err;
   });
 };
+
+exports.saveBusinessInfo = function (params, transaction) {
+  // Method to update organization info
+  var OrgId = (params.OrgId) ? params.OrgId : false;
+  var authUpdateParams = {
+    patch: true
+  };
+  var authFetchParams = {};
+
+  if (transaction) {
+    authUpdateParams.transacting = transaction;
+    authFetchParams.transacting = transaction;
+  }
+
+  var businessData = {
+
+    "OrgOwner": (params.OrgOwner) ? params.OrgOwner : null,
+    "OrgAddress": (params.OrgAddress) ? params.OrgAddress : null,
+    "City": (params.City) ? params.City : null,
+    "Country": (params.Country) ? params.Country : null,
+    "PostCode": (params.PostCode) ? params.PostCode : null
+  };
+
+  return Organization.forge().query(function (qb) {
+    if (OrgId)
+      qb.where({
+        'OrgId': OrgId
+      });
+  }).fetch().then(function (fOrganization) {
+    return fOrganization.save(businessData, authUpdateParams);
+  });
+}
 //check a user is existed or not
 exports.getUserByEmail = function (email) {
   return UserAccount.forge().query(function (qb) {
@@ -95,6 +127,17 @@ exports.GetUserAccount = function (UserId) {
     if (UserId)
       qb.where({
         'UserId': UserId
+      });
+  }).fetch(fetchParams);
+}
+
+//get user detail using userId
+exports.GetOrganization = function (OrgId) {
+  var fetchParams = {};
+  return Organization.forge().query(function (qb) {
+    if (OrgId)
+      qb.where({
+        'OrgId': OrgId
       });
   }).fetch(fetchParams);
 }
