@@ -84,7 +84,10 @@ exports.saveBusinessInfo = function (params, transaction) {
   }
 
   var businessData = {
-
+    "OrgName":(params.OrgName)?params.OrgName:null,
+    "Profession":(params.Profession)?params.Profession:null,
+    "RegistrationNo":(params.RegistrationNo)?params.RegistrationNo:null,
+    "OrgDesc":(params.OrgDesc)?params.OrgDesc:null,
     "OrgOwner": (params.OrgOwner) ? params.OrgOwner : null,
     "OrgAddress": (params.OrgAddress) ? params.OrgAddress : null,
     "City": (params.City) ? params.City : null,

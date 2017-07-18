@@ -230,6 +230,34 @@ define({
               "group": "Parameter",
               "type": "String",
               "optional": false,
+              "field": "OrgName",
+              "description": "<p>Organization Name (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Profession",
+              "description": "<p>Profession of the Organization (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "RegistrationNo",
+              "description": "<p>RegistrationNo of the Organization (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgDesc",
+              "description": "<p>Organization Description (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
               "field": "OrgOwner",
               "description": "<p>Organization Owner (required)</p>"
             },
