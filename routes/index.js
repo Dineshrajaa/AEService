@@ -35,5 +35,6 @@ require('./Followers.routes')(router);
 require('./Clients.routes')(router);
 require('./Notes.routes')(router);
 require('./Chat.routes')(router);
+require('./Pictures.routes')(router);
 exports.router = router;
 
