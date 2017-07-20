@@ -210,6 +210,29 @@ define({
         ]
       },
       "groupTitle": "Followers"
+    },{
+      "type": "get",
+      "url": "Organization/GetById?id=:OrgId",
+      "title": "Get Organization info",
+      "version": "1.0.0",
+      "name": "Fetch Organization info",
+      "group": "Organization",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Get details based on the Organization ID</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"organization":{"OrgId":46,"OrgName":"Aesthetic Pro","OrgImage":"http://xxxxxnull","OrgAddress":"cbe","OrgTitle":null,"OrgPhone":null,"OrgDesc":"test desc","CreateDate":"2017-07-18T08:32:50.000Z","ModifyDate":"2017-07-18T08:32:50.000Z","City":"cbe","Country":"india","Feedback":null,"RegistrationNo":"12345","Longitude":null,"Latitude":null,"OrgOwner":"test123lasttest","OrgCoverImage":"http://xxxxxnull","Profession":"test","PostCode":641004},"ResponseMessage":"Wow!! you are so passionate about your OrganizationRepository"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Organization"
     }, {
       "type": "post",
       "url": "/Organization",
