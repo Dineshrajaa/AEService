@@ -204,7 +204,7 @@ define({
         "examples": [
           {
             "title": "Success-Response:",
-            "content": '[{"FirstName":"Rajkumar","LastName":"rathore","DOB":"1990-05-05T00:00:00.000Z","UserImage":"Upload/User/527575.png","FavouriteId":67,"OrgId":2,"UserId":149},{"FirstName":"Jane","LastName":"Austin","DOB":"2017-10-31T18:30:00.000Z","UserImage":"Upload/User/3d120b76-d6de-4645-aefa-a2caa2c5d272.png","FavouriteId":80,"OrgId":2,"UserId":177}]',
+            "content": '{"data":[{"FirstName":"Rajkumar","LastName":"rathore","DOB":"1990-05-05T00:00:00.000Z","UserImage":"Upload/User/527575.png","City":null,"FavouriteId":67,"OrgId":2,"UserId":149},{"FirstName":"Jane","LastName":"Austin","DOB":"2017-10-31T18:30:00.000Z","UserImage":"Upload/User/3d120b76-d6de-4645-aefa-a2caa2c5d272.png","City":null,"FavouriteId":80,"OrgId":2,"UserId":177}]}',
             "type": "json"
           }
         ]

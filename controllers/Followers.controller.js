@@ -8,7 +8,7 @@ exports.GetAllFollowers = function (req, res) {
     var OrgId=(req.params.OrgId)?req.params.OrgId:false;
     FollowersServices.GetAllFollowers(OrgId, 'OrgId').then(function (Followers) {
         if (Followers.length) {
-            res.json(Followers);
+            res.json({"data":Followers});
         } else {
             res.json({
                 "Message": "An error has occurred."
