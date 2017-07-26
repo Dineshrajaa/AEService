@@ -426,6 +426,95 @@ define({
           }
         ]
       }
+    },{
+      "type": "post",
+      "url": "/Clients",
+      "title": "Add Client",
+      "version": "1.0.0",
+      "name": "Add Client",
+      "group": "Client",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Add Client</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "UserId",
+              "description": "<p>UserId of the Client (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "FirstName",
+              "description": "<p>FirstName of the Client (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "LastName",
+              "description": "<p>LastName of the Client (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Gender",
+              "description": "<p>Gender of the Client (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Address",
+              "description": "<p>Address of the Client (required)</p>"
+            }, {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Town",
+              "description": "<p>Town/City of the Client (required)</p>"
+            }, {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "PostCode",
+              "description": "<p>PostCode of the Client (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Profile",
+              "description": "<p>Profile of the Client (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "DOB",
+              "description": "<p>DOB of the Client (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Updated Successfully!!!"}',
+            "type": "json"
+          }
+        ]
+      }
     }
   ]
 });
