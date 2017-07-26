@@ -11,7 +11,7 @@ exports.registerUser = function (params) {
     EmailId: (params.EmailId) ? params.EmailId : null,
     // ConfirmEmail:(params.EmailId)?params.EmailId:null,
     Role: (params.Role) ? params.Role : null,
-    UserImage: 'upload/user/UserDefault.png',
+    UserImage: 'Upload/user/UserDefault.png',
     ConfirmEmail: (params.ConfirmEmail) ? params.ConfirmEmail : null,
     Gender: (params.Gender) ? params.Gender : null,
     Address: (params.Address) ? params.Address : null,

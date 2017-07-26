@@ -31,12 +31,21 @@ exports.AddPost = function (req, res) {
             "Message": "An error has occurred."
         });
     } else {
-        PostsServices.AddPost(req.body).then(function (result) {
-            res.json({
-                "StatusCode": 200,
-                "data": result,
-                "ResponseMessage": "Added Post successfully!"
-            });
+        var section = "post";
+        var image = (req.body.picture) ? req.body.picture : false;
+        PostsServices.AddPost(req.body).then(function (postSuccess) {
+            if (postSuccess) {
+                if (image) {
+                    helperServices.base64toimage(image, postSuccess.get("PostId"), section);
+                }
+                res.json({
+                    "StatusCode": 200,
+                    "data": postSuccess,
+                    "ResponseMessage": "Added Post successfully!"
+                });
+            } else {
+                res.json({ "StatusCode": 404, "Message": "An error has occurred." });
+            }
         }).catch(function (err) {
             res.json({
                 "StatusCode": err.status,

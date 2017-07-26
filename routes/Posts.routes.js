@@ -12,7 +12,7 @@ module.exports = function (router) {
     /**
      * this accepts all request methods to the `/` path
      */
-    router.route('/Aesthetic/api/PostGet')
+    router.route('/Aesthetic/api/Posts')
         //   .get(middleware.authorizseUser,controller.getAllPost);
         .post(middleware.authorizseUser, controller.AddPost)
     router.route('/Aesthetic/api/Posts/:OrgId')

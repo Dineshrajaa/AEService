@@ -3,6 +3,7 @@ var config = require('../config'),
   fs = require("fs"),
   CommentServices = require('../services/Comment.service'),
   ChatServices = require('../services/Chat.service'),
+  PostServices = require('../services/Posts.service'),
   ReviewServices = require('../services/Review.service'),
   distance = require('google-distance-matrix'),
   moment = require('moment');
@@ -101,6 +102,8 @@ exports.base64toimage = function (dataString, CommentId, section) {
     folder = "Review";
   if (section == "chat")
     folder = "Chat"
+  if (section == "post")
+    folder = "Post"
   var filename = config.image_path_global + folder + "/" + name;
   var path = "Upload/" + folder + "/" + name;
 
@@ -125,6 +128,20 @@ exports.base64toimage = function (dataString, CommentId, section) {
         "ImagePath": path
       }
       return ChatServices.uploadImage(data, ChatId).then(function () {
+        return path;
+      }).catch(function (err) {
+        return err;
+      })
+
+    });
+  }
+
+  if (section == "post") {
+    fs.writeFile(filename, new Buffer(dataString, "base64"), function (err) {
+      var data = {
+        "PostImage": path
+      };
+      return PostServices.uploadImage(data, PostId).then(function () {
         return path;
       }).catch(function (err) {
         return err;

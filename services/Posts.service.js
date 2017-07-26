@@ -23,18 +23,22 @@ exports.GetAllPosts = function (OrgId) {
     })
 };
 
-exports.AddNote = function (params) {
-    console.log("AddNote");
-    var Note = new Notes({
-        ClientId: (params.ClientId) ? params.ClientId : null,
-        NoteDate: (params.NoteDate) ? params.NoteDate : null,
-        NoteText: (params.NoteText) ? params.NoteText : null
+exports.AddPost = function (params) {
+    console.log("AddPost");
+    var Posts = new Posts({
+        OrgId: (params.OrgId) ? params.OrgId : null,
+        PostMessage: (params.PostMessage) ? params.PostMessage : null,
+        PostTime: (params.PostTime) ? params.PostTime : null,
+        CreateDate: (params.CreateDate) ? params.CreateDate : new Date(),
+        PostImage: (params.PostImage) ? params.PostImage : null
     });
-    return Note.save(null).tap(function (model) {
-        noteData = model;
-        return noteData;
-    }).then(function (noteData) {
-        return noteData;
+    return Posts.save(null).tap(function (model) {
+        postData = model;
+        console.log('model:', model);
+        return postData;
+    }).then(function (postData) {
+        console.log('postData:', postData);
+        return postData;
     }).catch(function (err) {
         console.log(err);
     });
@@ -53,3 +57,19 @@ exports.DeleteNote = function (NoteId) {
         return err;
     });
 };
+
+exports.uploadImage = function (data, PostId) {
+
+    console.log(data);
+    console.log(PostId);
+    var authUpdateParams = {
+        patch: true
+    };
+    var authFetchParams = {};
+    return Posts.forge().query(function (qb) {
+        if (PostId)
+            qb.where({ 'PostId': PostId });
+    }).fetch().then(function (Posts) {
+        return Posts.save(data, authUpdateParams);
+    });
+}

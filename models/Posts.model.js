@@ -2,7 +2,7 @@ var orm = require('../orm');
 
 // Related Models
 
-var PostGet = orm.bookshelf.Model.extend({
+var Posts = orm.bookshelf.Model.extend({
     tableName: 'PostGet',
     idAttribute: 'PostId',
     UserAccount: function () {
@@ -14,4 +14,4 @@ var PostGet = orm.bookshelf.Model.extend({
 });
 // Load child models after exports, so that can create 2-way relations
 PostImage = require('./PostImage.model');
-module.exports = PostGet;
+module.exports = Posts;
