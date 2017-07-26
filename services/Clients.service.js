@@ -13,8 +13,11 @@ exports.AddClient = function (params) {
         ModifiedBy: (params.ModifiedBy) ? params.ModifiedBy : null,
         FirstName: (params.FirstName) ? params.FirstName : null,
         LastName: (params.LastName) ? params.LastName : null,
-        DOB: (params.DOB) ? params.DOB : null
-        // TBD Add Address fields
+        DOB: (params.DOB) ? params.DOB : null,
+        Address: (params.Address) ? params.Address : null,
+        PostCode: (params.PostCode) ? params.PostCode : null,
+        Town: (params.Town) ? params.Town : null,
+        Profile: (params.Profile) ? params.Profile : null
     });
     return Client.save(null).tap(function (model) {
         clientData = model;
