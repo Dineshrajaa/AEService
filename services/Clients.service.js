@@ -33,7 +33,7 @@ exports.AddClient = function (params) {
     /**
      * Method to Add a client
      */
-    exports.getSelectedConsumer(params.UserId).then(function (consumer) {
+    getSelectedConsumer(params.UserId).then(function (consumer) {
         var Client = new Clients({
             OrgId: (params.OrgId) ? params.OrgId : null,
             UserId: (params.UserId) ? params.UserId : null,
@@ -49,7 +49,7 @@ exports.AddClient = function (params) {
             Address: (consumer.Address) ? consumer.Address : null,
             PostCode: (consumer.PostCode) ? consumer.PostCode : null,
             Town: (consumer.Town) ? consumer.Town : null,
-            Profile: (consumer.Profile) ? consumer.Profile : null,
+            // Profile: (consumer.Profile) ? consumer.Profile : null,
             UserImage: (consumer.UserImage) ? consumer.UserImage : 'Upload/user/UserDefault.png'
         });
         return Client.save(null).tap(function (model) {
@@ -94,15 +94,15 @@ exports.GetAllConsumers = function () {
     });
 };
 
-exports.getSelectedConsumer = function (consumerId) {
+getSelectedConsumer = function (consumerId) {
     /**
      * Method to get the selected User details
      */
     var fetchParams = {};
-    return UserAccount.forge().query(function (qb) {
-        if (UserId)
+    return Consumers.forge().query(function (qb) {
+        if (consumerId)
             qb.where({
-                'UserId': UserId
+                'UserId': consumerId
             });
     }).fetch(fetchParams);
 }
