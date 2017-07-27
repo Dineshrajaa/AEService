@@ -210,7 +210,7 @@ define({
         ]
       },
       "groupTitle": "Followers"
-    },{
+    }, {
       "type": "get",
       "url": "Organization/GetById?id=:OrgId",
       "title": "Get Organization info",
@@ -342,7 +342,7 @@ define({
       "url": "/PutUserImage",
       "title": "Update User data after signup",
       "version": "1.0.0",
-      "name": "Update User dat",
+      "name": "Update User data",
       "group": "Account",
       "permission": [
         {
@@ -426,7 +426,7 @@ define({
           }
         ]
       }
-    },{
+    }, {
       "type": "post",
       "url": "/Clients",
       "title": "Add Client",
@@ -453,55 +453,22 @@ define({
               "group": "Parameter",
               "type": "String",
               "optional": false,
-              "field": "FirstName",
-              "description": "<p>FirstName of the Client (required)</p>"
+              "field": "OrgId",
+              "description": "<p>Organisation ID (required)</p>"
             },
             {
               "group": "Parameter",
               "type": "String",
               "optional": false,
-              "field": "LastName",
-              "description": "<p>LastName of the Client (required)</p>"
+              "field": "FavouriteId",
+              "description": "<p>Favourite id of the Client (required)</p>"
             },
             {
               "group": "Parameter",
               "type": "String",
               "optional": false,
-              "field": "Gender",
-              "description": "<p>Gender of the Client (required)</p>"
-            },
-            {
-              "group": "Parameter",
-              "type": "String",
-              "optional": false,
-              "field": "Address",
-              "description": "<p>Address of the Client (required)</p>"
-            }, {
-              "group": "Parameter",
-              "type": "String",
-              "optional": false,
-              "field": "Town",
-              "description": "<p>Town/City of the Client (required)</p>"
-            }, {
-              "group": "Parameter",
-              "type": "String",
-              "optional": false,
-              "field": "PostCode",
-              "description": "<p>PostCode of the Client (required)</p>"
-            },
-            {
-              "group": "Parameter",
-              "type": "String",
-              "optional": false,
-              "field": "Profile",
-              "description": "<p>Profile of the Client (required)</p>"
-            },
-            {
-              "group": "Parameter",
-              "type": "String",
-              "optional": false,
-              "field": "DOB",
-              "description": "<p>DOB of the Client (required)</p>"
+              "field": "CreateDate",
+              "description": "<p>Created Date (required)</p>"
             }
           ]
         }
@@ -515,6 +482,29 @@ define({
           }
         ]
       }
+    }, {
+      "type": "get",
+      "url": "/Clients/:OrgId",
+      "title": "Get Clients list",
+      "version": "1.0.0",
+      "name": "List Clients",
+      "group": "Client",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Get list of Clients based on the Organization ID</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"clientlist":[{"ClientId":1,"OrgId":2,"UserId":177,"FavouriteId":80,"CreateDate":"2017-07-02T15:44:34.000Z","CreatedBy":200,"IsActive":1,"ModifiedDate":"2017-07-02T15:44:34.000Z","ModifiedBy":null,"FirstName":null,"LastName":null,"DOB":"0000-00-00 00:00:00","Address":null,"PostCode":null,"Town":null,"UserImage":null}],"ResponseMessage":"Wow!! you are so passionate about your Clients"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Followers"
     }
   ]
 });
