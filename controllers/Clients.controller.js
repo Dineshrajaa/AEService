@@ -3,7 +3,7 @@ var config = require('../config'),
     Consumers = require('../models/UserAccount.model'),
     ClientsServices = require('../services/Clients.service')
 
-exports.AddClient = function (req, res) {
+/* exports.AddClient = function (req, res) {
     console.log("AddClient");
     ClientsServices.AddClient(req.body).then(function (result) {
         if (result)
@@ -25,8 +25,46 @@ exports.AddClient = function (req, res) {
             "ResponseMessage": err.messages
         });
     });
+}; */
+exports.AddClient = function (req, res) {
+    console.log("AddClient");
+    ClientsServices.getSelectedConsumer(req.body.UserId).then(function (result) {
+        if (result) {
+            console.warn(result);
+            req.body.FirstName = result.get('FirstName');
+            req.body.LastName = result.get('LastName');
+            req.body.DOB = result.get('DOB');
+            req.body.PostCode = result.get('PostCode');
+            req.body.Address = result.get('Address');
+            req.body.Town = result.get('Town');
+            req.body.UserImage = result.get('UserImage') || 'Upload/user/UserDefault.png';
+            ClientsServices.AddClient(req.body).then(function (result) {
+                res.json({
+                    "StatusCode": 200,
+                    "client_": result,
+                    "ResponseMessage": "Added Client Successfully!"
+                });
+            })
+        }
+        /* res.json({
+            "StatusCode": 200,
+            "client_": result,
+            "ResponseMessage": "Added Client Successfully!"
+        }); */
+        else
+            res.json({
+                "StatusCode": 404,
+                "client_": result,
+                "ResponseMessage": "error"
+            });
+    }).catch(function (err) {
+        res.json({
+            "StatusCode": err.status,
+            "lstCategories": [],
+            "ResponseMessage": err.messages
+        });
+    });
 };
-
 exports.DeleteClient = function (req, res) {
     console.log("DeleteClient");
     console.log("req.params.ClientId:", req.params.ClientId);

@@ -1,23 +1,23 @@
 var Clients = require('../models/Clients.model');
 var Consumers = require('../models/UserAccount.model');
-/* exports.AddClient = function (params) {
+ exports.AddClient = function (params) {
     console.log("AddClient");
     var Client = new Clients({
         OrgId: (params.OrgId) ? params.OrgId : null,
         UserId: (params.UserId) ? params.UserId : null,
         FavouriteId: (params.FavouriteId) ? params.FavouriteId : null,
-        CreateDate: (params.CreateDate) ? params.CreateDate : null,
-        CreatedBy: (params.CreatedBy) ? params.CreatedBy : null,
+        CreateDate: (params.CreateDate) ? params.CreateDate : new Date(),
+        CreatedBy: (params.CreatedBy) ? params.OrgId : null,
         IsActive: (params.IsActive) ? params.IsActive : true,
-        ModifiedDate: (params.ModifiedDate) ? params.ModifiedDate : null,
-        ModifiedBy: (params.ModifiedBy) ? params.ModifiedBy : null,
+        ModifiedDate: (params.ModifiedDate) ? params.ModifiedDate : new Date(),
+        ModifiedBy: (params.ModifiedBy) ? params.OrgId : null,
         FirstName: (params.FirstName) ? params.FirstName : null,
         LastName: (params.LastName) ? params.LastName : null,
         DOB: (params.DOB) ? params.DOB : null,
         Address: (params.Address) ? params.Address : null,
         PostCode: (params.PostCode) ? params.PostCode : null,
         Town: (params.Town) ? params.Town : null,
-        Profile: (params.Profile) ? params.Profile : null
+        // Profile: (params.Profile) ? params.Profile : null
     });
     return Client.save(null).tap(function (model) {
         clientData = model;
@@ -27,12 +27,9 @@ var Consumers = require('../models/UserAccount.model');
     }).catch(function (err) {
         console.log(err);
     });
-}; */
+}; 
 
-exports.AddClient = function (params) {
-    /**
-     * Method to Add a client
-     */
+/* exports.AddClient = function (params) {
     getSelectedConsumer(params.UserId).then(function (consumer) {
         var Client = new Clients({
             OrgId: (params.OrgId) ? params.OrgId : null,
@@ -43,19 +40,21 @@ exports.AddClient = function (params) {
             IsActive: (params.IsActive) ? params.IsActive : true,
             ModifiedDate: (params.ModifiedDate) ? params.ModifiedDate : new Date(),
             ModifiedBy: (params.OrgId) ? params.OrgId : null,
-            FirstName: (consumer.FirstName) ? consumer.FirstName : null,
-            LastName: (consumer.LastName) ? consumer.LastName : null,
-            DOB: (consumer.DOB) ? consumer.DOB : null,
-            Address: (consumer.Address) ? consumer.Address : null,
-            PostCode: (consumer.PostCode) ? consumer.PostCode : null,
-            Town: (consumer.Town) ? consumer.Town : null,
+            FirstName: (consumer.get('FirstName')) ? consumer.get('FirstName') : null,
+            LastName: (consumer.get('LastName')) ? consumer.get('LastName') : null,
+            DOB: (consumer.get('DOB')) ? consumer.get('DOB') : null,
+            Address: (consumer.get('Address')) ? consumer.get('Address') : null,
+            PostCode: (consumer.get('PostCode')) ? consumer.get('PostCode') : null,
+            Town: (consumer.get('Town')) ? consumer.get('Town') : null,
             // Profile: (consumer.Profile) ? consumer.Profile : null,
-            UserImage: (consumer.UserImage) ? consumer.UserImage : 'Upload/user/UserDefault.png'
+            UserImage: (consumer.get('UserImage')) ? consumer.get('UserImage') : 'Upload/user/UserDefault.png'
         });
         return Client.save(null).tap(function (model) {
+
             clientData = model;
             return clientData;
         }).then(function (clientData) {
+            console.warn('clientData', clientData);
             return clientData;
         }).catch(function (err) {
             console.log(err);
@@ -63,7 +62,7 @@ exports.AddClient = function (params) {
     })
 
 
-};
+}; */
 exports.GetAllClients = function (OrgId) {
     console.log("Get all clients");
     return Clients.forge().query(function (qb) {
@@ -94,17 +93,22 @@ exports.GetAllConsumers = function () {
     });
 };
 
-getSelectedConsumer = function (consumerId) {
+exports.getSelectedConsumer = function (consumerId) {
     /**
      * Method to get the selected User details
      */
+    console.warn('consumerId:',consumerId);
     var fetchParams = {};
     return Consumers.forge().query(function (qb) {
         if (consumerId)
             qb.where({
                 'UserId': consumerId
             });
-    }).fetch(fetchParams);
+    }).fetch().then(function (Consumer) {
+        return Consumer;
+    }).catch(function (err) {
+        return err;
+    });
 }
 exports.DeleteClient = function (ClientId) {
     return Clients.forge().query(function (qb) {
