@@ -1,6 +1,7 @@
 var Clients = require('../models/Clients.model');
 var Consumers = require('../models/UserAccount.model');
- exports.AddClient = function (params) {
+var Followers = require('../models/Followers.model')
+exports.AddClient = function (params) {
     console.log("AddClient");
     var Client = new Clients({
         OrgId: (params.OrgId) ? params.OrgId : null,
@@ -20,17 +21,15 @@ var Consumers = require('../models/UserAccount.model');
         // Profile: (params.Profile) ? params.Profile : null
     });
     return Client.save(null).tap(function (model) {
-        console.warn("model",model);
         clientData = model;
         return clientData;
     }).then(function (clientData) {
-        console.warn("clientData",clientData);
         return clientData;
     }).catch(function (err) {
-        console.log('err:',err);
+        console.log('err:', err);
         return err.Error;
     });
-}; 
+};
 
 /* exports.AddClient = function (params) {
     getSelectedConsumer(params.UserId).then(function (consumer) {
@@ -100,7 +99,7 @@ exports.getSelectedConsumer = function (consumerId) {
     /**
      * Method to get the selected User details
      */
-    console.warn('consumerId:',consumerId);
+    console.warn('consumerId:', consumerId);
     var fetchParams = {};
     return Consumers.forge().query(function (qb) {
         if (consumerId)
@@ -111,6 +110,48 @@ exports.getSelectedConsumer = function (consumerId) {
         return Consumer;
     }).catch(function (err) {
         return err;
+    });
+};
+
+exports.getFollowerById = function (FavouriteId) {
+    console.log('Here 2');
+    var fetchParams = {};
+    return Followers.forge().query(function (qb) {
+        if (FavouriteId)
+            qb.where({
+                'FavouriteId': FavouriteId
+            });
+    }).fetch(fetchParams);
+}
+
+exports.UpdateFollowerStatus = function (FavouriteId, transaction) {
+    // Method to change the Business info status
+    var FavouriteId = (FavouriteId) ? FavouriteId : false;
+    console.log('Here 3');
+    var authUpdateParams = {
+        patch: true
+    };
+    var authFetchParams = {};
+
+    if (transaction) {
+        authUpdateParams.transacting = transaction;
+        authFetchParams.transacting = transaction;
+    }
+    /* if(params.Fullname || params.Fullname=='' || params.Fullname==null)
+       params.remove('Fullname');*/
+    //console.log(params);
+    var data = {
+        "isClient": true
+    };
+
+    return Followers.forge().query(function (qb) {
+        if (FavouriteId)
+            qb.where({
+                'FavouriteId': FavouriteId
+            });
+    }).fetch().then(function (fUser) {
+        console.log('fUser:',fUser);
+        return fUser.save(data, authUpdateParams);
     });
 }
 exports.DeleteClient = function (ClientId) {

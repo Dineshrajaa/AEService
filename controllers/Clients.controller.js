@@ -1,7 +1,8 @@
 var config = require('../config'),
     Clients = require('../models/Clients.model'),
     Consumers = require('../models/UserAccount.model'),
-    ClientsServices = require('../services/Clients.service')
+    ClientsServices = require('../services/Clients.service'),
+    orm = require('../orm');
 
 /* exports.AddClient = function (req, res) {
     console.log("AddClient");
@@ -39,14 +40,14 @@ exports.AddClient = function (req, res) {
             req.body.Town = result.get('Town');
             req.body.UserImage = result.get('UserImage') || 'Upload/user/UserDefault.png';
             ClientsServices.AddClient(req.body).then(function (result) {
-                console.warn("result:", result);
-                if (typeof result != 'undefined')
+                if (typeof result == 'undefined')
                     res.json({
-                        "StatusCode": 201,
+                        "StatusCode": 200,
                         "client_": result,
-                        "Error": "Client already exist!"
+                        "ResponseMessage": "Client already exist!"
                     });
                 else {
+                    exports.markFavouriteAsClient(result.get('FavouriteId'));
                     res.json({
                         "StatusCode": 200,
                         "client_": result,
@@ -74,6 +75,25 @@ exports.AddClient = function (req, res) {
         });
     });
 };
+exports.markFavouriteAsClient = function (FavouriteId) {
+    /**
+     * Method to mark this client as favourite
+     */
+    console.log('Here 1');
+    return orm.bookshelf.transaction(function (trx) {
+        return ClientsServices.getFollowerById(FavouriteId, trx)
+            .then(function (follower) {
+                console.warn('follower:',follower);
+                if (follower)
+                    return ClientsServices.UpdateFollowerStatus(FavouriteId, trx);
+                else
+                    return false;
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    })
+}
 exports.DeleteClient = function (req, res) {
     console.log("DeleteClient");
     console.log("req.params.ClientId:", req.params.ClientId);
@@ -131,7 +151,7 @@ exports.GetAllClients = function (req, res) {
                 });
             else
                 res.json({
-                    "StatusCode": 404,
+                    "StatusCode": 200,
                     "clientlist": result,
                     "ResponseMessage": "Sorry no client found."
                 });
