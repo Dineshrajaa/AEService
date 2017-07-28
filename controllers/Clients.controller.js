@@ -39,11 +39,20 @@ exports.AddClient = function (req, res) {
             req.body.Town = result.get('Town');
             req.body.UserImage = result.get('UserImage') || 'Upload/user/UserDefault.png';
             ClientsServices.AddClient(req.body).then(function (result) {
-                res.json({
-                    "StatusCode": 200,
-                    "client_": result,
-                    "ResponseMessage": "Added Client Successfully!"
-                });
+                console.warn("result:", result);
+                if (typeof result != 'undefined')
+                    res.json({
+                        "StatusCode": 201,
+                        "client_": result,
+                        "Error": "Client already exist!"
+                    });
+                else {
+                    res.json({
+                        "StatusCode": 200,
+                        "client_": result,
+                        "ResponseMessage": "Added Client Successfully!"
+                    });
+                }
             })
         }
         /* res.json({

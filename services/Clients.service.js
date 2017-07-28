@@ -20,12 +20,15 @@ var Consumers = require('../models/UserAccount.model');
         // Profile: (params.Profile) ? params.Profile : null
     });
     return Client.save(null).tap(function (model) {
+        console.warn("model",model);
         clientData = model;
         return clientData;
     }).then(function (clientData) {
+        console.warn("clientData",clientData);
         return clientData;
     }).catch(function (err) {
-        console.log(err);
+        console.log('err:',err);
+        return err.Error;
     });
 }; 
 
