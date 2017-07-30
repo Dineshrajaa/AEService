@@ -47,7 +47,7 @@ exports.AddClient = function (req, res) {
                         "ResponseMessage": "Client already exist!"
                     });
                 else {
-                    exports.markFavouriteAsClient(result.get('FavouriteId'));
+                    // exports.markFavouriteAsClient(result.get('FavouriteId'));
                     res.json({
                         "StatusCode": 200,
                         "client_": result,
