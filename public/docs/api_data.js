@@ -505,6 +505,92 @@ define({
         ]
       },
       "groupTitle": "Followers"
+    }, {
+      "type": "get",
+      "url": "/Posts/:OrgId",
+      "title": "Get all the Posts of a Business user",
+      "version": "1.0.0",
+      "name": "List Posts",
+      "group": "Posts",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Get list of Posts based on the Organization ID</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"data":[{"PostId":20,"OrgId":2,"PostMessage":"I went to a visual arts high school and focused on film \rphotography. Ever since, I’ve loved capturing my life. \r\nABC ","IsFavourite":0,"PostTime":"2016-09-30T13:30:09.000Z","CreateDate":"2016-09-09T13:30:09.000Z","ModifyDate":"2016-09-09T13:30:09.000Z","PostImage":null},{"PostId":28,"OrgId":2,"PostMessage":"Hi Dinesh","IsFavourite":null,"PostTime":"2017-07-30T03:01:34.000Z","CreateDate":"2017-07-30T03:01:34.000Z","ModifyDate":null,"PostImage":null}]}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Posts"
+    }, {
+      "type": "post",
+      "url": "/Posts",
+      "title": "Add Post",
+      "version": "1.0.0",
+      "name": "Add Post",
+      "group": "Posts",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Add Posts</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "PostMessage",
+              "description": "<p>Post Message (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgId",
+              "description": "<p>Organisation ID (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "PostTime",
+              "description": "<p>Date or time Post which was created(needed to avoid TimeZone issue) (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "CreateDate",
+              "description": "<p>Created Date (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "PostImage",
+              "description": "<p>Image as base64 (required for image post/optional for text post)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Updated Successfully!!!"}',
+            "type": "json"
+          }
+        ]
+      }
     }
   ]
 });

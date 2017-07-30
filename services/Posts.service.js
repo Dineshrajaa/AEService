@@ -25,19 +25,17 @@ exports.GetAllPosts = function (OrgId) {
 
 exports.AddPost = function (params) {
     console.log("AddPost");
-    var Posts = new Posts({
+    var Post = new Posts({
         OrgId: (params.OrgId) ? params.OrgId : null,
         PostMessage: (params.PostMessage) ? params.PostMessage : null,
         PostTime: (params.PostTime) ? params.PostTime : null,
         CreateDate: (params.CreateDate) ? params.CreateDate : new Date(),
         PostImage: (params.PostImage) ? params.PostImage : null
     });
-    return Posts.save(null).tap(function (model) {
+    return Post.save(null).tap(function (model) {
         postData = model;
-        console.log('model:', model);
         return postData;
     }).then(function (postData) {
-        console.log('postData:', postData);
         return postData;
     }).catch(function (err) {
         console.log(err);
