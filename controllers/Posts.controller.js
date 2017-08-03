@@ -1,6 +1,7 @@
 var config = require('../config'),
     Posts = require('../models/Posts.model'),
-    PostsServices = require('../services/Posts.service')
+    PostsServices = require('../services/Posts.service'),
+    helperServices = require('../services/helper.service');
 
 exports.GetAllPosts = function (req, res) {
     console.log("GetAllPosts");
@@ -25,16 +26,15 @@ exports.GetAllPosts = function (req, res) {
 
 exports.AddPost = function (req, res) {
     console.log("addPost");
-    console.log(req.body);
     if (req.body.OrgId == undefined) {
         res.json({
             "Message": "An error has occurred."
         });
     } else {
         var section = "post";
-        var image = (req.body.picture) ? req.body.picture : false;
+        var image = (req.body.PostImage) ? req.body.PostImage : false;
         PostsServices.AddPost(req.body).then(function (postSuccess) {
-            if (postSuccess) {
+            if (postSuccess.get("PostId") !== null) {
                 if (image) {
                     helperServices.base64toimage(image, postSuccess.get("PostId"), section);
                 }

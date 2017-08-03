@@ -30,7 +30,7 @@ exports.AddPost = function (params) {
         PostMessage: (params.PostMessage) ? params.PostMessage : null,
         PostTime: (params.PostTime) ? params.PostTime : null,
         CreateDate: (params.CreateDate) ? params.CreateDate : new Date(),
-        PostImage: (params.PostImage) ? params.PostImage : null
+        // PostImage: (params.PostImage) ? params.PostImage : null
     });
     return Post.save(null).tap(function (model) {
         postData = model;

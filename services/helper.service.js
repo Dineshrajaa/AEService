@@ -87,7 +87,19 @@ exports.getDisplayTime = function (PostTime) {
     return displayTime;
   }
 }
+function decodeBase64Image(dataString) {
+  var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+    response = {};
 
+  if (matches.length !== 3) {
+    return new Error('Invalid input string');
+  }
+
+  response.type = matches[1];
+  response.data = new Buffer(matches[2], 'base64');
+
+  return response;
+}
 exports.base64toimage = function (dataString, CommentId, section) {
   console.log("dataString");
   var min = 100000;
@@ -137,11 +149,13 @@ exports.base64toimage = function (dataString, CommentId, section) {
   }
 
   if (section == "post") {
-    fs.writeFile(filename, new Buffer(dataString, "base64"), function (err) {
+    var base64Image = dataString.split(';base64,').pop();
+    console.warn('filename:',filename);
+    fs.writeFile(filename, base64Image, {encoding: 'base64'}, function (err) {
       var data = {
         "PostImage": path
       };
-      return PostServices.uploadImage(data, PostId).then(function () {
+      return PostServices.uploadImage(data, CommentId).then(function () {
         return path;
       }).catch(function (err) {
         return err;
