@@ -15,6 +15,7 @@ exports.GetAllPosts = function (req, res) {
             });
         }
     }).catch(function (err) {
+        console.warn('err:',err);
         res.json({
             "StatusCode": err.status,
             "Posts": [],
