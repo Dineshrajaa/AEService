@@ -16,16 +16,30 @@ exports.GetAllPosts = function (OrgId) {
         qb.join('UserAccount', function () {
             this.on('PostGet.OrgId', '=', 'UserAccount.OrgId')
         })
-        qb.count('Comment.CommentId as CommentCount')
-        qb.join('Comment',function(){
-            this.on('Comment.PostId','=','PostGet.PostId')
-        })
-        qb.orderBy("CommentCount", "desc");
+
         if (OrgId) {
             qb.where('PostGet.OrgId', OrgId);
         }
     }).fetchAll().then(function (result) {
-        return result;
+        if (result.length) {
+            return Promise.map(result.models, function (Fav) {
+                return Comment.forge().query(function (qb) {
+                    qb.count('CommentId as totalcomments');
+                    qb.where('PostId', Fav.get('PostId'))
+                }).fetch().then(function (CountOfComment) {
+                    var DisplayTime = helperServices.getDisplayTime(Fav.get('PostTime'));
+                    Fav.set("DisplayTime", DisplayTime);
+                    Fav.set('CountOfComment', CountOfComment.get('totalcomments'));
+                    return Fav;
+                }).catch(function (err) {
+                    console.log("error in comment");
+                    console.log(err);
+                });
+            })
+
+        } else {
+            return [];
+        }
     }).catch(function (err) {
         console.warn('err1:', err);
         /* res.json({
