@@ -116,7 +116,7 @@ exports.base64toimage = function (dataString, CommentId, section) {
     folder = "Chat"
   if (section == "post")
     folder = "Post"
-  var filename = config.image_path_global + folder + "/" + name;
+  var filename = config.image_path_global+'/Upload/' + folder + "/" + name;
   var path = "Upload/" + folder + "/" + name;
 
 
