@@ -20,34 +20,41 @@ exports.GetAllPosts = function (OrgId) {
         if (OrgId) {
             qb.where('PostGet.OrgId', OrgId);
         }
-    }).fetchAll().then(function (result) {
-        if (result.length) {
-            return Promise.map(result.models, function (Fav) {
-                return Comment.forge().query(function (qb) {
-                    qb.count('CommentId as totalcomments');
-                    qb.where('PostId', Fav.get('PostId'))
-                }).fetch().then(function (CountOfComment) {
-                    var DisplayTime = helperServices.getDisplayTime(Fav.get('PostTime'));
-                    Fav.set("DisplayTime", DisplayTime);
-                    Fav.set('CountOfComment', CountOfComment.get('totalcomments'));
-                    return Fav;
-                }).catch(function (err) {
-                    console.log("error in comment");
-                    console.log(err);
-                });
-            })
+    })./* fetchPage({
+        pageSize: 3, // Defaults to 10 if not specified
+        page: 3
+    }) */
+        fetchAll({
+            pageSize: 3, // Defaults to 10 if not specified
+            page: 3
+        }).then(function (result) {
+            if (result.length) {
+                return Promise.map(result.models, function (Fav) {
+                    return Comment.forge().query(function (qb) {
+                        qb.count('CommentId as totalcomments');
+                        qb.where('PostId', Fav.get('PostId'))
+                    }).fetch().then(function (CountOfComment) {
+                        var DisplayTime = helperServices.getDisplayTime(Fav.get('PostTime'));
+                        Fav.set("DisplayTime", DisplayTime);
+                        Fav.set('CountOfComment', CountOfComment.get('totalcomments'));
+                        return Fav;
+                    }).catch(function (err) {
+                        console.log("error in comment");
+                        console.log(err);
+                    });
+                })
 
-        } else {
-            return [];
-        }
-    }).catch(function (err) {
-        console.warn('err1:', err);
-        /* res.json({
-            "StatusCode": err.status,
-            "data": [],
-            "ResponseMessage": err.messages
-        }); */
-    })
+            } else {
+                return [];
+            }
+        }).catch(function (err) {
+            console.warn('err1:', err);
+            /* res.json({
+                "StatusCode": err.status,
+                "data": [],
+                "ResponseMessage": err.messages
+            }); */
+        })
 };
 
 exports.AddPost = function (params) {

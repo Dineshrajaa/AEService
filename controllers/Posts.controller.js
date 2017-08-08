@@ -7,7 +7,6 @@ exports.GetAllPosts = function (req, res) {
     console.log("GetAllPosts");
     var OrgId = req.params.OrgId;
     PostsServices.GetAllPosts(OrgId).then(function (Posts) {
-        console.warn('Posts:', Posts);
         if (Posts.length) {
             res.json({ "data": Posts });
         } else {

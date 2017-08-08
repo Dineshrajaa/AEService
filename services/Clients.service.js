@@ -18,6 +18,7 @@ exports.AddClient = function (params) {
         Address: (params.Address) ? params.Address : null,
         PostCode: (params.PostCode) ? params.PostCode : null,
         Town: (params.Town) ? params.Town : null,
+        UserImage:(params.UserImage)?params.UserImage:'Upload/user/UserDefault.png'
         // Profile: (params.Profile) ? params.Profile : null
     });
     return Client.save(null).tap(function (model) {

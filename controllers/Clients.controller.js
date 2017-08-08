@@ -31,14 +31,14 @@ exports.AddClient = function (req, res) {
     console.log("AddClient");
     ClientsServices.getSelectedConsumer(req.body.UserId).then(function (result) {
         if (result) {
-            console.warn(result);
+            console.warn(result.get('UserImage'));
             req.body.FirstName = result.get('FirstName');
             req.body.LastName = result.get('LastName');
             req.body.DOB = result.get('DOB');
             req.body.PostCode = result.get('PostCode');
             req.body.Address = result.get('Address');
             req.body.Town = result.get('Town');
-            req.body.UserImage = result.get('UserImage') || 'Upload/user/UserDefault.png';
+            req.body.UserImage = (result.get('UserImage')) ? result.get('UserImage') : 'Upload/user/UserDefault.png';
             ClientsServices.AddClient(req.body).then(function (result) {
                 if (typeof result == 'undefined')
                     res.json({
@@ -83,7 +83,7 @@ exports.markFavouriteAsClient = function (FavouriteId) {
     return orm.bookshelf.transaction(function (trx) {
         return ClientsServices.getFollowerById(FavouriteId, trx)
             .then(function (follower) {
-                console.warn('follower:',follower);
+                console.warn('follower:', follower);
                 if (follower)
                     return ClientsServices.UpdateFollowerStatus(FavouriteId, trx);
                 else
