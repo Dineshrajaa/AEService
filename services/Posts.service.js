@@ -1,6 +1,7 @@
 var config = require('../config'),
     PostGet = require('../models/Posts.model'),
     UserAccount = require('../models/UserAccount.model'),
+    Comment = require('../models/Comment.model'),
     helperServices = require('../services/helper.service'),
     Promise = require("bluebird");
 
@@ -10,11 +11,16 @@ exports.GetAllPosts = function (OrgId) {
 
     return PostGet.forge().query(function (qb) {
         qb.select('UserAccount.FirstName', 'UserAccount.LastName', 'UserAccount.UserImage',
-        'PostGet.PostId', 'PostGet.PostMessage', 'PostGet.PostTime', 'PostGet.PostImage', 'PostGet.CreateDate', 'PostGet.ModifyDate',
-    )
+            'PostGet.PostId', 'PostGet.PostMessage', 'PostGet.PostTime', 'PostGet.PostImage', 'PostGet.CreateDate', 'PostGet.ModifyDate',
+        )
         qb.join('UserAccount', function () {
             this.on('PostGet.OrgId', '=', 'UserAccount.OrgId')
         })
+        qb.count('Comment.CommentId as CommentCount')
+        qb.join('Comment',function(){
+            this.on('Comment.PostId','=','PostGet.PostId')
+        })
+        qb.orderBy("CommentCount", "desc");
         if (OrgId) {
             qb.where('PostGet.OrgId', OrgId);
         }
