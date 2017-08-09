@@ -1,4 +1,4 @@
- // ORM For js.
+// ORM For js.
 var config = require('./config');
 var filteration = require('bookshelf-filteration');
 filteration.useDefaultFilters(true);
@@ -10,5 +10,5 @@ var knex = require('knex')({
 
 var bookshelf = require('bookshelf')(knex);
 bookshelf.plugin(filteration.plugin);
-
-module.exports = { bookshelf:bookshelf, knex:knex };
+bookshelf.plugin('pagination');
+module.exports = { bookshelf: bookshelf, knex: knex };

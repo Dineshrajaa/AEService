@@ -504,14 +504,14 @@ define({
           }
         ]
       },
-      "groupTitle": "Followers"
+      "groupTitle": "Clients"
     }, {
       "type": "get",
       "url": "/Posts/:OrgId",
       "title": "Get all the Posts of a Business user",
       "version": "1.0.0",
       "name": "List Posts",
-      "group": "Posts",
+      "group": "MyPosts",
       "permission": [
         {
           "name": "Universal"
@@ -527,14 +527,14 @@ define({
           }
         ]
       },
-      "groupTitle": "Posts"
+      "groupTitle": "MyPosts"
     }, {
       "type": "post",
       "url": "/Posts",
       "title": "Add Post",
       "version": "1.0.0",
       "name": "Add Post",
-      "group": "Posts",
+      "group": "MyPosts",
       "permission": [
         {
           "name": "Universal"
@@ -591,6 +591,85 @@ define({
           }
         ]
       }
+    }, {
+      "type": "post",
+      "url": "/Notes",
+      "title": "Add Note",
+      "version": "1.0.0",
+      "name": "Add Note",
+      "group": "Client",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Add Notes about a Client</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ClientId",
+              "description": "<p>ClientId of the Client (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "Date",
+              "optional": false,
+              "field": "NoteDate",
+              "description": "<p>Date of the Creation of Note (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "NoteDesc",
+              "description": "<p>Note Description (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "NoteText",
+              "description": "<p>Note Title (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"note_":{"ClientId":"28","NoteDate":"2017-08-09T06:27:17.730Z","NoteText":"Testing Note","NoteDesc":"Test Notes list","NoteId":1},"ResponseMessage":"Added Note successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "get",
+      "url": "/Notes/:NoteId",
+      "title": "List Notes",
+      "version": "1.0.0",
+      "name": "List Notes",
+      "group": "Client",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Get list of Notes based on the Client ID</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '[{"ClientId":"28","NoteDate":"2017-08-09T00:57:17.000Z","NoteText":"Testing Note","NoteId":1,"NoteDesc":"Test Notes list"}]',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Clients"
     }
   ]
 });

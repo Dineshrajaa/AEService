@@ -30,7 +30,8 @@ exports.AddNote = function (params) {
     var Note = new Notes({
         ClientId: (params.ClientId) ? params.ClientId : null,
         NoteDate: (params.NoteDate) ? params.NoteDate : null,
-        NoteText: (params.NoteText) ? params.NoteText : null
+        NoteText: (params.NoteText) ? params.NoteText : null,
+        NoteDesc: (params.NoteDesc) ? params.NoteDesc : null
     });
     return Note.save(null).tap(function (model) {
         noteData = model;
