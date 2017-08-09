@@ -664,7 +664,7 @@ define({
         "examples": [
           {
             "title": "Success-Response:",
-            "content": '[{"ClientId":"28","NoteDate":"2017-08-09T00:57:17.000Z","NoteText":"Testing Note","NoteId":1,"NoteDesc":"Test Notes list"}]',
+            "content": '{"StatusCode":200,"data":[{"ClientId":"28","NoteDate":"2017-08-09T00:57:17.000Z","NoteText":"Testing Note","NoteId":1,"NoteDesc":"Test Notes list"}],"ResponseMessage":"Listed Client Successfully"}',
             "type": "json"
           }
         ]
