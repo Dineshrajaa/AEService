@@ -78,7 +78,7 @@ exports.registerUser = function (req, res) {
 				exports.updateAndSaveUserAccount(req, res);
 			} else {
 				res.json({
-					"StatusCode": 302,
+					"StatusCode": 200,
 					"user": [],
 					"ResponseMessage": "User Already Exist!!"
 				});

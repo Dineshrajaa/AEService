@@ -705,6 +705,137 @@ define({
           }
         ]
       }
+    },
+    {
+      "type": "post",
+      "url": "/Users/ChangePassword",
+      "title": "Change Password",
+      "version": "1.0.0",
+      "name": "Change Password",
+      "group": "Account",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows user to Change their Password</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "oldPassword",
+              "description": "<p>oldPassword of the User (required)</p>"
+            }, {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Newpassword",
+              "description": "<p>Newpassword of the User (required)</p>"
+            }, {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "UserId",
+              "description": "<p>UserId of the User (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Reset Password has been emailed Successfully!!!"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "post",
+      "url": "/Treatment",
+      "title": "Add Treatment",
+      "version": "1.0.0",
+      "name": "Add Treatment",
+      "group": "Treatment",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows user to Add Treatment</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Desc",
+              "description": "<p>Description about the Treatment (required)</p>"
+            }, {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "TreatmentName",
+              "description": "<p>Title of the Treatment(required)</p>"
+            }, {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgId",
+              "description": "<p>OrgId of the User (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"data":{"OrgId":"42","TreatmentName":"Massage","Desc":"Relax your body by doing Massage","TreatmentIdPrimary":7},"ResponseMessage":"Added Treatment successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "get",
+      "url": "Treatment/GetByOrgId?OrgId=:OrgId",
+      "title": "List Treatments",
+      "version": "1.0.0",
+      "name": "Get List of Treatments of an Organization",
+      "group": "Treatment",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Get List of Treatments of an Organization by Organization ID</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgId",
+              "description": "<p>Organization ID to be sent in URL as QueryString (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"lstTreatment":[{"TreatmentId":7,"Desc":"Relax your body by doing Massage","TreatmentName":"Massage","OrgId":42}],"ResponseMessage":"Wow!! you are so passionate about your TraetmentRepository"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Treatment"
     }
   ]
 });
