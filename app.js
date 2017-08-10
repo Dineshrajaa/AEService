@@ -9,12 +9,24 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
     multiLogger = require('./services/logger.service'),
-    passportAuth = require('./authenticate');
+    passportAuth = require('./authenticate'),
+    mailer = require("express-mailer");
 routes = require('./routes'),
     path = require('path'),
     server = require('http').createServer(app);
 var moment = require('moment');
 var moment = require('moment-timezone');
+mailer.extend(app, {
+    from: config.email.from,
+    host: config.email.host, // hostname
+    secureConnection: true, // use SSL
+    port: config.email.port, // port for secure SMTP
+    transportMethod: "SMTP", // default is SMTP. Accepts anything that nodemailer accepts
+    auth: {
+        user: config.email.auth.user,
+        pass: config.email.auth.pass
+    }
+})
 app.get('/', function (req, res) {
     res.sendFile(__dirname + "/index.html");
 });
@@ -56,7 +68,7 @@ app
     .use(passportAuth.initialize())
     .use(passportAuth.session())
     .use(routes.router)
-    .use('/docs',express.static(path.join(__dirname, 'public/docs/')))
+    .use('/docs', express.static(path.join(__dirname, 'public/docs/')))
     .use(function (req, res) {
         res.status(404).render('404', { title: 'Not Found :(' });
     });

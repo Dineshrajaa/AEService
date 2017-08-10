@@ -649,7 +649,7 @@ define({
       }
     }, {
       "type": "get",
-      "url": "/Notes/:NoteId",
+      "url": "/Notes/:ClientId",
       "title": "List Notes",
       "version": "1.0.0",
       "name": "List Notes",
@@ -670,6 +670,41 @@ define({
         ]
       },
       "groupTitle": "Clients"
+    }, {
+      "type": "post",
+      "url": "/Users/ResetPassword",
+      "title": "Reset Password",
+      "version": "1.0.0",
+      "name": "Reset Password",
+      "group": "Account",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows user to Reset their Password</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "EmailId",
+              "description": "<p>EmailId of the User (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Reset Password has been emailed Successfully!!!"}',
+            "type": "json"
+          }
+        ]
+      }
     }
   ]
 });
