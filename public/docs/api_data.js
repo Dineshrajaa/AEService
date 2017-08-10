@@ -836,6 +836,53 @@ define({
         ]
       },
       "groupTitle": "Treatment"
+    }, {
+      "type": "post",
+      "url": "/Review/PostReview",
+      "title": "Add Review",
+      "version": "1.0.0",
+      "name": "Add Review",
+      "group": "Review",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows user to Add Review</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "UserId",
+              "description": "<p>UserId of the Review adder (required)</p>"
+            }, {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ReviewComment",
+              "description": "<p>Review Text(required)</p>"
+            }, {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgId",
+              "description": "<p>OrgId of the User (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"data":{"OrgId":"42","TreatmentName":"Massage","Desc":"Relax your body by doing Massage","TreatmentIdPrimary":7},"ResponseMessage":"Added Treatment successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
     }
   ]
 });

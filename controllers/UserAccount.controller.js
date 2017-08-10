@@ -79,7 +79,7 @@ exports.registerUser = function (req, res) {
 			} else {
 				res.json({
 					"StatusCode": 200,
-					"user": [],
+					"user": {},
 					"ResponseMessage": "User Already Exist!!"
 				});
 			}
