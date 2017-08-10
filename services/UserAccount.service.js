@@ -84,10 +84,10 @@ exports.saveBusinessInfo = function (params, transaction) {
   }
 
   var businessData = {
-    "OrgName":(params.OrgName)?params.OrgName:null,
-    "Profession":(params.Profession)?params.Profession:null,
-    "RegistrationNo":(params.RegistrationNo)?params.RegistrationNo:null,
-    "OrgDesc":(params.OrgDesc)?params.OrgDesc:null,
+    "OrgName": (params.OrgName) ? params.OrgName : null,
+    "Profession": (params.Profession) ? params.Profession : null,
+    "RegistrationNo": (params.RegistrationNo) ? params.RegistrationNo : null,
+    "OrgDesc": (params.OrgDesc) ? params.OrgDesc : null,
     "OrgOwner": (params.OrgOwner) ? params.OrgOwner : null,
     "OrgAddress": (params.OrgAddress) ? params.OrgAddress : null,
     "City": (params.City) ? params.City : null,
@@ -105,7 +105,7 @@ exports.saveBusinessInfo = function (params, transaction) {
   });
 }
 
-exports.UpdateBusinessInfoStatus = function (UserId,transaction) {
+exports.UpdateBusinessInfoStatus = function (UserId, transaction) {
   // Method to change the Business info status
   var UserId = (UserId) ? UserId : false;
   var authUpdateParams = {
@@ -237,6 +237,27 @@ exports.reRegisterUser = function (params) {
     "Password": (params.Password) ? params.Password : null,
     "ConfirmPassword": (params.Password) ? params.Password : null,
     "Role": (params.Role) ? params.Role : null
+  };
+  var authUpdateParams = {
+    patch: true
+  };
+  return UserAccount.forge().query(function (qb) {
+    if (UserId)
+      qb.where({
+        'UserId': UserId
+      });
+  }).fetch().then(function (fUser) {
+    return fUser.save(data, authUpdateParams);
+  });
+}
+
+exports.resetUserPassword = function (params) {
+  /* Method to reset user password */
+  console.log('params:', params);
+  var UserId = (params.UserId) ? params.UserId : false;
+  var data = {
+    "Password": (params.Password) ? params.Password : null,
+    "ConfirmPassword": (params.Password) ? params.Password : null
   };
   var authUpdateParams = {
     patch: true

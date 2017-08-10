@@ -5,7 +5,9 @@ var config = require('../config'),
 	moment = require('moment'),
 	fs = require("fs"),
 	Promise = require("bluebird"),
-	orm = require('../orm');
+	orm = require('../orm'),
+	generator = require('generate-password'),
+	mailer = require("express-mailer");
 /*Get all categories*/
 exports.registerBusinessInfo = function (req, res) {
 	// Method to register business info
@@ -30,11 +32,11 @@ exports.registerBusinessInfo = function (req, res) {
 					"ResponseMessage": "Object reference not set to an instance of an object."
 				});
 			else
-				exports.changeBusinessInfoStatus(req,res);
-				/* res.json({
-					"StatusCode": 200,
-					"ResponseMessage": "Saved Business info Successfully!!!"
-				}); */
+				exports.changeBusinessInfoStatus(req, res);
+			/* res.json({
+				"StatusCode": 200,
+				"ResponseMessage": "Saved Business info Successfully!!!"
+			}); */
 		})
 		.catch(function (err) {
 			res.json({
@@ -268,7 +270,7 @@ exports.updateUserProfile = function (req, res) {
 		});
 }
 
-exports.changeBusinessInfoStatus=function(req,res){
+exports.changeBusinessInfoStatus = function (req, res) {
 	// Method to change the Business info available status
 	return orm.bookshelf.transaction(function (trx) {
 		return UserAccountServices.GetUserAccount(req.body.UserId, trx)
@@ -450,4 +452,78 @@ exports.ChangePassword = function (req, res) {
 
 
 	}
+}
+
+exports.resetPassword = function (req, res) {
+	/* Method to reset password of the user */
+	if (req.body.EmailId === null) {
+		res.json({
+			"StatusCode": 200,
+			"ResponseMessage": "Email ID is needed for this request"
+		});
+	}
+	UserAccountServices.getUserByEmail(req.body.EmailId).then(function (result) {
+		if (result == 0) {
+			res.json({
+				"StatusCode": 200,
+				"ResponseMessage": "User doesn't Exist!!"
+			});
+		} else {
+
+			var dynamicPassword = generator.generate({
+				length: 6,
+				numbers: true
+			});
+			var emailData = {
+				to: req.body.EmailId,
+				subject: "Password Change Request for Aesthetic Pro",
+				handle: req.body.EmailId,
+				body: 'Your Aesthetic Pro account password is ' + dynamicPassword
+			};
+			res.mailer.send('emails/resetPassword', emailData, function (err) {
+				if (err) {
+					// handle error 
+					console.log(err);
+					res.send('There was an error sending the email');
+					return;
+				} else {
+
+					console.warn('dynamicPassword:', dynamicPassword);
+					var newpassword = helperServices.encryption(dynamicPassword, result.get('EmailId'));
+					var data = {};
+					data.Password = newpassword;
+					data.ConfirmPassword = newpassword;
+					data.UserId = result.get('UserId');
+					return UserAccountServices.resetUserPassword(data).then(function (result) {
+						if (result) {
+							res.json({
+								"StatusCode": 200,
+								"ResponseMessage": "Reset Password has been emailed Successfully!!!"
+							});
+						} else {
+							res.json({
+								"StatusCode": 417,
+								"ResponseMessage": "Object reference not set to an instance of an object."
+							});
+						}
+					}).catch(function (err) {
+						console.warn('err:', err);
+						res.json({
+							"StatusCode": err.status,
+							"Favourites": [],
+							"ResponseMessage": err.messages
+						});
+					})
+				}
+			});
+		}
+
+	}).catch(function (err) {
+		console.log(err);
+		res.json({
+			"StatusCode": err.status,
+			"Favourites": [],
+			"ResponseMessage": err.messages
+		});
+	});
 }

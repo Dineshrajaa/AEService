@@ -29,6 +29,6 @@ module.exports = function (router) {
 		.post(middleware.authorizseUser, controller.ChangePassword);
 	router.route('/Aesthetic/api/Organization/')
 		.post(middleware.authorizseUser, controller.registerBusinessInfo);
-	/*router.route('/Aesthetic/api/Account/ResetPassword')
-		.get()*/
+	router.route('/Aesthetic/api/Users/ResetPassword')
+		.post(controller.resetPassword)
 }
