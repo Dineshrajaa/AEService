@@ -353,25 +353,12 @@ exports.ChangePassword = function (req, res) {
 		"oldPassword": (req.body.oldPassword) ? req.body.oldPassword : false,
 		"Newpassword": (req.body.Newpassword) ? req.body.Newpassword : false,
 		"UserId": (req.body.UserId) ? req.body.UserId : false,
-	}
+	};
 	if (!data1.UserId || !data1.oldPassword || !data1.Newpassword) {
-		/*return UserAccountServices.ChangePassword(data).then(function(result){
-			if(result)
-				res.json({"StatusCode": 200,"ResponseMessage": "Updated Successfully!!!"});
-			else
-				res.json({"StatusCode": 417,"ResponseMessage": "Object reference not set to an instance of an object."});
-		}).catch(function(){
-			res.json({"StatusCode":err.status,"Favourites":[],"ResponseMessage":err.messages});
-		})*/
-
 		res.json({
 			"StatusCode": 417,
 			"ResponseMessage": "Object reference not set to an instance of an object."
 		});
-
-
-
-
 	} else {
 		return UserAccountServices.GetUserAccount(data1.UserId).then(function (result) {
 			if (!result) {
@@ -384,15 +371,12 @@ exports.ChangePassword = function (req, res) {
 					newpassword = helperServices.encryption(data1.Newpassword, result.get('EmailId'));
 					var data = {};
 					data.Password = newpassword;
-					data.oldpassword = password;
-					data.Newpassword = newpassword;
 					data.UserId = data1.UserId;
-					return UserAccountServices.UpdateUserAccount(data).then(function (result) {
-
+					return UserAccountServices.resetUserPassword(data).then(function (result) {
 						if (result) {
 							res.json({
 								"StatusCode": 200,
-								"ResponseMessage": "Updated Successfully!!!"
+								"ResponseMessage": "Changed Password Successfully!!!"
 							});
 						} else {
 							res.json({
@@ -400,13 +384,36 @@ exports.ChangePassword = function (req, res) {
 								"ResponseMessage": "Object reference not set to an instance of an object."
 							});
 						}
-					}).catch(function () {
+					}).catch(function (err) {
+						console.warn('err:', err);
 						res.json({
 							"StatusCode": err.status,
-							"Favourites": [],
+							"users": {},
 							"ResponseMessage": err.messages
 						});
 					})
+					/* data.oldpassword = password;
+					data.Newpassword = newpassword; */
+					/* 					return UserAccountServices.UpdateUserAccount(data).then(function (result) {
+					
+											if (result) {
+												res.json({
+													"StatusCode": 200,
+													"ResponseMessage": "Updated Successfully!!!"
+												});
+											} else {
+												res.json({
+													"StatusCode": 417,
+													"ResponseMessage": "Object reference not set to an instance of an object."
+												});
+											}
+										}).catch(function () {
+											res.json({
+												"StatusCode": err.status,
+												"Favourites": [],
+												"ResponseMessage": err.messages
+											});
+										}) */
 				} else {
 					res.json({
 						"StatusCode": 401,
