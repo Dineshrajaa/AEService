@@ -18,7 +18,7 @@ exports.AddClient = function (params) {
         Address: (params.Address) ? params.Address : null,
         PostCode: (params.PostCode) ? params.PostCode : null,
         Town: (params.Town) ? params.Town : null,
-        UserImage:(params.UserImage)?params.UserImage:'Upload/user/UserDefault.png'
+        UserImage: (params.UserImage) ? params.UserImage : 'Upload/user/UserDefault.png'
         // Profile: (params.Profile) ? params.Profile : null
     });
     return Client.save(null).tap(function (model) {
@@ -151,7 +151,7 @@ exports.UpdateFollowerStatus = function (FavouriteId, transaction) {
                 'FavouriteId': FavouriteId
             });
     }).fetch().then(function (fUser) {
-        console.log('fUser:',fUser);
+        console.log('fUser:', fUser);
         return fUser.save(data, authUpdateParams);
     });
 }
@@ -161,6 +161,25 @@ exports.DeleteClient = function (ClientId) {
             'ClientId': ClientId
         });
         qb.del();
+    }).fetch().then(function (result) {
+        return result;
+    }).catch(function (err) {
+        return err;
+    });
+};
+
+exports.UpdateClient = function (ClientData) {
+    var ClientId = ClientData.ClientId;
+    var ClientInfo = {
+        'FirstName': ClientData.FirstName,
+        'LastName': ClientData.LastName,
+        'DOB': ClientData.DOB,
+        'Address': ClientData.Address,
+        'Town': ClientData.Town,
+        'PostCode': ClientData.PostCode
+    };
+    return new Station({ 'id': ClientId }).save(ClientInfo, {
+        patch: true
     }).fetch().then(function (result) {
         return result;
     }).catch(function (err) {

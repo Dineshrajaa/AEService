@@ -211,3 +211,34 @@ exports.GetAllConsumers = function (req, res) {
     });
 
 };
+
+exports.UpdateClientInfo = function (req, res) {
+    /* Method to update Client details */
+    console.log("UpdateClient");
+    console.log("req.params.ClientId:", req.params.ClientId);
+    req.body.ClientId = (req.params.ClientId) ? req.params.ClientId : false;
+    if (req.body.ClientId) {
+        ClientsServices.UpdateClient(req.body).then(function (result) {
+            if (result)
+                res.json({
+                    "StatusCode": 200,
+                    "ResponseMessage": "Updated Client info Successfully"
+                });
+            else
+                res.json({
+                    "Message": "An error has occurred."
+                });
+        }).catch(function (err) {
+            res.json({
+                "StatusCode": err.status,
+                "clients": [],
+                "ResponseMessage": err.messages
+            });
+        });
+
+    } else {
+        res.json({
+            "Message": "No HTTP resource was found that matches the request URI '" + config.webUri + "/Aesthetic/api/Categories/Delete'."
+        });
+    }
+};

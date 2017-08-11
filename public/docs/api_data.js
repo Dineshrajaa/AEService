@@ -483,6 +483,105 @@ define({
         ]
       }
     }, {
+      "type": "put",
+      "url": "/Clients/:ClientId",
+      "title": "Update Client info",
+      "version": "1.0.0",
+      "name": "Update Client",
+      "group": "Client",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Update Client Info</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ClientId",
+              "description": "<p>ClientId of the Client to be sent in URL(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "FirstName",
+              "description": "<p>FirstName of the Client (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "LastName",
+              "description": "<p>LastName of the Client (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "Date",
+              "optional": false,
+              "field": "DOB",
+              "description": "<p>DOB of the Client (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Address",
+              "description": "<p>Address of the Client (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Town",
+              "description": "<p>Town of the Client (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "PostCode",
+              "description": "<p>PostCode of the Client (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Updated Client info Successfully"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "delete",
+      "url": "/Clients/:ClientId",
+      "title": "Delete the Client",
+      "version": "1.0.0",
+      "name": "Delete Client",
+      "group": "Client",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Delete Client</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Deleted Client Successfully"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
       "type": "get",
       "url": "/Clients/:OrgId",
       "title": "Get Clients list",
