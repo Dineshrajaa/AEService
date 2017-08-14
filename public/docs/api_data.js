@@ -982,6 +982,62 @@ define({
           }
         ]
       }
+    }, {
+      "type": "post",
+      "url": "/FeedBack",
+      "title": "Send Feedback",
+      "version": "1.0.0",
+      "name": "Send Feedback",
+      "group": "Feedback",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Add Feedback</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "UserId",
+              "description": "<p>UserId to be sent as Query String (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": true,
+              "field": "Attachment",
+              "description": "<p>Image file if any (base64)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "FeedBackCategory",
+              "description": "<p>Category of the Feedback (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "message",
+              "description": "<p>Feed back message (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Updated Successfully!!!"}',
+            "type": "json"
+          }
+        ]
+      }
     }
   ]
 });
