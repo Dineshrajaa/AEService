@@ -606,7 +606,7 @@ define({
       "groupTitle": "Clients"
     }, {
       "type": "get",
-      "url": "/Posts/:OrgId",
+      "url": "/Posts/:OrgId/:pagenumber/:limit",
       "title": "Get all the Posts of a Business user",
       "version": "1.0.0",
       "name": "List Posts",
@@ -621,7 +621,7 @@ define({
         "examples": [
           {
             "title": "Success-Response:",
-            "content": '{"data":[{"PostId":20,"OrgId":2,"PostMessage":"I went to a visual arts high school and focused on film \rphotography. Ever since, I’ve loved capturing my life. \r\nABC ","IsFavourite":0,"PostTime":"2016-09-30T13:30:09.000Z","CreateDate":"2016-09-09T13:30:09.000Z","ModifyDate":"2016-09-09T13:30:09.000Z","PostImage":null},{"PostId":28,"OrgId":2,"PostMessage":"Hi Dinesh","IsFavourite":null,"PostTime":"2017-07-30T03:01:34.000Z","CreateDate":"2017-07-30T03:01:34.000Z","ModifyDate":null,"PostImage":null}]}',
+            "content": '{"data":[{"FirstName":"Aesthetic","LastName":"Tester","UserImage":"upload/user/UserDefault.png","PostId":39,"PostMessage":null,"PostTime":"2017-08-03T11:57:03.000Z","PostImage":null,"CreateDate":"2017-08-02T18:30:00.000Z","ModifyDate":null,"DisplayTime":"11 days","CountOfComment":0},{"FirstName":"Aesthetic","LastName":"Tester","UserImage":"upload/user/UserDefault.png","PostId":40,"PostMessage":null,"PostTime":"2017-08-03T12:00:27.000Z","PostImage":"Upload/Post/696598.png","CreateDate":"2017-08-02T18:30:00.000Z","ModifyDate":null,"DisplayTime":"11 days","CountOfComment":0},{"FirstName":"Aesthetic","LastName":"Tester","UserImage":"upload/user/UserDefault.png","PostId":41,"PostMessage":null,"PostTime":"2017-08-03T12:03:45.000Z","PostImage":"Upload/Post/242798.png","CreateDate":"2017-08-02T18:30:00.000Z","ModifyDate":null,"DisplayTime":"11 days","CountOfComment":0}],"paginationData":{"page":4,"pageSize":3,"rowCount":13,"pageCount":5}}',
             "type": "json"
           }
         ]

@@ -6,9 +6,14 @@ var config = require('../config'),
     Promise = require("bluebird");
 
 
-exports.GetAllPosts = function (OrgId) {
-    console.log("OrgId:", OrgId);
+exports.GetAllPosts = function (postReqData) {
 
+    var OrgId = postReqData.OrgId;
+    console.log("OrgId:", OrgId);
+    var paginationSettings = {
+        'pageSize': postReqData.pageSize || 10,
+        'page': postReqData.page
+    };
     return PostGet.forge().query(function (qb) {
         qb.select('UserAccount.FirstName', 'UserAccount.LastName', 'UserAccount.UserImage',
             'PostGet.PostId', 'PostGet.PostMessage', 'PostGet.PostTime', 'PostGet.PostImage', 'PostGet.CreateDate', 'PostGet.ModifyDate',
@@ -20,16 +25,10 @@ exports.GetAllPosts = function (OrgId) {
         if (OrgId) {
             qb.where('PostGet.OrgId', OrgId);
         }
-    })./* fetchPage({
-        pageSize: 3, // Defaults to 10 if not specified
-        page: 3
-    }) */
-        fetchAll({
-            pageSize: 3, // Defaults to 10 if not specified
-            page: 3
-        }).then(function (result) {
+    }).fetchPage(paginationSettings)
+        .then(function (result) {
             if (result.length) {
-                return Promise.map(result.models, function (Fav) {
+                var formattedPosts = Promise.map(result.models, function (Fav) {
                     return Comment.forge().query(function (qb) {
                         qb.count('CommentId as totalcomments');
                         qb.where('PostId', Fav.get('PostId'))
@@ -44,6 +43,11 @@ exports.GetAllPosts = function (OrgId) {
                     });
                 })
 
+                formattedPosts.then(function (data) {
+                    var paginationObj = result.pagination;
+                    data.push(paginationObj);
+                });
+                return formattedPosts;
             } else {
                 return [];
             }

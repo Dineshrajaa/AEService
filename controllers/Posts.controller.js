@@ -5,10 +5,17 @@ var config = require('../config'),
 
 exports.GetAllPosts = function (req, res) {
     console.log("GetAllPosts");
-    var OrgId = req.params.OrgId;
-    PostsServices.GetAllPosts(OrgId).then(function (Posts) {
+    var postReqPara = {
+        'OrgId': req.params.OrgId,
+        'page': req.params.pagenumber,
+        'pageSize': req.params.limit
+    }
+
+    PostsServices.GetAllPosts(postReqPara).then(function (Posts) {
         if (Posts.length) {
-            res.json({ "data": Posts });
+            var paginationData = Posts[Posts.length - 1];
+            Posts.pop();
+            res.json({ "data": Posts, paginationData });
         } else {
             res.json({
                 "Message": "An error has occurred."
