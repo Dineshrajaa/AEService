@@ -116,7 +116,7 @@ exports.base64toimage = function (dataString, CommentId, section) {
     folder = "Chat"
   if (section == "post")
     folder = "Post"
-  var filename = config.image_path_global+'/Upload/' + folder + "/" + name;
+  var filename = config.image_path_global + '/Upload/' + folder + "/" + name;
   var path = "Upload/" + folder + "/" + name;
 
 
@@ -150,8 +150,8 @@ exports.base64toimage = function (dataString, CommentId, section) {
 
   if (section == "post") {
     var base64Image = dataString.split(';base64,').pop();
-    console.warn('filename:',filename);
-    fs.writeFile(filename, base64Image, {encoding: 'base64'}, function (err) {
+    console.warn('filename:', filename);
+    fs.writeFile(filename, base64Image, { encoding: 'base64' }, function (err) {
       var data = {
         "PostImage": path
       };

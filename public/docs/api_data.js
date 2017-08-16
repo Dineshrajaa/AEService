@@ -977,11 +977,46 @@ define({
         "examples": [
           {
             "title": "Success-Response:",
-            "content": '{"StatusCode":200,"data":{"OrgId":"42","TreatmentName":"Massage","Desc":"Relax your body by doing Massage","TreatmentIdPrimary":7},"ResponseMessage":"Added Treatment successfully!"}',
+            "content": '{"StatusCode":200,"review_":{"UserId":"201","OrgId":"42","ReviewComment":"Hi Dinesh","ReviewTime":"2017-08-16 20:39:41","CreateDate":"2017-08-16 20:39:41","ModifyDate":"2017-08-16 20:39:41","ReviewId":17},"ResponseMessage":"Review insert successfully!"}',
             "type": "json"
           }
         ]
       }
+    }, {
+      "type": "get",
+      "url": "/Review/GetReviewByOrgId?id=:OrgId",
+      "title": "Get Review list of the Organization",
+      "version": "1.0.0",
+      "name": "List Reviews",
+      "group": "Review",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ], "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgId",
+              "description": "<p>Organization ID to be sent in URL as QueryString (required)</p>"
+            }
+          ]
+        }
+      },
+      "description": "<p>Get list of Reviews based on the Organization ID</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"lstReview":[{"ReviewId":16,"UserId":201,"OrgId":42,"ReviewComment":"Testing Review from Post man","ReviewTime":"2017-08-10T12:24:19.000Z","CreateDate":"2017-08-10T12:24:19.000Z","ModifyDate":"2017-08-10T12:24:19.000Z","Attachment":"http://xxxxxnull","UserAccount":null,"OrgImage":null,"OrgName":null,"address":"null, null","UserImage":"http://xxxxxupload/user/UserDefault.png","FirstName":"Aesthetic","LastName":"Tester","CommentOfCount":0,"Fullname":"Aesthetic Tester","DisplayTime":"6 days"},{"ReviewId":17,"UserId":201,"OrgId":42,"ReviewComment":"Hi Dinesh","ReviewTime":"2017-08-16T15:09:41.000Z","CreateDate":"2017-08-16T15:09:41.000Z","ModifyDate":"2017-08-16T15:09:41.000Z","Attachment":"http://xxxxxnull","UserAccount":null,"OrgImage":null,"OrgName":null,"address":"null, null","UserImage":"http://xxxxxupload/user/UserDefault.png","FirstName":"Aesthetic","LastName":"Tester","CommentOfCount":0,"Fullname":"Aesthetic Tester","DisplayTime":"8 Minutes"}],"ResponseMessage":"Wow!! you are so passionate about your ReviewRepository"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Review"
     }, {
       "type": "post",
       "url": "/FeedBack",
@@ -1034,6 +1069,48 @@ define({
           {
             "title": "Success-Response:",
             "content": '{"StatusCode":200,"ResponseMessage":"Updated Successfully!!!"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "post",
+      "url": "/Gallery",
+      "title": "Add Picture",
+      "version": "1.0.0",
+      "name": "Add Picture",
+      "group": "Gallery",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Add Pictures</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgId",
+              "description": "<p>OrgId of the Creator (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "Date",
+              "optional": false,
+              "field": "picture",
+              "description": "<p>picture in base64 format (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"data":{"Photos":"Upload/Gallery/704743.png","GalleryId":4},"ResponseMessage":"Uploaded Picture Successfully!"}',
             "type": "json"
           }
         ]

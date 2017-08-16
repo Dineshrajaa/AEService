@@ -1,7 +1,9 @@
 var config = require('../config'),
 	Gallery = require('../models/Gallery.model'),
 	GalleryServices = require('../services/Gallery.service'),
-	Promise = require("bluebird");
+	Promise = require("bluebird"),
+	fs = require("fs"),
+	helperServices = require('../services/helper.service');
 /*get gellary for an organization*/
 exports.GetGalleryById = function (req, res) {
 	console.log("GetGalleryById");
@@ -39,5 +41,23 @@ exports.addPhotoToGallery = function (req, res) {
 	/**
 	 * Method to Add photos to gallery
 	 */
-	
+	if (req.body.picture) {
+		var min = 100000;
+		var max = 999999;
+		var name = Math.floor(Math.random() * (max - min + 1)) + min + ".png";
+		var filename = config.image_path_global + '/Upload/Gallery/' + name;
+		var path = "Upload/Gallery/" + name;
+		req.body.picpath = path;
+		fs.writeFile(filename, new Buffer(req.body.picture, "base64"), function (err) {
+			if (!err) {
+				GalleryServices.savePicture(req.body).then(function (picture) {
+					if (picture) {
+						res.json({ "StatusCode": 200,"data": picture,"ResponseMessage":"Uploaded Picture Successfully!" });
+					}
+				})
+			}
+		});
+	} else {
+		res.json({ 'Message': 'No Picture Attached' });
+	}
 }
