@@ -178,7 +178,7 @@ exports.UpdateClient = function (ClientData) {
         'Town': ClientData.Town,
         'PostCode': ClientData.PostCode
     };
-    return new Clients({ 'id': ClientId }).save(ClientInfo, {
+    return new Clients().where({ 'ClientId': ClientId }).save(ClientInfo, {
         patch: true
     }).then(function (result) {
         return result;

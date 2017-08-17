@@ -219,6 +219,7 @@ exports.UpdateClientInfo = function (req, res) {
     req.body.ClientId = (req.params.ClientId) ? req.params.ClientId : false;
     if (req.body.ClientId) {
         ClientsServices.UpdateClient(req.body).then(function (result) {
+            console.warn('result:', result);
             if (result)
                 res.json({
                     "StatusCode": 200,
