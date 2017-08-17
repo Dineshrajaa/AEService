@@ -215,16 +215,30 @@ exports.AddTreatmentPhoto = function (ClientId) {
     });
 }
 
-exports.uploadImage = function (data, PictureId) {    
-        
-        var authUpdateParams = {
-            patch: true
-        };
-        var authFetchParams = {};
-        return ClientTreatments.forge().query(function (qb) {
-            if (PictureId)
-                qb.where({ 'PictureId': PictureId });
-        }).fetch().then(function (TreatmentPicture) {
-            return TreatmentPicture.save(data, authUpdateParams);
-        });
-    }
+exports.uploadImage = function (data, PictureId) {
+
+    var authUpdateParams = {
+        patch: true
+    };
+    var authFetchParams = {};
+    return ClientTreatments.forge().query(function (qb) {
+        if (PictureId)
+            qb.where({ 'PictureId': PictureId });
+    }).fetch().then(function (TreatmentPicture) {
+        return TreatmentPicture.save(data, authUpdateParams);
+    });
+}
+
+exports.GetTreatmentPhoto = function (ClientId) {
+    return ClientTreatments.forge().query(function (qb) {
+        if (ClientId != 0)
+            qb.where({
+                'ClientId': ClientId
+            });
+
+    }).fetchAll().then(function (clientTreatmentPictures) {
+        return clientTreatmentPictures;
+    }).catch(function (err) {
+        return err;
+    });
+}

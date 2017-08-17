@@ -627,7 +627,7 @@ define({
         ]
       },
       "groupTitle": "MyPosts"
-    },{
+    }, {
       "type": "get",
       "url": "/Client/:ClientId",
       "title": "Get Client info",
@@ -1160,7 +1160,7 @@ define({
           }
         ]
       }
-    },{
+    }, {
       "type": "get",
       "url": "Gallery/GetGalleryById?Id=:OrgId",
       "title": "List Gallery Photos",
@@ -1172,7 +1172,7 @@ define({
           "name": "Universal"
         }
       ],
-      "description": "<p>Get List of Treatment Photos of an Client by Client ID</p>",
+      "description": "<p>Get List of Treatment Photos of an Organization by OrgId ID</p>",
       "parameter": {
         "fields": {
           "Parameter": [
@@ -1196,6 +1196,83 @@ define({
         ]
       },
       "groupTitle": "Treatment"
+    }, {
+      "type": "get",
+      "url": "Client/treatment/:ClientId",
+      "title": "List Treatment Photos of Client",
+      "version": "1.0.0",
+      "name": "Get List of Treatment Photos of Client",
+      "group": "Client",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Get List of Treatment Photos of an Client by Client ID</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgId",
+              "description": "<p>ClientId to be sent in URL as QueryString (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"data":[{"ClientId":28,"PictureId":1,"Picture":"Upload/Client/105126.png"}],"ResponseMessage":"Wow!! you are so passionate about your Client Treatment"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Client"
+    }, {
+      "type": "post",
+      "url": "Client/treatment/:ClientId",
+      "title": "Add Treatment photo for a Client",
+      "version": "1.0.0",
+      "name": "Add Treatment Photo",
+      "group": "Client",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows user to Add Treatment photo to an Client Profile</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Picture",
+              "description": "<p>Treatment picture as base64(required)</p>"
+            }, {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ClientId",
+              "description": "<p>ClientId of the Client to be sent in URL (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"data":{"ClientId":"28","PictureId":2},"ResponseMessage":"Added Treatment Photo successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
     }
   ]
 });

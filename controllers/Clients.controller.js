@@ -300,3 +300,22 @@ exports.addTreatmentPhoto = function (req, res) {
         });
     }
 }
+
+exports.getTreatmentPhoto = function (req, res) {
+    /* Method to fetch list of Treatment photos */
+    var ClientId = req.params.ClientId;
+    ClientsServices.GetTreatmentPhoto(ClientId).then(function (result) {
+        if (result.length)
+            res.json({
+                "StatusCode": 200,
+                "data": result,
+                "ResponseMessage": "Wow!! you are so passionate about your Client Treatment"
+            });
+        else
+            res.json({
+                "StatusCode": 404,
+                "data": result,
+                "ResponseMessage": "Sorry no Treatment Picture found."
+            });
+    })
+}
