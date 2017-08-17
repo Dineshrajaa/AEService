@@ -178,7 +178,7 @@ exports.UpdateClient = function (ClientData) {
         'Town': ClientData.Town,
         'PostCode': ClientData.PostCode
     };
-    return new Client({ 'id': ClientId }).save(ClientInfo, {
+    return new Clients({ 'id': ClientId }).save(ClientInfo, {
         patch: true
     }).fetch().then(function (result) {
         return result;
