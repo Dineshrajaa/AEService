@@ -180,7 +180,7 @@ exports.UpdateClient = function (ClientData) {
     };
     return new Clients({ 'id': ClientId }).save(ClientInfo, {
         patch: true
-    }).fetch().then(function (result) {
+    }).then(function (result) {
         return result;
     }).catch(function (err) {
         return err;
