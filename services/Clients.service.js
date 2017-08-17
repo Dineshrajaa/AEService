@@ -1,6 +1,7 @@
 var Clients = require('../models/Clients.model');
 var Consumers = require('../models/UserAccount.model');
-var Followers = require('../models/Followers.model')
+var Followers = require('../models/Followers.model');
+var ClientTreatments = require('../models/ClientTreatments.model');
 exports.AddClient = function (params) {
     console.log("AddClient");
     var Client = new Clients({
@@ -198,3 +199,32 @@ exports.GetClientInfo = function (ClientId) {
         return err;
     });
 }
+
+exports.AddTreatmentPhoto = function (ClientId) {
+    var ClientTreatment = new ClientTreatments({
+        ClientId: (ClientId) ? ClientId : null
+    });
+    return ClientTreatment.save(null).tap(function (model) {
+        clientData = model;
+        return clientData;
+    }).then(function (clientData) {
+        return clientData;
+    }).catch(function (err) {
+        console.log('err:', err);
+        return err.Error;
+    });
+}
+
+exports.uploadImage = function (data, PictureId) {    
+        
+        var authUpdateParams = {
+            patch: true
+        };
+        var authFetchParams = {};
+        return ClientTreatments.forge().query(function (qb) {
+            if (PictureId)
+                qb.where({ 'PictureId': PictureId });
+        }).fetch().then(function (TreatmentPicture) {
+            return TreatmentPicture.save(data, authUpdateParams);
+        });
+    }

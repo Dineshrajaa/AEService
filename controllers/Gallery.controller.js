@@ -16,7 +16,7 @@ exports.GetGalleryById = function (req, res) {
 			if (result.length) {
 				return Promise.map(result.models, function (gallery) {
 					url = gallery.get('Photos');
-					gallery.set('Photos', config.image_url + url.trim());
+					gallery.set('Photos', url.trim());
 					return gallery;
 				})
 			} else {

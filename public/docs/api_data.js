@@ -770,6 +770,28 @@ define({
         ]
       }
     }, {
+      "type": "delete",
+      "url": "/Notes/:NoteId",
+      "title": "Delete Note",
+      "version": "1.0.0",
+      "name": "Delete Note",
+      "group": "Client",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Delete Note</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Deleted Note Successfully"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
       "type": "get",
       "url": "/Notes/:ClientId",
       "title": "List Notes",
@@ -1138,6 +1160,42 @@ define({
           }
         ]
       }
+    },{
+      "type": "get",
+      "url": "Gallery/GetGalleryById?Id=:OrgId",
+      "title": "List Gallery Photos",
+      "version": "1.0.0",
+      "name": "Get List of Treatment Photos",
+      "group": "Gallery",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Get List of Treatment Photos of an Client by Client ID</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgId",
+              "description": "<p>Organization ID to be sent in URL as QueryString (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"lstgallery":[{"GalleryId":1,"Photos":"Upload/Gallery/gallerya.png","OrgId":1},{"GalleryId":2,"Photos":"Upload/Gallery/galleryb.png","OrgId":1},{"GalleryId":3,"Photos":"Upload/Gallery/804333.png","OrgId":1}],"ResponseMessage":"Wow!! you are so passionate about your GalleryRepository"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Treatment"
     }
   ]
 });

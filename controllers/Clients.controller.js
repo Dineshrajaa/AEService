@@ -2,7 +2,8 @@ var config = require('../config'),
     Clients = require('../models/Clients.model'),
     Consumers = require('../models/UserAccount.model'),
     ClientsServices = require('../services/Clients.service'),
-    orm = require('../orm');
+    orm = require('../orm'),
+    helperServices = require('../services/helper.service');
 
 /* exports.AddClient = function (req, res) {
     console.log("AddClient");
@@ -267,3 +268,35 @@ exports.UpdateClientInfo = function (req, res) {
         });
     }
 };
+
+exports.addTreatmentPhoto = function (req, res) {
+    /* Method to upload Treatment photos of Clients */
+    var ClientId = req.params.ClientId;
+    var image = (req.body.Picture) ? req.body.Picture : false;
+    if (!image) {
+        res.json({
+            "Message": "An error has occurred."
+        });
+    } else {
+        ClientsServices.AddTreatmentPhoto(ClientId).then(function (result) {
+            if (result.get("PictureId") !== null) {
+                if (image) {
+                    helperServices.base64toimage(image, result.get("PictureId"), 'client');
+                }
+                res.json({
+                    "StatusCode": 200,
+                    "data": result,
+                    "ResponseMessage": "Added Treatment Photo successfully!"
+                });
+            } else {
+                res.json({ "StatusCode": 404, "Message": "An error has occurred." });
+            }
+        }).catch(function (err) {
+            res.json({
+                "StatusCode": err.status,
+                "data": {},
+                "ResponseMessage": err.messages
+            });
+        });
+    }
+}

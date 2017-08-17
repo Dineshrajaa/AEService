@@ -25,6 +25,7 @@ module.exports = function (router) {
 		.put(controller.UpdateClientInfo)
 	router.route('/Aesthetic/api/Client/:ClientId')
 		.get(controller.getClientInfo)
+		.post(controller.addTreatmentPhoto)
 	router.route('/Aesthetic/api/Consumers')
 		.get(controller.GetAllConsumers)
 	/*router.route('/Aesthetic/api/Categories/GetCategoriesOrgId')
