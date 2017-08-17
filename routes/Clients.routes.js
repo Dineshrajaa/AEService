@@ -23,6 +23,8 @@ module.exports = function (router) {
 	router.route('/Aesthetic/api/Clients/:ClientId')
 		.delete(controller.DeleteClient)
 		.put(controller.UpdateClientInfo)
+	router.route('/Aesthetic/api/Client/:ClientId')
+		.get(controller.getClientInfo)
 	router.route('/Aesthetic/api/Consumers')
 		.get(controller.GetAllConsumers)
 	/*router.route('/Aesthetic/api/Categories/GetCategoriesOrgId')

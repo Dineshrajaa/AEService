@@ -212,6 +212,30 @@ exports.GetAllConsumers = function (req, res) {
 
 };
 
+exports.getClientInfo = function (req, res) {
+    /* Method to get Client details */
+    var ClientId = req.params.ClientId;
+    if (ClientId) {
+        ClientsServices.GetClientInfo(ClientId).then(function (result) {
+            if (result) {
+                res.json({
+                    "StatusCode": 200,
+                    "ResponseMessage": "Got Client info Successfully",
+                    "data": result
+                });
+            } else
+                res.json({
+                    "Message": "An error has occurred."
+                });
+        }).catch(function (err) {
+            res.json({
+                "StatusCode": err.status,
+                "clients": [],
+                "ResponseMessage": err.messages
+            });
+        });
+    }
+}
 exports.UpdateClientInfo = function (req, res) {
     /* Method to update Client details */
     console.log("UpdateClient");

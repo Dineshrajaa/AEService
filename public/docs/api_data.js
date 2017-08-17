@@ -627,6 +627,29 @@ define({
         ]
       },
       "groupTitle": "MyPosts"
+    },{
+      "type": "get",
+      "url": "/Client/:ClientId",
+      "title": "Get Client info",
+      "version": "1.0.0",
+      "name": "Get Client info",
+      "group": "Client",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Get Client info based on the Client ID</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Got Client info Successfully","data":{"ClientId":28,"OrgId":2,"UserId":149,"FavouriteId":69,"CreateDate":"2017-08-17T10:00:00.000Z","CreatedBy":null,"IsActive":1,"ModifiedDate":"2017-08-08T14:33:21.000Z","ModifiedBy":null,"FirstName":"Dinesh","LastName":"Raja","DOB":"2017-08-17T04:25:59.000Z","Address":"4/517 A,Jeeva Nagar","PostCode":642126,"Town":"Udumalpet","UserImage":null}}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Clients"
     }, {
       "type": "post",
       "url": "/Posts",

@@ -186,3 +186,15 @@ exports.UpdateClient = function (ClientData) {
         return err;
     });
 };
+
+exports.GetClientInfo = function (ClientId) {
+    return Clients.forge().query(function (qb) {
+        qb.where({
+            'ClientId': ClientId
+        });
+    }).fetch().then(function (result) {
+        return result;
+    }).catch(function (err) {
+        return err;
+    });
+}
