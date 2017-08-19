@@ -153,7 +153,7 @@ exports.base64toimage = function (dataString, CommentId, section) {
   if (section == "chat") {
     fs.writeFile(filename, new Buffer(dataString, "base64"), function (err) {
       var data = {
-        "ImagePath": path
+        "Picture": path
       }
       return ChatServices.uploadImage(data, ChatId).then(function () {
         return path;

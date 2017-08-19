@@ -27,11 +27,11 @@ exports.GetConversation = function (req, res) {
 exports.sendMessage = function (req, res) {
     console.log("Send Message");
     var section = "chat";
-    var image = (req.body.picture) ? req.body.picture : false;
-    /* sendMessage(req.body) */ChatServices.getAllConversationsOfUser(req.body.FromUserId).then(function (chatSuccess) {
+    var image = (req.body.Picture) ? req.body.Picture : false;
+    ChatServices.sendMessage(req.body).then(function (chatSuccess) {
         if (chatSuccess) {
             if (image) {
-                helperServices.base64toimage(image, chatSuccess.get("Id"), section);
+                helperServices.base64toimage(image, chatSuccess.get("MessageId"), section);
             }
             res.json({ "StatusCode": 200, "chat": chatSuccess, "ResponseMessage": "Message sent successfully!" });
         } else {

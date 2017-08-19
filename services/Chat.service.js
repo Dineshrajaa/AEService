@@ -26,30 +26,23 @@ exports.GetConversation = function (UserId, MyUserId) {
 
 exports.sendMessage = function (params) {
     // Method to save message
-    console.log(params);
-    var chatData = new Chat({
-        "FromUserId": (params.FromUserId) ? params.FromUserId : null,
-        "ToUserId": (params.ToUserId) ? params.ToUserId : null,
+    var messageData = new Messages({
+        "FromId": (params.FromId) ? params.FromId : null,
         "IsViewed": (params.IsViewed) ? params.IsViewed : false,
         "Message": (params.Message) ? params.Message : null,
+        "ConversationId": (params.ConversationId) ? params.ConversationId : null,
+        "SentTime": (params.SentTime) ? params.SentTime : new Date()
     });
 
-    /* return chatData.save(null).tap(function (model) {
-        chatData = model;
-        return chatData;
+    return messageData.save(null).tap(function (model) {
+        message = model;
+        return message;
     }).then(function (chatData) {
         return chatData;
     }).catch(function (err) {
         return err;
-    }); */
-    /*if (typeof messagePayload.picture !== 'undefined') {
+    });
 
-        var fs = require('fs');
-        var data = messagePayload.picture.replace(/^data:image\/\w+;base64,/, "");
-        console.warn(data);
-        var buf = new Buffer(data, 'base64');
-        fs.writeFile('image.png', buf);
-    }*/
 }
 
 exports.getAllConversationsOfUser = function (userId) {
@@ -146,9 +139,9 @@ exports.uploadImage = function (data, ChatId) {
         patch: true
     };
     var authFetchParams = {};
-    return Review.forge().query(function (qb) {
+    return Messages.forge().query(function (qb) {
         if (ChatId)
-            qb.where({ 'Id': ChatId });
+            qb.where({ 'MessageId': ChatId });
     }).fetch().then(function (Chat) {
         return Chat.save(data, authUpdateParams);
     });
