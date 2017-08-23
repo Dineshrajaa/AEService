@@ -222,7 +222,7 @@ exports.getClientInfo = function (req, res) {
                 res.json({
                     "StatusCode": 200,
                     "ResponseMessage": "Got Client info Successfully",
-                    "data": result
+                    "user": result
                 });
             } else
                 res.json({

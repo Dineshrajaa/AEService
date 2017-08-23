@@ -7,7 +7,9 @@ var config = require('../config'),
     Messages = require('../models/Messages.model'),
     Participants = require('../models/Participants.model'),
     orm = require('../orm'),
-    Promise = require("bluebird");
+    UserAccount = require('../models/UserAccount.model'),
+    Promise = require("bluebird")
+    ;
 
 exports.GetConversation = function (UserId, MyUserId) {
     return Chat.forge().query(function (qb) {
@@ -69,8 +71,24 @@ exports.listAllMessages = function (convId) {
             });
 
     }).fetchAll().then(function (messages) {
-        console.log('messages:', messages.toJSON());
-        return messages;
+        console.log('messages.length:', messages.length);
+        if (messages.length) {
+            return Promise.map(messages.models, function (msg) {
+                console.log('msg:', msg.get('FromId'));
+                return UserAccount.forge().query(function (qb) {
+                    qb.where('UserId', msg.get('FromId'))
+                }).fetch().then(function (user) {
+                    msg.set('UserImage', user.get('UserImage'));
+                    msg.set('FirstName', user.get('FirstName'));
+                    msg.set('LastName', user.get('LastName'));
+                    return msg;
+                }).catch(function (err) {
+                    console.log("error in comment");
+                    console.log(err);
+                });
+            })
+        }
+        // return messages;
     }).catch(function (err) {
         return err;
     });
