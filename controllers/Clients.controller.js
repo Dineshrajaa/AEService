@@ -40,6 +40,8 @@ exports.AddClient = function (req, res) {
             req.body.Address = result.get('Address');
             req.body.Town = result.get('Town');
             req.body.UserImage = (result.get('UserImage')) ? result.get('UserImage') : 'Upload/user/UserDefault.png';
+            req.body.Profile=(result.get('Profile')) ? result.get('Profile') : '';
+            req.body.Gender=(result.get('Gender')) ? result.get('Gender') : null;
             ClientsServices.AddClient(req.body).then(function (result) {
                 if (typeof result == 'undefined')
                     res.json({

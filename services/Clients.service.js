@@ -177,7 +177,9 @@ exports.UpdateClient = function (ClientData) {
         'DOB': ClientData.DOB,
         'Address': ClientData.Address,
         'Town': ClientData.Town,
-        'PostCode': ClientData.PostCode
+        'PostCode': ClientData.PostCode,
+        'Gender': ClientData.Gender,
+        'Profile': ClientData.Profile
     };
     return new Clients().where({ 'ClientId': ClientId }).save(ClientInfo, {
         patch: true
