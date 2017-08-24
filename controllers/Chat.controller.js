@@ -90,3 +90,12 @@ exports.getConversation = function (req, res) {
         }
     })
 }
+
+exports.getConversationNew = function (req, res) {
+    var FromUserId = req.params.From;
+    var ToUserId = req.params.To;
+    ChatServices.getConversationIdAmongUsersNew(FromUserId, ToUserId).then(function (conv) {
+        res.json({ 'conv': conv })
+    });
+    /* .then(function (conv) {}) */
+}
