@@ -9,12 +9,14 @@ var config = require('../config'),
 exports.GetAllPosts = function (postReqData) {
 
     var OrgId = postReqData.OrgId;
+    var input = postReqData.input;
     console.log("OrgId:", OrgId);
     var paginationSettings = {
         'pageSize': postReqData.pageSize || 10,
         'page': postReqData.page
     };
     return PostGet.forge().query(function (qb) {
+        qb.debug(true);
         qb.select('UserAccount.FirstName', 'UserAccount.LastName', 'UserAccount.UserImage',
             'PostGet.PostId', 'PostGet.PostMessage', 'PostGet.PostTime', 'PostGet.PostImage', 'PostGet.CreateDate', 'PostGet.ModifyDate',
             'Organization.OrgName', 'Organization.OrgImage', 'Organization.OrgAddress'
@@ -23,14 +25,25 @@ exports.GetAllPosts = function (postReqData) {
             this.on('PostGet.OrgId', '=', 'UserAccount.OrgId')
         })
 
-        qb.join('Organization',function(){
-            this.on('PostGet.OrgId','=','Organization.OrgId')
+        qb.join('Organization', function () {
+            this.on('PostGet.OrgId', '=', 'Organization.OrgId')
         })
+
+        if (input != 'false') {
+            console.warn('input:', input);
+            // qb.where('Organization.OrgName', 'like', "%" + input + "%")
+            // qb.where('PostGet.PostMessage', 'LIKE', "%Hi%")
+            qb.where(function () {
+                this.where('Organization.OrgName', 'LIKE', "%" + input + "%").orWhere('PostGet.PostMessage', 'LIKE', "%" + input + "%")
+            });
+        }
 
         if (OrgId != 'false') {
             console.log("OrgId is:", OrgId);
             qb.where('PostGet.OrgId', OrgId);
         }
+
+
     }).fetchPage(paginationSettings)
         .then(function (result) {
             if (result.length) {
