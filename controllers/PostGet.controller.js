@@ -31,7 +31,7 @@ exports.SearchRecord = function(req, res){
 			if(post.length)
 			res.json({"StatusCode": 200,"lstPostGet":post, "ResponseMessage": "Wow!! you are so passionate about your PostGetRepository"});
 			else
-			res.json({"StatusCode": 404,"lstPostGet":post, "ResponseMessage": "Sorry not in the list."});
+			res.json({"StatusCode": 200,"lstPostGet":post, "ResponseMessage": "Sorry not in the list."});
 		}).catch(function(err){
 			res.json({"StatusCode":err.status,"lstPostGet":[],"ResponseMessage":err.messages});
 		});
