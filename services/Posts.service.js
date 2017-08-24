@@ -17,9 +17,14 @@ exports.GetAllPosts = function (postReqData) {
     return PostGet.forge().query(function (qb) {
         qb.select('UserAccount.FirstName', 'UserAccount.LastName', 'UserAccount.UserImage',
             'PostGet.PostId', 'PostGet.PostMessage', 'PostGet.PostTime', 'PostGet.PostImage', 'PostGet.CreateDate', 'PostGet.ModifyDate',
+            , 'Organization.OrgName', 'Organization.OrgImage', 'Organization.OrgAddress'
         )
         qb.join('UserAccount', function () {
             this.on('PostGet.OrgId', '=', 'UserAccount.OrgId')
+        })
+
+        qb.join('Organization',function(){
+            this.on('PostGet.OrgId','=','Organization.OrgId')
         })
 
         if (OrgId != 'false') {
