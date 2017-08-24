@@ -22,7 +22,8 @@ exports.GetAllPosts = function (postReqData) {
             this.on('PostGet.OrgId', '=', 'UserAccount.OrgId')
         })
 
-        if (OrgId) {
+        if (OrgId != 'false') {
+            console.log("OrgId is:", OrgId);
             qb.where('PostGet.OrgId', OrgId);
         }
     }).fetchPage(paginationSettings)
