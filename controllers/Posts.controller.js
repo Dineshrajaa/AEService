@@ -8,7 +8,9 @@ exports.GetAllPosts = function (req, res) {
     var postReqPara = {
         'OrgId': req.params.OrgId,
         'page': req.params.pagenumber,
-        'pageSize': req.params.limit
+        'pageSize': req.params.limit,
+        'input':req.params.input,
+        'country':req.params.country
     }
 
     PostsServices.GetAllPosts(postReqPara).then(function (Posts) {
