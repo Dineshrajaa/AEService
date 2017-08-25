@@ -14,17 +14,17 @@ exports.registerBusinessInfo = function (req, res) {
 	console.log("registerBusinessinfo");
 
 	return orm.bookshelf.transaction(function (trx) {
-			return UserAccountServices.GetOrganization(req.body.OrgId, trx)
-				.then(function (organization) {
-					if (organization)
-						return UserAccountServices.saveBusinessInfo(req.body, trx);
-					else
-						return false;
-				})
-				.catch(function (err) {
-					console.log(err);
-				});
-		})
+		return UserAccountServices.GetOrganization(req.body.OrgId, trx)
+			.then(function (organization) {
+				if (organization)
+					return UserAccountServices.saveBusinessInfo(req.body, trx);
+				else
+					return false;
+			})
+			.catch(function (err) {
+				console.log(err);
+			});
+	})
 		.then(function (results) {
 			if (!results)
 				res.json({
@@ -53,6 +53,7 @@ exports.registerUser = function (req, res) {
 	req.body.Password = password;
 
 	UserAccountServices.getUserByEmail(req.body.EmailId).then(function (result) {
+		console.warn('getUserByEmail:', result);
 		if (result == 0) {
 			var OrgId = null;
 			if (req.body.Role === 'business') {
@@ -100,7 +101,8 @@ exports.updateAndSaveUserAccount = function (req, res) {
 		if (result) {
 			res.json({
 				"StatusCode": 200,
-				"ResponseMessage": "Registered Successfully!!!"
+				"user": result,
+				"ResponseMessage": "New user created successfully!"
 			});
 		} else {
 			res.json({
@@ -239,17 +241,17 @@ exports.updateUserProfile = function (req, res) {
 	}
 
 	return orm.bookshelf.transaction(function (trx) {
-			return UserAccountServices.GetUserAccount(req.body.UserId, trx)
-				.then(function (user) {
-					if (user)
-						return UserAccountServices.UpdateUserAccount(req.body, trx);
-					else
-						return false;
-				})
-				.catch(function (err) {
-					console.log(err);
-				});
-		})
+		return UserAccountServices.GetUserAccount(req.body.UserId, trx)
+			.then(function (user) {
+				if (user)
+					return UserAccountServices.UpdateUserAccount(req.body, trx);
+				else
+					return false;
+			})
+			.catch(function (err) {
+				console.log(err);
+			});
+	})
 		.then(function (results) {
 			if (!results)
 				res.json({
@@ -274,17 +276,17 @@ exports.updateUserProfile = function (req, res) {
 exports.changeBusinessInfoStatus = function (req, res) {
 	// Method to change the Business info available status
 	return orm.bookshelf.transaction(function (trx) {
-			return UserAccountServices.GetUserAccount(req.body.UserId, trx)
-				.then(function (user) {
-					if (user)
-						return UserAccountServices.UpdateBusinessInfoStatus(req.body.UserId, trx);
-					else
-						return false;
-				})
-				.catch(function (err) {
-					console.log(err);
-				});
-		})
+		return UserAccountServices.GetUserAccount(req.body.UserId, trx)
+			.then(function (user) {
+				if (user)
+					return UserAccountServices.UpdateBusinessInfoStatus(req.body.UserId, trx);
+				else
+					return false;
+			})
+			.catch(function (err) {
+				console.log(err);
+			});
+	})
 		.then(function (results) {
 			if (!results)
 				res.json({

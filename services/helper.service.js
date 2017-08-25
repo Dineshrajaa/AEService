@@ -15,13 +15,13 @@ exports.decrypt = function (text, Email) {
   return dec;
 }
 exports.encryption = function (text, Email) {
-  /*	console.log(Email);
-    console.log(text);*/
+  	console.log(Email);
+    console.log(text);
   var cipher = crypto.createCipher('aes-256-cbc', Email);
   var crypted = cipher.update(text, 'utf8', 'base64');
   crypted += cipher.final('base64');
   data = crypted;
-  /* console.log(data);*/
+  console.log(data);
   return data;
 }
 exports.getDisplayTime = function (PostTime) {
