@@ -60,6 +60,7 @@ exports.registerOrganization = function (params) {
     CreateDate: (params.CreateDate) ? params.CreateDate : new Date(),
     ModifyDate: (params.ModifyDate) ? params.ModifyDate : new Date()
   });
+  console.warn('organization:',organization);
   return organization.save(null).tap(function (model) {
     organizationData = model;
     return organizationData.get('OrgId');

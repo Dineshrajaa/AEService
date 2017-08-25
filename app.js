@@ -79,7 +79,13 @@ app.use(function (req, res, next) {
     err.status = 404;
     next(err);
 });
+/*passportAuth.serializeUser(function(user, done) {
+  done(null, user);
+});
 
+passportAuth.deserializeUser(function(user, done) {
+  done(null, user);
+});*/
 
 // error handlers
 app.use(function (err, req, res, next) {
