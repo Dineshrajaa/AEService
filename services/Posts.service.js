@@ -10,6 +10,7 @@ exports.GetAllPosts = function (postReqData) {
 
     var OrgId = postReqData.OrgId;
     var input = postReqData.input;
+    var country=postReqData.country;
     console.log("OrgId:", OrgId);
     var paginationSettings = {
         'pageSize': postReqData.pageSize || 10,
@@ -28,13 +29,16 @@ exports.GetAllPosts = function (postReqData) {
         qb.join('Organization', function () {
             this.on('PostGet.OrgId', '=', 'Organization.OrgId')
         })
-
+        qb.where('PostGet.PostMessage', 'LIKE', "%Hi%")
         if (input != 'false') {
-            console.warn('input:', input);
-            // qb.where('Organization.OrgName', 'like', "%" + input + "%")
-            // qb.where('PostGet.PostMessage', 'LIKE', "%Hi%")
             qb.where(function () {
                 this.where('Organization.OrgName', 'LIKE', "%" + input + "%").orWhere('PostGet.PostMessage', 'LIKE', "%" + input + "%")
+            });
+        }        
+
+        if(country!= 'false'){
+            qb.where(function(){
+                this.where('Organization.Country','like',"%"+country+"%")
             });
         }
 
