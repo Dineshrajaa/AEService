@@ -28,7 +28,6 @@ exports.GetAllPosts = function (postReqData) {
         qb.join('Organization', function () {
             this.on('PostGet.OrgId', '=', 'Organization.OrgId')
         })
-        qb.where('PostGet.PostMessage', 'LIKE', "%Hi%")
         if (input != 'false') {
             qb.where(function () {
                 this.where('Organization.OrgName', 'LIKE', "%" + input + "%").orWhere('PostGet.PostMessage', 'LIKE', "%" + input + "%")
