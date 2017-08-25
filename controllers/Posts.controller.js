@@ -9,19 +9,17 @@ exports.GetAllPosts = function (req, res) {
         'OrgId': req.params.OrgId,
         'page': req.params.pagenumber,
         'pageSize': req.params.limit,
-        'input':req.params.input,
-        'country':req.params.country
+        'input': req.params.input,
+        'country': req.params.country
     }
 
     PostsServices.GetAllPosts(postReqPara).then(function (Posts) {
         if (Posts.length) {
             var paginationData = Posts[Posts.length - 1];
             Posts.pop();
-            res.json({ "data": Posts, paginationData });
+            res.json({ "StatusCode": 200, "data": Posts, paginationData });
         } else {
-            res.json({
-                "Message": "An error has occurred."
-            });
+            res.json({ "StatusCode": 200, "data": [], "Message": "No Post Found." });
         }
     }).catch(function (err) {
         console.warn('err:', err);

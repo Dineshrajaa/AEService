@@ -10,14 +10,13 @@ exports.GetAllPosts = function (postReqData) {
 
     var OrgId = postReqData.OrgId;
     var input = postReqData.input;
-    var country=postReqData.country;
+    var country = postReqData.country;
     console.log("OrgId:", OrgId);
     var paginationSettings = {
         'pageSize': postReqData.pageSize || 10,
         'page': postReqData.page
     };
     return PostGet.forge().query(function (qb) {
-        qb.debug(true);
         qb.select('UserAccount.FirstName', 'UserAccount.LastName', 'UserAccount.UserImage',
             'PostGet.PostId', 'PostGet.PostMessage', 'PostGet.PostTime', 'PostGet.PostImage', 'PostGet.CreateDate', 'PostGet.ModifyDate',
             'Organization.OrgName', 'Organization.OrgImage', 'Organization.OrgAddress'
@@ -34,11 +33,11 @@ exports.GetAllPosts = function (postReqData) {
             qb.where(function () {
                 this.where('Organization.OrgName', 'LIKE', "%" + input + "%").orWhere('PostGet.PostMessage', 'LIKE', "%" + input + "%")
             });
-        }        
+        }
 
-        if(country!= 'false'){
-            qb.where(function(){
-                this.where('Organization.Country','like',"%"+country+"%")
+        if (country != 'false') {
+            qb.where(function () {
+                this.where('Organization.Country', 'like', "%" + country + "%")
             });
         }
 
