@@ -141,12 +141,28 @@ exports.getConversationIdAmongUsers = function (FromUserId, ToUserId) {
 
 exports.getConversationIdAmongUsersNew = function (FromUserId, ToUserId) {
     // var convQuery = '(SELECT id,c.FromUserId,c.chatDate,c.Message FROM Chat as c WHERE c.FromUserId!=' + FromUserId + ' and  c.ToUserId=' + FromUserId + ' and c.id =(select d.id from Chat as d  where d.FromUserId=c.FromUserId and d.ToUserId=' + FromUserId + ' order by d.ChatDate desc limit 1))UNION(SELECT id,c.ToUserId,c.chatDate,c.Message FROM Chat as c WHERE c.FromUserId=' + FromUserId + ' and  c.ToUserId!=' + FromUserId + ' and c.id =(select d.id from Chat as d  where d.ToUserId=c.ToUserId and d.FromUserId=' + FromUserId + ' order by d.ChatDate desc limit 1)) order by 3 desc';
-    var convQuery = 'select * from Chat where (FromUserId=' + FromUserId + ' and ToUserId=' + ToUserId + ') or (FromUserId=' + ToUserId + ' and ToUserId=' + FromUserId + ')';
+    /* var convQuery = 'select * from Chat where (FromUserId=' + FromUserId + ' and ToUserId=' + ToUserId + ') or (FromUserId=' + ToUserId + ' and ToUserId=' + FromUserId + ')';
     console.warn('convQuery:', convQuery);
     return orm.knex.raw(convQuery).then(function (chatResults) {
         console.warn('chatResults:', chatResults);
         return chatResults[0];
-    })
+    }) */
+
+    return Chat.forge().query(function (qb) {
+        qb.where({
+            'FromUserId': FromUserId,
+            'ToUserId': ToUserId
+        });
+        qb.orWhere({
+            'FromUserId': ToUserId,
+            'ToUserId': FromUserId
+        });
+
+    }).fetchAll().then(function (Messages) {
+        return Messages;
+    }).catch(function (err) {
+        return err;
+    });
 }
 
 exports.registerConversation = function () {
