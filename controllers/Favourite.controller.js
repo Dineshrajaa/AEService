@@ -103,7 +103,7 @@ console.log(req.body);
 		res.json({ "Message": "An error has occurred."});
 	}else{
 		FavouriteServices.addFavourite(req.body).then(function(result){
-			res.json({"StatusCode": 200,"favourite_": result,"ResponseMessage": "Favourite insert successfully!"});
+			res.json({"StatusCode": 200,"favourite_": result,"ResponseMessage": "Favourite added successfully!"});
 		}).catch(function(err){
 			res.json({"StatusCode":err.status,"Favourites":[],"ResponseMessage":err.messages});
 		});

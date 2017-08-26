@@ -606,7 +606,7 @@ define({
       "groupTitle": "Clients"
     }, {
       "type": "get",
-      "url": "/Posts/:OrgId/:pagenumber/:limit",
+      "url": "/Posts/:OrgId/:input/:country/:pagenumber/:limit",
       "title": "Get all the Posts of a Business user",
       "version": "1.0.0",
       "name": "List Posts",
@@ -617,6 +617,47 @@ define({
         }
       ],
       "description": "<p>Get list of Posts based on the Organization ID</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgId",
+              "description": "<p>OrganizationID for whom Posts has to be retrieved <strong>false</strong> if need to list every post(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "input",
+              "description": "<p>Searchbox value <strong>false</strong> if no text value is available(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "country",
+              "description": "<p>Country based filtering  <strong>false</strong> if no Country value is available(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "pagenumber",
+              "description": "<p>Used for pagination (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "limit",
+              "description": "<p>Number of posts to be listed</p>"
+            }
+          ]
+        }
+      },
       "success": {
         "examples": [
           {
@@ -1269,6 +1310,48 @@ define({
           {
             "title": "Success-Response:",
             "content": '{"StatusCode":200,"data":{"ClientId":"28","PictureId":2},"ResponseMessage":"Added Treatment Photo successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "post",
+      "url": "/Favourite",
+      "title": "Add Favourite",
+      "version": "1.0.0",
+      "name": "Add Favourite",
+      "group": "Favourite",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Add Favourite</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "UserId",
+              "description": "<p>UserId of the User who is adding a Favourite (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgId",
+              "description": "<p>Organisation ID (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Favourite added successfully!"}',
             "type": "json"
           }
         ]
