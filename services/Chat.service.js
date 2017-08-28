@@ -28,6 +28,28 @@ exports.GetConversation = function (UserId, MyUserId) {
 
 exports.sendMessage = function (params) {
     // Method to save message
+    var messageData = new Chat({
+        "FromUserId": (params.FromUserId) ? params.FromUserId : null,
+        "ToUserId": (params.ToUserId) ? params.ToUserId : null,
+        "IsViewed": (params.IsViewed) ? params.IsViewed : false,
+        "Message": (params.Message) ? params.Message : null,
+        "CreateDate": (params.CreateDate) ? params.ChatDate : null,
+        "ChatDate": (params.ChatDate) ? params.ChatDate : new Date()
+    });
+
+    return messageData.save(null).tap(function (model) {
+        message = model;
+        return message;
+    }).then(function (chatData) {
+        return chatData;
+    }).catch(function (err) {
+        return err;
+    });
+
+}
+
+exports.sendMessageNew = function (params) {
+    // Method to save message
     var messageData = new Messages({
         "FromId": (params.FromId) ? params.FromId : null,
         "IsViewed": (params.IsViewed) ? params.IsViewed : false,
@@ -46,7 +68,6 @@ exports.sendMessage = function (params) {
     });
 
 }
-
 exports.getAllConversationsOfUser = function (userId) {
     return Participants.forge().query(function (qb) {
         if (userId != 0)
@@ -207,7 +228,7 @@ exports.getRecentConversation = function (UserId) {
     }).catch(function (err) {
         return err;
     }); */
-    var convQuery = 'SELECT id,c.FromUserId,c.chatDate,c.Message FROM Chat as c WHERE c.FromUserId<>' + UserId + ' and  c.ToUserId=' + UserId + ' and c.id =(select d.id from Chat as d  where d.FromUserId=c.FromUserId and d.ToUserId=' + UserId + ' order by d.ChatDate desc)';
+    var convQuery = 'SELECT id,c.FromUserId,c.chatDate,c.Message FROM Chat as c WHERE c.FromUserId<>' + UserId + ' and  c.ToUserId=' + UserId + ' and c.id =(select d.id from Chat as d  where d.FromUserId=c.FromUserId and d.ToUserId=' + UserId + ' order by d.ChatDate desc limit 1)';
     // console.warn('convQuery:', convQuery);
     return orm.knex.raw(convQuery).then(function (chatResults) {
         return chatResults[0];

@@ -24,11 +24,11 @@ exports.GetConversation = function (req, res) {
     });
 }
 
-exports.sendMessage = function (req, res) {
+exports.sendMessageNew = function (req, res) {
     console.log("Send Message");
     var section = "chat";
     var image = (req.body.Picture) ? req.body.Picture : false;
-    ChatServices.sendMessage(req.body).then(function (chatSuccess) {
+    ChatServices.sendMessageNew(req.body).then(function (chatSuccess) {
         if (chatSuccess) {
             if (image) {
                 helperServices.base64toimage(image, chatSuccess.get("MessageId"), section);
@@ -97,11 +97,11 @@ exports.getConversationNew = function (req, res) {
     ChatServices.getConversationIdAmongUsersNew(FromUserId, ToUserId).then(function (conv) {
         res.json({ 'conv': conv })
     });
-    
+
 }
 
-exports.getMyRecentConversation=function(req,res){
-    var UserId=req.params.UserId;
+exports.getMyRecentConversation = function (req, res) {
+    var UserId = req.params.UserId;
     ChatServices.getRecentConversation(UserId).then(function (conv) {
         res.json({ 'conv': conv })
     });

@@ -19,7 +19,8 @@ module.exports = function (router) {
         .get(controller.getConversation) */
 
     router.route('/Aesthetic/api/Chat/')
-        .post(controller.sendMessage);
+        // .post(controller.sendMessage);
+        .post(controller.sendMessageNew);
     router.route('/Aesthetic/api/Chat/:From/:To')
         .get(controller.getConversationNew)
     router.route('/Aesthetic/api/Chat/:UserId')
