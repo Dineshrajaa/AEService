@@ -18,8 +18,10 @@ module.exports = function (router) {
     router.route('/Aesthetic/api/Chat/:From/:To')
         .get(controller.getConversation) */
 
-        router.route('/Aesthetic/api/Chat/')
+    router.route('/Aesthetic/api/Chat/')
         .post(controller.sendMessage);
     router.route('/Aesthetic/api/Chat/:From/:To')
         .get(controller.getConversationNew)
+    router.route('/Aesthetic/api/Chat/:UserId')
+        .get(controller.getMyRecentConversation)
 }

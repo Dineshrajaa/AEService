@@ -190,3 +190,26 @@ exports.uploadImage = function (data, ChatId) {
         return Chat.save(data, authUpdateParams);
     });
 }
+
+exports.getRecentConversation = function (UserId) {
+    /* Method to get recent conversation of the userid */
+    /* return Chat.forge().query(function (qb) {
+        qb.where({
+            'FromUserId': UserId
+        });
+        qb.orWhere({
+            'ToUserId': UserId
+        });
+
+    }).fetchOne().then(function (Messages) {
+        console.warn(Messages);
+        return Messages;
+    }).catch(function (err) {
+        return err;
+    }); */
+    var convQuery = 'SELECT id,c.FromUserId,c.chatDate,c.Message FROM Chat as c WHERE c.FromUserId<>' + UserId + ' and  c.ToUserId=' + UserId + ' and c.id =(select d.id from Chat as d  where d.FromUserId=c.FromUserId and d.ToUserId=' + UserId + ' order by d.ChatDate desc)';
+    // console.warn('convQuery:', convQuery);
+    return orm.knex.raw(convQuery).then(function (chatResults) {
+        return chatResults[0];
+    })
+}

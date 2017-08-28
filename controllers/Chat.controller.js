@@ -97,5 +97,12 @@ exports.getConversationNew = function (req, res) {
     ChatServices.getConversationIdAmongUsersNew(FromUserId, ToUserId).then(function (conv) {
         res.json({ 'conv': conv })
     });
-    /* .then(function (conv) {}) */
+    
+}
+
+exports.getMyRecentConversation=function(req,res){
+    var UserId=req.params.UserId;
+    ChatServices.getRecentConversation(UserId).then(function (conv) {
+        res.json({ 'conv': conv })
+    });
 }
