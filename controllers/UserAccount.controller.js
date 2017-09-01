@@ -188,7 +188,7 @@ exports.GetUserAccountById = function (req, res) {
 				});
 			} else {
 
-				result.set("UserImage", config.image_url + result.get("UserImage"));
+				result.set("UserImage", result.get("UserImage"));
 				return result;
 			}
 		}).then(function (fresult) {
@@ -230,7 +230,7 @@ exports.updateUserProfile = function (req, res) {
 		var min = 100000;
 		var max = 999999;
 		var name = Math.floor(Math.random() * (max - min + 1)) + min + ".png";
-		var filename = config.image_path + name;
+		var filename = config.image_path_global+'/' + name;
 		var path = "Upload/User/" + name;
 		fs.writeFile(filename, new Buffer(req.body.UserImage, "base64"), function (err) {
 			console.log(err);
