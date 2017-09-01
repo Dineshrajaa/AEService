@@ -225,13 +225,12 @@ exports.GetUserAccountById = function (req, res) {
     user.Profile = userAccount.Profile;
 }*/
 exports.updateUserProfile = function (req, res) {
-	console.log("updateUserProfile");
-	if (req.body.UserImage) {
+	if (req.body.UserImage != '') {
 		var min = 100000;
 		var max = 999999;
 		var name = Math.floor(Math.random() * (max - min + 1)) + min + ".png";
-		var filename = config.image_path_global+'/' + name;
-		var path = "Upload/User/" + name;
+		var filename = config.image_path_global + '/Upload/user/' + name;
+		var path = "Upload/user/" + name;
 		fs.writeFile(filename, new Buffer(req.body.UserImage, "base64"), function (err) {
 			console.log(err);
 			console.log(filename);

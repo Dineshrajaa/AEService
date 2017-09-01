@@ -186,7 +186,7 @@ exports.GetUsersImageById = function (UserId) {
 }
 //update user
 exports.UpdateUserAccount = function (params, transaction) {
-  console.log("UpdateUserAccount");
+  console.log("UpdateUserAccount service");
   var UserId = (params.UserId) ? params.UserId : false;
   var authUpdateParams = {
     patch: true
