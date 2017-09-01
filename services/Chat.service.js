@@ -228,9 +228,33 @@ exports.getRecentConversation = function (UserId) {
     }).catch(function (err) {
         return err;
     }); */
-    var convQuery = 'SELECT id,c.FromUserId,c.chatDate,c.Message FROM Chat as c WHERE c.FromUserId<>' + UserId + ' and  c.ToUserId=' + UserId + ' and c.id =(select d.id from Chat as d  where d.FromUserId=c.FromUserId and d.ToUserId=' + UserId + ' order by d.ChatDate desc limit 1)';
+
+    // var convQuery = 'SELECT id,c.FromUserId,c.chatDate,c.Message FROM Chat as c WHERE c.FromUserId<>' + UserId + ' and  c.ToUserId=' + UserId + ' and c.id =(select d.id from Chat as d  where d.FromUserId=c.FromUserId and d.ToUserId=' + UserId + ' order by d.ChatDate desc limit 1)';
+    var convQuery='(SELECT id,c.FromUserId,c.chatDate,c.Message FROM Chat as c WHERE c.FromUserId<>179 and  c.ToUserId=179 and c.id =(select d.id from Chat as d  where d.FromUserId=c.FromUserId and d.ToUserId=179 order by d.ChatDate desc limit 1))UNION(SELECT id,c.ToUserId,c.chatDate,c.Message FROM Chat as c WHERE c.FromUserId=179 and  c.ToUserId<>179 and c.id =(select d.id from Chat as d  where d.ToUserId=c.ToUserId and d.FromUserId=179 order by d.ChatDate desc limit 1)) order by 3 desc'
     // console.warn('convQuery:', convQuery);
     return orm.knex.raw(convQuery).then(function (chatResults) {
         return chatResults[0];
     })
+
+/*     return Chat.forge().orderBy('Id', 'DESC').query(function (qb) {
+        qb.where({
+            'FromUserId': UserId
+        });
+        qb.orWhere({
+            'ToUserId': UserId
+        });
+
+    }).fetchAll().then(function (Messages) {
+        var uniqueConversations;
+        console.warn('I am here:',Messages);
+        if (Messages.length) {
+            
+            Promise.map(Messages.model, function (msg) {
+                console.log(msg.get('Message'));
+            })
+        }
+        // return Messages;
+    }).catch(function (err) {
+        return err;
+    }); */
 }
