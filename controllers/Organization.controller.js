@@ -12,8 +12,8 @@ exports.GetOrganizationById = function (req, res) {
 		OrganizationServices.GetOrganizationById(OrgId, 'OrgId').then(function (result) {
 			if (result.length) {
 				return Promise.map(result.models, function (org) {
-					org.set("OrgImage", config.image_url + org.get("OrgImage"));
-					org.set("OrgCoverImage", config.image_url + org.get("OrgCoverImage"));
+					org.set("OrgImage", org.get("OrgImage"));
+					org.set("OrgCoverImage", org.get("OrgCoverImage"));
 					console.log(org.get("OrgCoverImage"));
 					return org;
 				});
