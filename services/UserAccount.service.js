@@ -93,7 +93,8 @@ exports.saveBusinessInfo = function (params, transaction) {
     "OrgAddress": (params.OrgAddress) ? params.OrgAddress : null,
     "City": (params.City) ? params.City : null,
     "Country": (params.Country) ? params.Country : null,
-    "PostCode": (params.PostCode) ? params.PostCode : null
+    "PostCode": (params.PostCode) ? params.PostCode : null,
+    "OrgCoverImage":(params.OrgCoverImage)?params.OrgCoverImage:"Upload/OrginizationCover/orgcoverdefault.png"
   };
 
   return Organization.forge().query(function (qb) {
