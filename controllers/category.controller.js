@@ -14,7 +14,7 @@ exports.GetAllCategories = function(req, res){
 			CategoriesServices.GetAllCategories(req.query).then(function(result){
 			if(result){
 				return Promise.map(result.models,function(cats){
-						cats.set("CatImage",config.image_url+cats.get('CatImage'));
+						cats.set("CatImage",cats.get('CatImage'));
 						return cats;
 				});
 				

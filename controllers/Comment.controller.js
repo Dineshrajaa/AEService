@@ -100,6 +100,7 @@ exports.updateComment = function (req, res) {
 		return UserAccountServices.GetUserAccount(req.body.UserId).then(function (user) {
 			if (user) {
 				return CommentServices.updateComment(req.body).then(function (result) {
+					console.warn(result);
 					if (result) {
 						if (image) {
 							var CommentImageresponse = helperServices.base64toimage(image, req.body.CommentId, section);
