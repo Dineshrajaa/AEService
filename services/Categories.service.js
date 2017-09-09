@@ -104,3 +104,13 @@ exports.DeleteCategory = function(CatId){
         return err;
     });
 }
+
+exports.getAllCategoriesWithSubCategories=function(){
+    return Categories.forge().query(function (qb) {
+        
+      }).fetchAll().then(function(Categories) {
+          return Categories;
+      }).catch(function(err){
+          return err;
+      });
+}
