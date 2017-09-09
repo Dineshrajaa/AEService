@@ -1831,6 +1831,29 @@ define({
         ]
       },
       "groupTitle": "My Shop"
+    }, {
+      "type": "get",
+      "url": "/Order/:OrgId",
+      "title": "List all Items of an Organization",
+      "version": "1.0.0",
+      "name": "List all Items of an Organization",
+      "group": "My Shop",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>List all Items of an Organization</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"data":[{"ItemID":37,"ItemName":"Mobile","ItemDiscp":"An excellent phone","ItemImage":null,"ItemPrice":2000,"subcatId":2,"ItemQuantity":3,"EstDelivery":"3 days","Returns":"Accepted","ItemCurrency":"Dollars","ItemOfferPrice":1800,"OfferValidTill":"2017-09-09T13:35:43.000Z","OrgId":12}],"Message":"Fetched Posts."}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "My Shop"
     }
   ]
 });

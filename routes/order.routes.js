@@ -11,6 +11,6 @@ module.exports = function(router) {
   /**
    * this accepts all request methods to the `/` path
    */
-	  router.route('/Aesthetic/api/Order')
+	  router.route('/Aesthetic/api/Order/:OrgId')
       .get(middleware.authorizseUser,controller.getAllOrders);
 }
