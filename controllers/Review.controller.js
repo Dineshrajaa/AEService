@@ -69,7 +69,7 @@ exports.CreateReviewComment = function(req, res){
 				if(image){
 					var ReviewCommentImageresponse = helperServices.base64toimage(image,reviews.get('ReviewCommentId'),section);
 				}
-				res.json({"StatusCode": 200,"reviewComment_": {},"ResponseMessage": "ReviewComment insert successfully!"});
+				res.json({"StatusCode": 200,"reviewComment_": {},"ResponseMessage": "Review Comment added successfully!"});
 			}
 			else{
 				res.json({"StatusCode":404,"Message": "An error has occurred."});

@@ -1356,6 +1356,353 @@ define({
           }
         ]
       }
+    }, {
+      "type": "get",
+      "url": "Users/GetById?id=:UserId",
+      "title": "Get Profile info of the user",
+      "version": "1.0.0",
+      "name": "Fetch User info",
+      "group": "Account",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Get details based on the User ID</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"userAccount":{"UserId":1,"UserImage":"Upload/User/cecilcinross.png\r\n","FirstName":"Jay","LastName":"Pocoyo","Password":"LkrEHfiqrxPh6rvJA0EfUQ==","ConfirmPassword":"LkrEHfiqrxPh6rvJA0EfUQ==","EmailId":"newindmin.a@gmail.com","ConfirmEmail":"newindsmin.a@gmail.com","Gender":"Male","Town":"ddd","City":"ddd","Role":"User","CreateDate":null,"ModifyDate":null,"Address":"gggg","PostCode":123,"Profile":"a","DOB":"0000-00-00 00:00:00","IsActive":null,"TagLine":"I went to a visual arts high school and focused on film \rphotography. Ever since, I’ve loved capturing my life","OrgId":null,"businessInfoFound":null},"ResponseMessage":"Wow!! you are so passionate about your UserAccountRepository"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Organization"
+    },{
+      "type": "put",
+      "url": "/Organization/:OrgId",
+      "title": "Update Organization Cover photo",
+      "version": "1.0.0",
+      "name": "Update Organization",
+      "group": "Organization",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Update Cover photo</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgId",
+              "description": "<p>OrgId of the Organization to be sent in URL(required)</p>"
+            },{
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgCoverImage",
+              "description": "<p>OrgCoverImage of the Organization to be sent as base64 string(required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Organization Cover Updated Successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
+    },{
+      "type": "post",
+      "url": "/ReviewComment",
+      "title": "Add Review Comment",
+      "version": "1.0.0",
+      "name": "Add Review Comment",
+      "group": "Review",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization/User to Add Comments to an Review</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "UserId",
+              "description": "<p>UserId of the User who is adding a Comment over a Review (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ReviewId",
+              "description": "<p>Review ID to which you are commenting(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ReviewCommentMsg",
+              "description": "<p>Review Message(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ReviewCommentImage",
+              "description": "<p>Review image in base64 format(required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Review Comment added successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
+    },{
+      "type": "post",
+      "url": "/Comment",
+      "title": "Add Comment for a Post",
+      "version": "1.0.0",
+      "name": "Add Post Comment",
+      "group": "Posts",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization/User to Add Comments to a Post</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "UserId",
+              "description": "<p>UserId of the User who is adding a Comment over a Review (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "PostId",
+              "description": "<p>Post ID to which User is commenting(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "CommentMsg",
+              "description": "<p>Review Message(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "CommentImage",
+              "description": "<p>Comment image in base64 format(required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Comment added successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "get",
+      "url": "Comment/GetById?id=:PostId",
+      "title": "Get list of comments of the post",
+      "version": "1.0.0",
+      "name": "Fetch Comments list",
+      "group": "Posts",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Get list of Comments of a Post</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"lstComment":[{"CommentId":19,"PostId":20,"UserId":149,"CommentMsg":"ok","CommentImage":"0","UserName":"Rajkumar rathore","UserImage":"Upload/User/527575.png","FirstName":"Rajkumar","LastName":"rathore","City":null,"ReviewComment":null,"ReviewTime":"0001-01-01T00:00:00","ReviewCommentId":0,"CommentCount":0,"PostTime":"0001-01-01T00:00:00","DisplayTime":"7 months","CommentTime":"2017-03-24T06:48:23.000Z","CreateDate":null,"ModifyDate":null,"PostGet":null,"UserAccount":null},{"CommentId":20,"PostId":20,"UserId":149,"CommentMsg":"test","CommentImage":"0","UserName":"Rajkumar rathore","UserImage":"Upload/User/527575.png","FirstName":"Rajkumar","LastName":"rathore","City":null,"ReviewComment":null,"ReviewTime":"0001-01-01T00:00:00","ReviewCommentId":0,"CommentCount":0,"PostTime":"0001-01-01T00:00:00","DisplayTime":"7 months","CommentTime":"2017-03-25T13:03:40.000Z","CreateDate":null,"ModifyDate":null,"PostGet":null,"UserAccount":null}],"ResponseMessage":"Wow!! you are so passionate about your CommentRepository"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Posts"
+    }, {
+      "type": "get",
+      "url": "ReviewComment/GetReviewCommentById?id=:ReviewId",
+      "title": "Get list of comments of the post",
+      "version": "1.0.0",
+      "name": "Fetch Comments list",
+      "group": "Review",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Get list of Comments of a Review</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"lstReviewComment":[{"ReviewCommentId":1,"ReviewId":55,"UserId":149,"ReviewCommentMsg":"hello","ReviewCommentImage":null,"ReviewCommentTime":"2017-03-08T14:19:46.000Z","ReviewCreateDate":"2017-03-08T14:19:46.000Z","ReviewModifyDate":"2017-03-08T14:19:46.000Z","UserImage":"Upload/User/527575.png","FirstName":"Rajkumar","LastName":"rathore","FullName":"Rajkumar rathore","DisplayTime":"7 months"}],"ResponseMessage":"Wow!! you are so passionate about your lstReviewCommentRepository"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Review"
+    },{
+      "type": "post",
+      "url": "/Comment/Update",
+      "title": "Update Comment for a Post",
+      "version": "1.0.0",
+      "name": "Update Post Comment",
+      "group": "Posts",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization/User to Update Comments</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "UserId",
+              "description": "<p>UserId of the User who is adding a Comment over a Review (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "CommentId",
+              "description": "<p>Comment ID you need to update(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "CommentMsg",
+              "description": "<p>Review Message(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "CommentImage",
+              "description": "<p>Comment image in base64 format(required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Comment updated successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "get",
+      "url": "Comment/Delete?id=:CommentID",
+      "title": "Delete comment of the post",
+      "version": "1.0.0",
+      "name": "Delete Comment",
+      "group": "Posts",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Delete a Comment of a Post</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Deleted Successfully"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Posts"
+    }, {
+      "type": "get",
+      "url": "/GetAllCategories",
+      "title": "List all Categories",
+      "version": "1.0.0",
+      "name": "List Categories",
+      "group": "Categories",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>List Categories</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"lstCategories":[{"CatId":1,"CatName":"Body","CatImage":"Upload/Category/girl3.png\r\n\r\n","OrgId":1},{"CatId":2,"CatName":"Face","CatImage":"Upload/Category/girl4.png\r\n","OrgId":1}],"ResponseMessage":"Wow!! you are so passionate about your Categories Repository"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Categories"
+    }, {
+      "type": "get",
+      "url": "/Categories/GetCategoryWithSubCategory",
+      "title": "List all Categories with SubCategories",
+      "version": "1.0.0",
+      "name": "List Categories with SubCategories",
+      "group": "Categories",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>List Categories with SubCategories</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"lstComment":[{"CatId":1,"CatName":"Body","CatImage":"Upload/Category/girl3.png\r\n\r\n","OrgId":1,"SubCategories":[{"SubcatId":2,"SbCatName":"Cellulite Treatment","CatId":1},{"SubcatId":3,"SbCatName":"Moisturisers","CatId":1}]},{"CatId":2,"CatName":"Face","CatImage":"Upload/Category/girl4.png\r\n","OrgId":1,"SubCategories":[]}],"ResponseMessage":"Wow!! you are so passionate about your CommentRepository"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Categories"
     }
   ]
 });
