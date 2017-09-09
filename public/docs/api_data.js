@@ -1703,6 +1703,134 @@ define({
         ]
       },
       "groupTitle": "Categories"
+    },{
+      "type": "post",
+      "url": "/Item",
+      "title": "Add Item",
+      "version": "1.0.0",
+      "name": "Add Item",
+      "group": "Posts",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Add Item</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgId",
+              "description": "<p>OrgId of the Organization who is adding a Item(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemName",
+              "description": "<p>Name of the Product(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemDiscp",
+              "description": "<p>Description of the Product(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemPrice",
+              "description": "<p>Price of the Product(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "subcatId",
+              "description": "<p>Subcategory to which Product belongs to(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemQuantity",
+              "description": "<p>Quantity of the Product(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "EstDelivery",
+              "description": "<p>Estimated Delivery Time of the Product in days(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemCurrency",
+              "description": "<p>Euro or Dollars(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemOfferPrice",
+              "description": "<p>Offer Price of the Product(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OfferValidTill",
+              "description": "<p>Offer Valid till as Timestamp(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Returns",
+              "description": "<p>Return of Product 'Accepted' or 'Not Accepted'(required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"data":{"ItemName":"Mobile","ItemDiscp":"An excellent phone","ItemPrice":"2000","subcatId":"2","ItemQuantity":"3","EstDelivery":"3 days","ItemCurrency":"Dollars","ItemOfferPrice":"1800","OfferValidTill":null,"Returns":"Accepted","OrgId":"12","ItemID":37},"ResponseMessage":"Added Item successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "get",
+      "url": "/Item/:OrgId",
+      "title": "List all Items of an Organization",
+      "version": "1.0.0",
+      "name": "List all Items of an Organization",
+      "group": "My Shop",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>List all Items of an Organization</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"data":[{"ItemID":37,"ItemName":"Mobile","ItemDiscp":"An excellent phone","ItemImage":null,"ItemPrice":2000,"subcatId":2,"ItemQuantity":3,"EstDelivery":"3 days","Returns":"Accepted","ItemCurrency":"Dollars","ItemOfferPrice":1800,"OfferValidTill":"2017-09-09T13:35:43.000Z","OrgId":12}],"Message":"Fetched Posts."}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "My Shop"
     }
   ]
 });

@@ -6,6 +6,7 @@ var config = require('../config'),
   ClientsServices = require('../services/Clients.service'),
   PostServices = require('../services/Posts.service'),
   ReviewServices = require('../services/Review.service'),
+  ItemServices = require('../services/item.service'),
   distance = require('google-distance-matrix'),
   moment = require('moment');
 exports.decrypt = function (text, Email) {
@@ -119,6 +120,8 @@ exports.base64toimage = function (dataString, CommentId, section) {
     folder = "Post"
   if (section == "client")
     folder = "Client"
+  if(section=="item")
+    folder="Item"
   var filename = config.image_path_global + '/Upload/' + folder + "/" + name;
   var path = "Upload/" + folder + "/" + name;
 
@@ -128,6 +131,20 @@ exports.base64toimage = function (dataString, CommentId, section) {
         "Picture": path
       }
       return ClientsServices.uploadImage(data, CommentId).then(function () {
+        return path;
+      }).catch(function (err) {
+        return err;
+      })
+
+    });
+  }
+
+  if (section == "item") {
+    fs.writeFile(filename, new Buffer(dataString, "base64"), function (err) {
+      var data = {
+        "ItemImage": path
+      }
+      return ItemServices.uploadImage(data, CommentId).then(function () {
         return path;
       }).catch(function (err) {
         return err;
