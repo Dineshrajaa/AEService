@@ -19,5 +19,7 @@ module.exports = function (router) {
         .get(controller.FindNearByOrganization);
     router.route('/Aesthetic/api/Organization/:OrgId')
         .put(middleware.authorizseUser, controller.UpdateOrganizationCover);
+    router.route('/Aesthetic/api/Organization/terms/:OrgId')
+        .put(middleware.authorizseUser, controller.UpdateOrganizationTerms);
 
 }

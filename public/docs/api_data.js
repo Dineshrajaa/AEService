@@ -1709,7 +1709,7 @@ define({
       "title": "Add Item",
       "version": "1.0.0",
       "name": "Add Item",
-      "group": "Posts",
+      "group": "My Shop",
       "permission": [
         {
           "name": "Universal"
@@ -1784,7 +1784,7 @@ define({
             },
             {
               "group": "Parameter",
-              "type": "String",
+              "type": "Timestamp",
               "optional": false,
               "field": "OfferValidTill",
               "description": "<p>Offer Valid till as Timestamp(required)</p>"
@@ -1795,6 +1795,13 @@ define({
               "optional": false,
               "field": "Returns",
               "description": "<p>Return of Product 'Accepted' or 'Not Accepted'(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemImage",
+              "description": "<p>Item Picture as Base64 string</p>"
             }
           ]
         }
@@ -1854,6 +1861,47 @@ define({
         ]
       },
       "groupTitle": "My Shop"
+    },{
+      "type": "put",
+      "url": "/Organization/terms/:OrgId",
+      "title": "Update Organization Terms and Condition",
+      "version": "1.0.0",
+      "name": "Update Organization Terms",
+      "group": "Organization",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Update Terms and Condition</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgId",
+              "description": "<p>OrgId of the Organization to be sent in URL(required)</p>"
+            },{
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "TermsAndCondition",
+              "description": "<p>TermsAndCondition of the Organization(required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Organization Terms Updated Successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
     }
   ]
 });

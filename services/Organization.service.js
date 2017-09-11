@@ -32,6 +32,21 @@ exports.UpdateCoverPhoto = function (organizationData) {
     });
 }
 
+
+exports.UpdateTermsAndCondition = function (organizationData) {
+    /* Service to update Terms and Condition */
+    var OrgId = organizationData.OrgId;
+    var organizationInfo = {
+        'TermsAndCondition': organizationData.TermsAndCondition
+    };
+    return new Organization().where({ 'OrgId': OrgId }).save(organizationInfo, {
+        patch: true
+    }).then(function (result) {
+        return result;
+    }).catch(function (err) {
+        return err;
+    });
+}
 //get nearby organiztion
 exports.FindNearByOrganization = function (origins) {
     var fetchParams = {};

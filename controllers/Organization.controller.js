@@ -77,6 +77,25 @@ exports.UpdateOrganizationCover = function (req, res) {
 			console.log(err);
 		});
 }
+
+exports.UpdateOrganizationTerms = function (req, res) {
+	/* Method to update organization cover photo */
+	var OrgId = req.params.OrgId;	
+
+	OrganizationServices.GetOrganizationById(OrgId, 'OrgId')
+		.then(function (organization) {
+			if (organization)
+				return OrganizationServices.UpdateTermsAndCondition(req.body)
+					.then(function (termsSuccess) {
+						res.json({ "StatusCode": 200, "Organization": termsSuccess, "ResponseMessage": "Organization Terms Updated Successfully!" });
+					});
+			else
+				res.json({ "StatusCode": 200, "ResponseMessage": "Organization Not Found!" });
+		})
+		.catch(function (err) {
+			console.log(err);
+		});
+}
 //get near by organnization
 exports.FindNearByOrganization = function (req, res) {
 	console.log("FindNearByOrganization");
