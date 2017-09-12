@@ -121,13 +121,14 @@ exports.GetById = function (req, res) {
 		ItemServices.GetAllItems(ItemID, "ItemID").then(function (result) {
 			if (result.length) {
 				return Promise.map(result.models, function (appo) {
+					// console.warn('result.models:',result.models);
 					return {
 						"SubCategory": {
 							"Categories": {
 								"CatId": appo.get('CatId'),
 								"CatName": appo.get('CatName'),
 								"CatImage": appo.get('CatImage'),
-								"OrgId": appo.get('OrgId')
+								"OrgId": appo.get('ItemOrgId')
 							},
 							"SubcatId": appo.get('SubcatId'),
 							"SbCatName": appo.get('SbCatName'),
@@ -149,7 +150,7 @@ exports.GetById = function (req, res) {
 						"Status": appo.get('Status'),
 						"OrgImage": appo.get('OrgImage'),
 						"OrgName": appo.get('OrgName'),
-						"OrgId": appo.get('OrgId'),
+						"OrgId": appo.get('ItemOrgId'),
 						"SubcatId": appo.get('SubcatId')
 					}
 
