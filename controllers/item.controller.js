@@ -126,7 +126,7 @@ exports.GetById = function (req, res) {
 							"Categories": {
 								"CatId": appo.get('CatId'),
 								"CatName": appo.get('CatName'),
-								"CatImage": config.image_url + appo.get('CatImage'),
+								"CatImage": appo.get('CatImage'),
 								"OrgId": appo.get('OrgId')
 							},
 							"SubcatId": appo.get('SubcatId'),
@@ -259,6 +259,7 @@ exports.DeleteItem = function (req, res) {
 
 exports.GetItemsOfOrganization = function (req, res) {
 	/* Method to Get the Items/Products  */
+	console.log('GetItemsOfOrganization');
 	ItemServices.getMyItems(req.params.OrgId).then(function (Items) {
 		if (Items.length) {
 

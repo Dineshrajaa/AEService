@@ -11,6 +11,8 @@ module.exports = function (router) {
 	/**
 	 * this accepts all request methods to the `/` path
 	 */
+	router.route('/Aesthetic/api/Item/GetByItemId')
+		.get(controller.GetById);
 	router.route('/Aesthetic/api/Item')
 		.get(controller.GetAllItems)
 		.post(controller.AddItem)
@@ -21,6 +23,5 @@ module.exports = function (router) {
 		.get(controller.GetItemsOfOrganization)
 	router.route('/Aesthetic/api/Item/GetItemBySubcategoryId')
 		.get(controller.GetItemBySubcategoryId);
-	router.route('/Aesthetic/api/Item/GetByItemId')
-		.get(controller.GetById);
+
 }
