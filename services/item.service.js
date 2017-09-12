@@ -52,6 +52,44 @@ exports.AddItem = function (params) {
     });
 };
 
+exports.UpdateItem = function (params) {
+    console.log("Update Item");
+    var ItemId = params.ItemID;
+    var ItemToUpdate = {
+        ItemName: (params.ItemName) ? params.ItemName : null,
+        ItemDiscp: (params.ItemDiscp) ? params.ItemDiscp : null,
+        ItemPrice: (params.ItemPrice) ? params.ItemPrice : null,
+        subcatId: (params.subcatId) ? params.subcatId : new Date(),
+        ItemQuantity: (params.ItemQuantity) ? params.ItemQuantity : null,
+        EstDelivery: (params.EstDelivery) ? params.EstDelivery : null,
+        ItemCurrency: (params.ItemCurrency) ? params.ItemCurrency : null,
+        ItemOfferPrice: (params.ItemOfferPrice) ? params.ItemOfferPrice : null,
+        OfferValidTill: (params.OfferValidTill) ? params.OfferValidTill : null,
+        Returns: (params.Returns) ? params.Returns : 'Accepted',
+        OrgId: (params.OrgId) ? params.OrgId : null,
+    };
+    return new Item().where({ 'ItemID': ItemId }).save(ItemToUpdate, {
+        patch: true
+    }).then(function (result) {
+        return result;
+    }).catch(function (err) {
+        return err;
+    });
+};
+
+exports.DeleteItem = function (ItemId) {
+    return Item.forge().query(function (qb) {
+        qb.where({
+            'ItemID': ItemId
+        });
+        qb.del();
+    }).fetch().then(function (result) {
+        return result;
+    }).catch(function (err) {
+        return err;
+    });
+};
+
 exports.uploadImage = function (data, ItemID) {
 
     var authUpdateParams = {

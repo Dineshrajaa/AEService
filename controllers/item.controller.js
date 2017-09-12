@@ -199,6 +199,64 @@ exports.AddItem = function (req, res) {
 
 }
 
+exports.UpdateItem = function (req, res) {
+	/* Method to Add a Product */
+	var section = "item";
+	var image = (req.body.ItemImage) ? req.body.ItemImage : false;
+	ItemServices.UpdateItem(req.body).then(function (itemSuccess) {
+		console.log('itemSuccess:', itemSuccess);
+		if (itemSuccess.get("ItemID") !== null) {
+			if (image) {
+				helperServices.base64toimage(image, itemSuccess.get("ItemID"), section);
+			}
+			res.json({
+				"StatusCode": 200,
+				"data": itemSuccess,
+				"ResponseMessage": "Updated Item successfully!"
+			});
+		} else {
+			res.json({ "StatusCode": 404, "Message": "An error has occurred." });
+		}
+	}).catch(function (err) {
+		res.json({
+			"StatusCode": err.status,
+			"data": [],
+			"ResponseMessage": err.messages
+		});
+	});
+
+}
+
+exports.DeleteItem = function (req, res) {
+	console.log("DeleteItem");
+	console.log("req.params.ItemID:", req.params.ItemID);
+	var ItemID = (req.params.ItemID) ? req.params.ItemID : false;
+	if (ItemID) {
+		ItemServices.DeleteItem(ItemID).then(function (result) {
+			if (result)
+				res.json({
+					"StatusCode": 200,
+					"ResponseMessage": "Deleted Item Successfully"
+				});
+			else
+				res.json({
+					"Message": "An error has occurred."
+				});
+		}).catch(function (err) {
+			res.json({
+				"StatusCode": err.status,
+				"deleteclients": [],
+				"ResponseMessage": err.messages
+			});
+		});
+
+	} else {
+		res.json({
+			"Message": "No HTTP resource was found that matches the request URI '" + config.webUri + "/Aesthetic/api/Categories/Delete'."
+		});
+	}
+};
+
 exports.GetItemsOfOrganization = function (req, res) {
 	/* Method to Get the Items/Products  */
 	ItemServices.getMyItems(req.params.OrgId).then(function (Items) {
