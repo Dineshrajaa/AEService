@@ -84,11 +84,13 @@ exports.UpdateOrganizationTerms = function (req, res) {
 
 	OrganizationServices.GetOrganizationById(OrgId, 'OrgId')
 		.then(function (organization) {
-			if (organization)
+			if (organization){
+				req.body.OrgId=OrgId;
 				return OrganizationServices.UpdateTermsAndCondition(req.body)
 					.then(function (termsSuccess) {
 						res.json({ "StatusCode": 200, "Organization": termsSuccess, "ResponseMessage": "Organization Terms Updated Successfully!" });
 					});
+			}
 			else
 				res.json({ "StatusCode": 200, "ResponseMessage": "Organization Not Found!" });
 		})

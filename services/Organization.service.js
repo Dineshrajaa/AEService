@@ -35,6 +35,7 @@ exports.UpdateCoverPhoto = function (organizationData) {
 
 exports.UpdateTermsAndCondition = function (organizationData) {
     /* Service to update Terms and Condition */
+    console.warn('organizationData:',organizationData);
     var OrgId = organizationData.OrgId;
     var organizationInfo = {
         'TermsAndCondition': organizationData.TermsAndCondition
