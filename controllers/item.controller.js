@@ -138,6 +138,7 @@ exports.GetById = function (req, res) {
 						"Status": null,
 						"ItemName": appo.get('ItemName'),
 						"ItemDiscp": appo.get('ItemDiscp'),
+						"ItemOfferPrice": appo.get('ItemOfferPrice'),
 						"ItemImage": appo.get('ItemImage'),
 						"ItemPrice": appo.get('ItemPrice'),
 						"EstDelivery": appo.get('EstDelivery'),
