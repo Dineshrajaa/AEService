@@ -12,3 +12,12 @@ exports.getAllOrders = function (req, res) {
 	});
 }
 
+exports.placeOrder = function (req, res) {
+	/* Method to place orders */
+	orderServices.placeOrder(req.body).then(function (result) {
+		res.json({ "StatusCode": err.status, "data": result, "ResponseMessage": "Created Order Successfully" });
+	}).catch(function () {
+		res.json({ "StatusCode": err.status, "lstCategories": [], "ResponseMessage": err.messages });
+	});
+}
+
