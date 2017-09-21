@@ -66,7 +66,7 @@ exports.GetItemBySubcategoryId = function (req, res) {
 							"Categories": {
 								"CatId": appo.get('CatId'),
 								"CatName": appo.get('CatName'),
-								"CatImage": config.image_url + appo.get('CatImage'),
+								"CatImage": appo.get('CatImage'),
 								"OrgId": appo.get('OrgId')
 							},
 							"SubcatId": appo.get('SubcatId'),
@@ -77,7 +77,7 @@ exports.GetItemBySubcategoryId = function (req, res) {
 						"Status": null,
 						"ItemName": appo.get('ItemName'),
 						"ItemDiscp": appo.get('ItemDiscp'),
-						"ItemImage": config.image_url + appo.get('ItemImage'),
+						"ItemImage": appo.get('ItemImage'),
 						"ItemPrice": appo.get('ItemPrice'),
 						"EstDelivery": appo.get('EstDelivery'),
 						"Returns": appo.get('Returns'),
@@ -87,7 +87,7 @@ exports.GetItemBySubcategoryId = function (req, res) {
 						"CatName": appo.get('CatName'),
 						"SbCatName": appo.get('SbCatName'),
 						"Status": appo.get('Status'),
-						"OrgImage": config.image_url + appo.get('OrgImage'),
+						"OrgImage":appo.get('OrgImage'),
 						"OrgName": appo.get('OrgName'),
 						"OrgId": appo.get('OrgId'),
 						"SubcatId": appo.get('SubcatId')
