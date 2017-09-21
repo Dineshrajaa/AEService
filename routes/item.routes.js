@@ -19,9 +19,10 @@ module.exports = function (router) {
 		.put(controller.UpdateItem)
 	router.route('/Aesthetic/api/Item/:ItemID')
 		.delete(controller.DeleteItem)
-	router.route('/Aesthetic/api/Item/:OrgId')
-		.get(controller.GetItemsOfOrganization)
 	router.route('/Aesthetic/api/Item/GetItemBySubcategoryId')
 		.get(controller.GetItemBySubcategoryId);
+	router.route('/Aesthetic/api/Item/:OrgId')
+		.get(controller.GetItemsOfOrganization)
+
 
 }
