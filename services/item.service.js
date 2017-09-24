@@ -20,7 +20,6 @@ exports.GetAllItems = function (value, fieldname) {
         if (fieldname) {
             qb.where("Item." + fieldname, value);
         }
-        qb.debug(true);
     }).fetchAll().then(function (SellerList) {
         return SellerList;
     }).catch(function (err) {
