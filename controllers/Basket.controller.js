@@ -57,3 +57,23 @@ exports.GetItemsFromMyBasket = function (req, res) {
         res.json({ "StatusCode": err.status, "lstCategories": [], "ResponseMessage": err.messages });
     });
 }
+
+exports.RemoveFromMyBasket=function(req,res){
+    /**
+     * Method to remove item from cart
+     */
+    var BasketId = (req.params.BasketId) ? req.params.BasketId : false;
+    if (BasketId) {
+        BasketServices.DeleteFromBasket(BasketId).then(function (result) {
+            if (result)
+                res.json({ "StatusCode": 200, "ResponseMessage": "Deleted Item Successfully" });
+            else
+                res.json({ "Message": "An error has occurred." });
+        }).catch(function (err) {
+            res.json({ "StatusCode": err.status, "ResponseMessage": err.messages });
+        });
+
+    } else {
+        res.json({ "Message": "No HTTP resource was found that matches the request URI '" + config.webUri + "/Aesthetic/api/Categories/Delete'." });
+    }
+}

@@ -31,7 +31,7 @@ exports.saveToBasket = function (params) {
 
 exports.getAllItemsFromBasket = function (userId) {
     return Basket.forge().query(function (qb) {
-        qb.select('Basket.BasketId','Basket.Quantity','Basket.Status','Basket.AddedTime','Basket.ItemID','Item.ItemName','Item.ItemPrice','Item.OrgId','Item.ItemImage','Item.ItemCurrency');
+        qb.select('Basket.BasketId', 'Basket.Quantity', 'Basket.Status', 'Basket.AddedTime', 'Basket.ItemID', 'Item.ItemName', 'Item.ItemPrice', 'Item.OrgId', 'Item.ItemImage', 'Item.ItemCurrency');
         qb.leftJoin('Item', function () {
             this.on('Basket.ItemID', '=', 'Item.ItemID')
         });
@@ -45,6 +45,19 @@ exports.getAllItemsFromBasket = function (userId) {
     }).catch(function (err) {
         console.log(err);
     })
+};
+
+exports.DeleteFromBasket = function (BasketId) {
+    return Basket.forge().query(function (qb) {
+        qb.where({
+            'BasketId': BasketId
+        });
+        qb.del();
+    }).fetch().then(function (result) {
+        return result;
+    }).catch(function (err) {
+        return err;
+    });
 };
 
 
