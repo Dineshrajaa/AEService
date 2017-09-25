@@ -33,14 +33,14 @@ exports.GetItemsFromMyBasket = function (req, res) {
                 // console.warn('result.models:',result.models);
                 return {
                     "ItemID": appo.get('ItemID'),
-                    "ItemName": appo.get('ItemName'),                    
+                    "ItemName": appo.get('ItemName'),
                     "ItemImage": appo.get('ItemImage'),
-                    "ItemPrice": appo.get('ItemPrice'),                    
+                    "ItemPrice": appo.get('ItemPrice'),
                     "ItemCurrency": appo.get('ItemCurrency'),
                     "Quantity": appo.get('Quantity'),
                     "AddedTime": appo.get('AddedTime'),
                     "BasketId": appo.get('BasketId'),
-                    "Status": appo.get('Status'),                    
+                    "Status": appo.get('Status'),
                     "OrgId": appo.get('ItemOrgId'),
                 }
 
@@ -58,7 +58,7 @@ exports.GetItemsFromMyBasket = function (req, res) {
     });
 }
 
-exports.RemoveFromMyBasket=function(req,res){
+exports.RemoveFromMyBasket = function (req, res) {
     /**
      * Method to remove item from cart
      */
@@ -67,6 +67,26 @@ exports.RemoveFromMyBasket=function(req,res){
         BasketServices.DeleteFromBasket(BasketId).then(function (result) {
             if (result)
                 res.json({ "StatusCode": 200, "ResponseMessage": "Deleted Item Successfully" });
+            else
+                res.json({ "Message": "An error has occurred." });
+        }).catch(function (err) {
+            res.json({ "StatusCode": err.status, "ResponseMessage": err.messages });
+        });
+
+    } else {
+        res.json({ "Message": "No HTTP resource was found that matches the request URI '" + config.webUri + "/Aesthetic/api/Categories/Delete'." });
+    }
+}
+
+exports.UpdateBasketItem = function (req, res) {
+    /**
+     * Method to update item in the cart generally for quantity
+     */
+    var BasketId = (req.params.BasketId) ? req.params.BasketId : false;
+    if (BasketId) {
+        BasketServices.UpdateItemInBasket(req.body,BasketId).then(function (result) {
+            if (result)
+                res.json({ "StatusCode": 200, "ResponseMessage": "Updated Basket Item Successfully" });
             else
                 res.json({ "Message": "An error has occurred." });
         }).catch(function (err) {

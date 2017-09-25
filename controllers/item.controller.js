@@ -79,6 +79,8 @@ exports.GetItemBySubcategoryId = function (req, res) {
 						"ItemDiscp": appo.get('ItemDiscp'),
 						"ItemImage": appo.get('ItemImage'),
 						"ItemPrice": appo.get('ItemPrice'),
+						"ItemOfferPrice": appo.get('ItemOfferPrice'),
+						"OfferValidTill": appo.get('OfferValidTill'),
 						"EstDelivery": appo.get('EstDelivery'),
 						"Returns": appo.get('Returns'),
 						"ItemCurrency": appo.get('ItemCurrency'),
@@ -87,7 +89,7 @@ exports.GetItemBySubcategoryId = function (req, res) {
 						"CatName": appo.get('CatName'),
 						"SbCatName": appo.get('SbCatName'),
 						"Status": appo.get('Status'),
-						"OrgImage":appo.get('OrgImage'),
+						"OrgImage": appo.get('OrgImage'),
 						"OrgName": appo.get('OrgName'),
 						"OrgId": appo.get('OrgId'),
 						"SubcatId": appo.get('SubcatId')

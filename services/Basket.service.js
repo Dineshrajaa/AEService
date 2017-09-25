@@ -39,7 +39,6 @@ exports.getAllItemsFromBasket = function (userId) {
             qb.where({
                 'Basket.UserId': userId
             });
-        qb.debug(true);
     }).fetchAll().then(function (result) {
         return result;
     }).catch(function (err) {
@@ -60,6 +59,16 @@ exports.DeleteFromBasket = function (BasketId) {
     });
 };
 
+
+exports.UpdateItemInBasket = function (basketData, basketId) {
+    return new Basket().where({ 'BasketId': basketId }).save(basketData, {
+        patch: true
+    }).then(function (result) {
+        return result;
+    }).catch(function (err) {
+        return err;
+    });
+};
 
 
 
