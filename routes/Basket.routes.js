@@ -19,4 +19,6 @@ module.exports = function (router) {
     router.route('/Aesthetic/api/Basket/:BasketId')
         .delete(controller.RemoveFromMyBasket)
         .put(controller.UpdateBasketItem)
+    router.route('/Aesthetic/api/ItemInBasket/:UserId/:ItemId')
+        .get(controller.checkItemInBasket)
 }

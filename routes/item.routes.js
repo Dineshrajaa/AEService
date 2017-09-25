@@ -23,6 +23,4 @@ module.exports = function (router) {
 		.get(controller.GetItemBySubcategoryId);
 	router.route('/Aesthetic/api/Item/:OrgId')
 		.get(controller.GetItemsOfOrganization)
-
-
 }

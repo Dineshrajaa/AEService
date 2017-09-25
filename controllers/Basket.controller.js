@@ -84,7 +84,7 @@ exports.UpdateBasketItem = function (req, res) {
      */
     var BasketId = (req.params.BasketId) ? req.params.BasketId : false;
     if (BasketId) {
-        BasketServices.UpdateItemInBasket(req.body,BasketId).then(function (result) {
+        BasketServices.UpdateItemInBasket(req.body, BasketId).then(function (result) {
             if (result)
                 res.json({ "StatusCode": 200, "ResponseMessage": "Updated Basket Item Successfully" });
             else
@@ -96,4 +96,25 @@ exports.UpdateBasketItem = function (req, res) {
     } else {
         res.json({ "Message": "No HTTP resource was found that matches the request URI '" + config.webUri + "/Aesthetic/api/Categories/Delete'." });
     }
+}
+
+
+exports.checkItemInBasket = function (req, res) {
+	/**
+	 * Method to check whether Item in Basket or not
+	 */
+    console.warn('checkItemInBasket');
+    var UserId = req.params.UserId;
+    var ItemId = req.params.ItemId;
+    console.log('UserId:', UserId, 'ItemId:', ItemId);
+    BasketServices.checkItemInMyBasket(UserId, ItemId).then(function (Items) {
+        res.json({ "StatusCode": 200, "alreadyInCart": Items, "Message": "Fetched Item in Cart Status." });
+    }).catch(function (err) {
+        console.warn('err:', err);
+        res.json({
+            "StatusCode": err.status,
+            "data": [],
+            "ResponseMessage": err.messages
+        });
+    });
 }

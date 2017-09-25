@@ -70,5 +70,20 @@ exports.UpdateItemInBasket = function (basketData, basketId) {
     });
 };
 
+exports.checkItemInMyBasket = function (UserId, ItemId) {
+    return Basket.forge().query(function (qb) {
+        qb.where({
+            'UserId': UserId,
+            'ItemId': ItemId
+        });
+    }).fetch().then(function (BasketItem) {
+        console.warn('BasketItem:', BasketItem);
+        if (BasketItem) {
+            return 1;
+        } else
+            return 0;
+    });
+};
+
 
 
