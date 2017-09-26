@@ -33,7 +33,8 @@ exports.placeOrder = function (params) {
             params.OrderId = orderId;
         }
         var orderTobeSaved = [];
-        for (var i = 0; i < params.items; i++) {
+        // console.warn('params:',params);
+        for (var i = 0; i < params.items.length; i++) {
             var item = params.items[i];
             var itemObj = {};
             itemObj.ItemId = item.ItemId;
