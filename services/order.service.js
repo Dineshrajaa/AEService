@@ -52,7 +52,9 @@ exports.placeOrder = function (params) {
         var OrderDetailCollection = orm.bookshelf.Collection.extend({
             model: OrderDetail
         });
+        console.log('coll:',OrderDetailCollection);
         return OrderDetailCollection.forge(orderTobeSaved).invokeThen('save').then(function (orderSuccess) {
+            console.log('orderSuccess:',orderSuccess);
             return orderSuccess;
         })
     }).catch(function (err) {
