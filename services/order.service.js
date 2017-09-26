@@ -27,40 +27,47 @@ exports.getAllOrders = function (OrgId) {
 exports.placeOrder = function (params) {
     /* Method to place order */
     console.warn(params);
-    exports.createOrder(params).then(function (orderId) {
+    createOrder(params).then(function (orderId) {
         console.warn('orderId:', orderId);
         if (orderId) {
             params.OrderId = orderId;
         }
-        var orderTobeSaved = [];
-        // console.warn('params:',params);
-        for (var i = 0; i < params.items.length; i++) {
-            var item = params.items[i];
-            var itemObj = {};
-            itemObj.ItemId = item.ItemId;
-            itemObj.ItemQuantity = item.ItemQuantity;
-            itemObj.ItemRate = item.ItemRate;
-            itemObj.Amount = item.ItemQuantity * item.ItemRate;
-            itemObj.ItemCurrency = item.ItemCurrency;
-            itemObj.OrdDetailStatus = (item.OrdDetailStatus) ? item.OrdDetailStatus : 'P';
-            itemObj.OrderId = orderId;
-            console.warn('itemObj:', itemObj);
-            orderTobeSaved.push(itemObj);
-        }
-        console.warn('orderTobeSaved:', orderTobeSaved);
-
-        var OrderDetailCollection = orm.bookshelf.Collection.extend({
-            model: OrderDetail
-        });
-        console.log('coll:',OrderDetailCollection);
-        return OrderDetailCollection.forge(orderTobeSaved).invokeThen('save').then(function (orderSuccess) {
-            console.log('orderSuccess:',orderSuccess);
-            return orderSuccess;
-        })
+        
     }).catch(function (err) {
         console.log('Err1:', err);
         return err;
     });
+}
+
+exports.saveItems=function(params){
+    /**
+     * Method to save items
+     */
+    var orderTobeSaved = [];
+    // console.warn('params:',params);
+    for (var i = 0; i < params.items.length; i++) {
+        var item = params.items[i];
+        var itemObj = {};
+        itemObj.ItemId = item.ItemId;
+        itemObj.ItemQuantity = item.ItemQuantity;
+        itemObj.ItemRate = item.ItemRate;
+        itemObj.Amount = item.ItemQuantity * item.ItemRate;
+        itemObj.ItemCurrency = item.ItemCurrency;
+        itemObj.OrdDetailStatus = (item.OrdDetailStatus) ? item.OrdDetailStatus : 'P';
+        itemObj.OrderId = params.OrderId;
+        console.warn('itemObj:', itemObj);
+        orderTobeSaved.push(itemObj);
+    }
+    console.warn('orderTobeSaved:', orderTobeSaved);
+
+    var OrderDetailCollection = orm.bookshelf.Collection.extend({
+        model: OrderDetail
+    });
+    console.log('coll:', OrderDetailCollection);
+    return OrderDetailCollection.forge(orderTobeSaved).invokeThen('save').then(function (orderSuccess) {
+        console.log('orderSuccess:', orderSuccess);
+        return orderSuccess;
+    })
 }
 
 exports.createOrder = function (params) {

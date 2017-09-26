@@ -14,9 +14,23 @@ exports.getAllOrders = function (req, res) {
 
 exports.placeOrder = function (req, res) {
 	/* Method to place orders */
-	orderServices.placeOrder(req.body).then(function (result) {
-		res.json({ "StatusCode": err.status, "data": result, "ResponseMessage": "Created Order Successfully" });
-	}).catch(function () {
+	orderServices.createOrder(req.body).then(function (result) {
+		console.log('result:', result);
+		req.body.OrderId = result;
+		saveOrderDetails(req,res);
+	}).catch(function (err) {
+		res.json({ "StatusCode": err.status, "lstCategories": [], "ResponseMessage": err.messages });
+	});
+}
+
+saveOrderDetails = function (req,res) {
+	/**
+	 * Method to save order details with orderID
+	 */
+	orderServices.saveItems(req.body).then(function (result) {
+		console.log('result2:', result);
+		res.json({ "StatusCode": 200, "data": result, "ResponseMessage": "Created Order Successfully" });
+	}).catch(function (err) {
 		res.json({ "StatusCode": err.status, "lstCategories": [], "ResponseMessage": err.messages });
 	});
 }
