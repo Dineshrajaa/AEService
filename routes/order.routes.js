@@ -15,4 +15,6 @@ module.exports = function (router) {
     .get(middleware.authorizseUser, controller.getAllOrders)
   router.route('/Aesthetic/api/Order')
     .post(middleware.authorizseUser, controller.placeOrder)
+  router.route('/Aesthetic/api/OrderPlaced/:UserId')
+    .get(middleware.authorizseUser, controller.getOrdersPlacedbyUser)
 }

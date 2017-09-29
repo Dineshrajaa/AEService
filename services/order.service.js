@@ -25,6 +25,25 @@ exports.getAllOrders = function (OrgId) {
     });
 };
 
+exports.getAllOrdersofUser = function (UserId) {
+    
+    return Order.forge().query(function (qb) {
+        qb.select('Order.*', 'OrderDetail.*','Item.*');
+        qb.join('OrderDetail', function () {
+            this.on('Order.OrderId', '=', 'OrderDetail.OrderId')
+        });
+        qb.join('Item', function () {
+            this.on('Item.ItemId', '=', 'OrderDetail.ItemId')
+        });
+        if (UserId)
+            qb.where("UserId", UserId);
+    }).fetchAll().then(function (result) {
+        return result;
+    }).catch(function (err) {
+        return err;
+    });
+};
+
 exports.placeOrder = function (params) {
     /* Method to place order */
     console.warn(params);

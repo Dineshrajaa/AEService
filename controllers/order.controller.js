@@ -12,6 +12,18 @@ exports.getAllOrders = function (req, res) {
 	});
 }
 
+exports.getOrdersPlacedbyUser = function (req, res) {
+	/**
+	 * Method to get the list of orders placed by User
+	 */
+	var UserId = (req.params.UserId) ? req.params.UserId : false;
+	orderServices.getAllOrdersofUser(UserId).then(function (result) {
+		res.json({ "StatusCode": 200, "data": result, "ResponseMessage": 'Listed your Orders' });
+	}).catch(function () {
+		res.json({ "StatusCode": err.status, "lstCategories": [], "ResponseMessage": err.messages });
+	});
+}
+
 exports.placeOrder = function (req, res) {
 	/* Method to place orders */
 	orderServices.createOrder(req.body).then(function (result) {
@@ -40,7 +52,7 @@ saveOrderDetails = function (req, res) {
 }
 
 clearBasket = function (req, res) {
-	console.log('req.body:',req.body);
+	console.log('req.body:', req.body);
 	orderServices.removeItemsFromBasket(req.body).then(function (result) {
 		console.log('result3:', result);
 		if (result)
