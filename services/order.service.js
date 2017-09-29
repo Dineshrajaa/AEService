@@ -1,6 +1,7 @@
 var Categories = require('../models/Categories.model'),
     Organization = require('../models/Organization.model'),
     Order = require('../models/Order.model'),
+    Basket = require('../models/Basket.model'),
     orm = require('../orm'),
     OrderDetail = require('../models/OrderDetail.model');
 
@@ -32,18 +33,19 @@ exports.placeOrder = function (params) {
         if (orderId) {
             params.OrderId = orderId;
         }
-        
+
     }).catch(function (err) {
         console.log('Err1:', err);
         return err;
     });
 }
 
-exports.saveItems=function(params){
+exports.saveItems = function (params) {
     /**
      * Method to save items
      */
     var orderTobeSaved = [];
+    var basketItemsToBeRemoved = [];
     // console.warn('params:',params);
     for (var i = 0; i < params.items.length; i++) {
         var item = params.items[i];
@@ -56,6 +58,7 @@ exports.saveItems=function(params){
         itemObj.OrdDetailStatus = (item.OrdDetailStatus) ? item.OrdDetailStatus : 'P';
         itemObj.OrderId = params.OrderId;
         console.warn('itemObj:', itemObj);
+        basketItemsToBeRemoved.push(item.BasketId);
         orderTobeSaved.push(itemObj);
     }
     console.warn('orderTobeSaved:', orderTobeSaved);
@@ -63,9 +66,12 @@ exports.saveItems=function(params){
     var OrderDetailCollection = orm.bookshelf.Collection.extend({
         model: OrderDetail
     });
-    console.log('coll:', OrderDetailCollection);
     return OrderDetailCollection.forge(orderTobeSaved).invokeThen('save').then(function (orderSuccess) {
         console.log('orderSuccess:', orderSuccess);
+        console.log('basketItemsToBeRemoved:', basketItemsToBeRemoved);
+        Basket.forge().query(function () {
+            qb.whereIn(basketItemsToBeRemoved).del();
+        })
         return orderSuccess;
     })
 }
@@ -75,7 +81,8 @@ exports.createOrder = function (params) {
     var order = new Order({
         OrderDate: (params.OrderDate) ? params.OrderDate : new Date(),
         UserId: params.UserId,
-        OrderStatus: (params.OrderStatus) ? params.OrderStatus : 'P'
+        OrderStatus: (params.OrderStatus) ? params.OrderStatus : 'P',
+        TotalAmount: (params.TotalAmount) ? params.TotalAmount : 0.00
     });
     return order.save(null).tap(function (model) {
         OrderData = model;
