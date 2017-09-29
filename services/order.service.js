@@ -45,7 +45,7 @@ exports.saveItems = function (params) {
      * Method to save items
      */
     var orderTobeSaved = [];
-    var basketItemsToBeRemoved = [];
+
     // console.warn('params:',params);
     for (var i = 0; i < params.items.length; i++) {
         var item = params.items[i];
@@ -58,7 +58,6 @@ exports.saveItems = function (params) {
         itemObj.OrdDetailStatus = (item.OrdDetailStatus) ? item.OrdDetailStatus : 'P';
         itemObj.OrderId = params.OrderId;
         console.warn('itemObj:', itemObj);
-        basketItemsToBeRemoved.push(item.BasketId);
         orderTobeSaved.push(itemObj);
     }
     console.warn('orderTobeSaved:', orderTobeSaved);
@@ -67,13 +66,26 @@ exports.saveItems = function (params) {
         model: OrderDetail
     });
     return OrderDetailCollection.forge(orderTobeSaved).invokeThen('save').then(function (orderSuccess) {
-        console.log('orderSuccess:', orderSuccess);
-        console.log('basketItemsToBeRemoved:', basketItemsToBeRemoved);
-        Basket.forge().query(function () {
-            qb.whereIn(basketItemsToBeRemoved).del();
-        })
+        // console.log('orderSuccess:', orderSuccess);
         return orderSuccess;
     })
+}
+
+exports.removeItemsFromBasket = function (params) {
+    console.log('params:',params.items);
+    var basketItemsToBeRemoved = [];
+    for (var i = 0; i < params.items.length; i++) {
+        var item = params.items[i];
+        basketItemsToBeRemoved.push(item.BasketId);
+    }   
+    console.log('basketItemsToBeRemoved',basketItemsToBeRemoved); 
+    return Basket.forge().query(function (qb) {
+        qb.whereIn("BasketId",basketItemsToBeRemoved).del();
+    }).fetch().then(function (result) {
+        return result;
+    }).catch(function (err) {
+        return err;
+    });
 }
 
 exports.createOrder = function (params) {

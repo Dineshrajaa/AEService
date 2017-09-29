@@ -17,19 +17,34 @@ exports.placeOrder = function (req, res) {
 	orderServices.createOrder(req.body).then(function (result) {
 		console.log('result:', result);
 		req.body.OrderId = result;
-		saveOrderDetails(req,res);
+		saveOrderDetails(req, res);
 	}).catch(function (err) {
 		res.json({ "StatusCode": err.status, "lstCategories": [], "ResponseMessage": err.messages });
 	});
 }
 
-saveOrderDetails = function (req,res) {
+saveOrderDetails = function (req, res) {
 	/**
 	 * Method to save order details with orderID
 	 */
+	var items = req.body.items;
 	orderServices.saveItems(req.body).then(function (result) {
 		console.log('result2:', result);
-		res.json({ "StatusCode": 200, "data": result, "ResponseMessage": "Created Order Successfully" });
+		if (result) {
+			clearBasket(req, res);
+		}
+		// res.json({ "StatusCode": 200, "data": result, "ResponseMessage": "Created Order Successfully" });
+	}).catch(function (err) {
+		res.json({ "StatusCode": err.status, "lstCategories": [], "ResponseMessage": err.messages });
+	});
+}
+
+clearBasket = function (req, res) {
+	console.log('req.body:',req.body);
+	orderServices.removeItemsFromBasket(req.body).then(function (result) {
+		console.log('result3:', result);
+		if (result)
+			res.json({ "StatusCode": 200, "data": result, "ResponseMessage": "Created Order Successfully" });
 	}).catch(function (err) {
 		res.json({ "StatusCode": err.status, "lstCategories": [], "ResponseMessage": err.messages });
 	});
