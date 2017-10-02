@@ -18,7 +18,35 @@ exports.getOrdersPlacedbyUser = function (req, res) {
 	 */
 	var UserId = (req.params.UserId) ? req.params.UserId : false;
 	orderServices.getAllOrdersofUser(UserId).then(function (result) {
+		console.log(result.models);
+		/* */
 		res.json({ "StatusCode": 200, "data": result, "ResponseMessage": 'Listed your Orders' });
+	}).catch(function () {
+		res.json({ "StatusCode": err.status, "lstCategories": [], "ResponseMessage": err.messages });
+	});
+}
+
+exports.getOrdersReceviedbyUser = function (req, res) {
+	/**
+	 * Method to get the list of orders placed by User
+	 */
+	var OrgId = (req.params.OrgId) ? req.params.OrgId : false;
+	orderServices.getAllOrdersReceived(OrgId).then(function (result) {
+		console.log(result.models);
+		res.json({ "StatusCode": 200, "data": result, "ResponseMessage": 'Listed your Orders' });
+	}).catch(function () {
+		res.json({ "StatusCode": err.status, "lstCategories": [], "ResponseMessage": err.messages });
+	});
+}
+
+exports.getOrderDetail = function (req, res) {
+	/**
+	 * Method to get the order detail
+	 */
+	var OrderId = (req.params.OrderId) ? req.params.OrderId : false;
+	orderServices.getOrderDetail(OrderId).then(function (result) {
+		console.log(result.models);
+		res.json({ "StatusCode": 200, "data": result, "ResponseMessage": 'Listed your Order details' });
 	}).catch(function () {
 		res.json({ "StatusCode": err.status, "lstCategories": [], "ResponseMessage": err.messages });
 	});

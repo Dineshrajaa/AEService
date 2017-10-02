@@ -1379,7 +1379,7 @@ define({
         ]
       },
       "groupTitle": "Organization"
-    },{
+    }, {
       "type": "put",
       "url": "/Organization/:OrgId",
       "title": "Update Organization Cover photo",
@@ -1401,7 +1401,7 @@ define({
               "optional": false,
               "field": "OrgId",
               "description": "<p>OrgId of the Organization to be sent in URL(required)</p>"
-            },{
+            }, {
               "group": "Parameter",
               "type": "String",
               "optional": false,
@@ -1420,7 +1420,7 @@ define({
           }
         ]
       }
-    },{
+    }, {
       "type": "post",
       "url": "/ReviewComment",
       "title": "Add Review Comment",
@@ -1476,7 +1476,7 @@ define({
           }
         ]
       }
-    },{
+    }, {
       "type": "post",
       "url": "/Comment",
       "title": "Add Comment for a Post",
@@ -1578,7 +1578,7 @@ define({
         ]
       },
       "groupTitle": "Review"
-    },{
+    }, {
       "type": "post",
       "url": "/Comment/Update",
       "title": "Update Comment for a Post",
@@ -1703,7 +1703,7 @@ define({
         ]
       },
       "groupTitle": "Categories"
-    },{
+    }, {
       "type": "post",
       "url": "/Item",
       "title": "Add Item",
@@ -1861,7 +1861,7 @@ define({
         ]
       },
       "groupTitle": "My Shop"
-    },{
+    }, {
       "type": "put",
       "url": "/Organization/terms/:OrgId",
       "title": "Update Organization Terms and Condition",
@@ -1883,7 +1883,7 @@ define({
               "optional": false,
               "field": "OrgId",
               "description": "<p>OrgId of the Organization to be sent in URL(required)</p>"
-            },{
+            }, {
               "group": "Parameter",
               "type": "String",
               "optional": false,
@@ -1902,6 +1902,529 @@ define({
           }
         ]
       }
+    }, {
+      "type": "get",
+      "url": "Item/GetByItemId?id=:ItemId",
+      "title": "Get Item info",
+      "version": "1.0.0",
+      "name": "Fetch Item info",
+      "group": "My Shop",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Get details based on the Organization ID</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"organization":{"OrgId":46,"OrgName":"Aesthetic Pro","OrgImage":"http://xxxxxnull","OrgAddress":"cbe","OrgTitle":null,"OrgPhone":null,"OrgDesc":"test desc","CreateDate":"2017-07-18T08:32:50.000Z","ModifyDate":"2017-07-18T08:32:50.000Z","City":"cbe","Country":"india","Feedback":null,"RegistrationNo":"12345","Longitude":null,"Latitude":null,"OrgOwner":"test123lasttest","OrgCoverImage":"http://xxxxxnull","Profession":"test","PostCode":641004},"ResponseMessage":"Wow!! you are so passionate about your OrganizationRepository"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "My Shop"
+    }, {
+      "type": "put",
+      "url": "/Item",
+      "title": "Update Item",
+      "version": "1.0.0",
+      "name": "Update Item",
+      "group": "My Shop",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Update Item</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemID",
+              "description": "<p>ItemID of the Item to be updated(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgId",
+              "description": "<p>OrgId of the Organization who is adding a Item(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemName",
+              "description": "<p>Name of the Product(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemDiscp",
+              "description": "<p>Description of the Product(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemPrice",
+              "description": "<p>Price of the Product(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "subcatId",
+              "description": "<p>Subcategory to which Product belongs to(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemQuantity",
+              "description": "<p>Quantity of the Product(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "EstDelivery",
+              "description": "<p>Estimated Delivery Time of the Product in days(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemCurrency",
+              "description": "<p>Euro or Dollars(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemOfferPrice",
+              "description": "<p>Offer Price of the Product(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "Timestamp",
+              "optional": false,
+              "field": "OfferValidTill",
+              "description": "<p>Offer Valid till as Timestamp(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Returns",
+              "description": "<p>Return of Product 'Accepted' or 'Not Accepted'(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemImage",
+              "description": "<p>Item Picture as Base64 string</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"data":{"ItemName":"Mobile","ItemDiscp":"An excellent phone","ItemPrice":"2000","subcatId":"2","ItemQuantity":"3","EstDelivery":"3 days","ItemCurrency":"Dollars","ItemOfferPrice":"1800","OfferValidTill":null,"Returns":"Accepted","OrgId":"12","ItemID":37},"ResponseMessage":"Added Item successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "delete",
+      "url": "/Item/:ItemID",
+      "title": "Delete the Item",
+      "version": "1.0.0",
+      "name": "Delete Item",
+      "group": "My Shop",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Delete Item</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Deleted Item Successfully"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "post",
+      "url": "/Item",
+      "title": "Place Order",
+      "version": "1.0.0",
+      "name": "Place Order",
+      "group": "Order",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to place Order</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "UserId",
+              "description": "<p>UserId of the user who is placing an Order(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "Object[]",
+              "optional": false,
+              "field": "items",
+              "description": "<p>Object Array holding the Order Items(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemId",
+              "description": "<p>ItemId of the Order Item(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemQuantity",
+              "description": "<p>ItemQuantity of the Item(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemRate",
+              "description": "<p>ItemRate of the Item(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemCurrency",
+              "description": "<p>ItemCurrency of the Item(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "BasketId",
+              "description": "<p>BasketId of the Item(required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"data":{"ItemName":"Mobile","ItemDiscp":"An excellent phone","ItemPrice":"2000","subcatId":"2","ItemQuantity":"3","EstDelivery":"3 days","ItemCurrency":"Dollars","ItemOfferPrice":"1800","OfferValidTill":null,"Returns":"Accepted","OrgId":"12","ItemID":37},"ResponseMessage":"Placed Order successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "get",
+      "url": "/SubCategory/GetSubCategoryByCategoryId?id=:CatID",
+      "title": "List all SubCategories",
+      "version": "1.0.0",
+      "name": "List all SubCategories",
+      "group": "Categories",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>List SubCategories of Categories</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"lstComment":[{"CatId":1,"CatName":"Body","CatImage":"Upload/Category/girl3.png\r\n\r\n","OrgId":1,"SubCategories":[{"SubcatId":2,"SbCatName":"Cellulite Treatment","CatId":1},{"SubcatId":3,"SbCatName":"Moisturisers","CatId":1}]},{"CatId":2,"CatName":"Face","CatImage":"Upload/Category/girl4.png\r\n","OrgId":1,"SubCategories":[]}],"ResponseMessage":"Wow!! you are so passionate about your CommentRepository"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Categories"
+    }, {
+      "type": "get",
+      "url": "/api/Item/GetItemBySubcategoryId?id=:SubCatId",
+      "title": "List all Items in this Sub category",
+      "version": "1.0.0",
+      "name": "List all Items in this Sub category",
+      "group": "My Shop",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>List SubCategories of Categories</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"lstComment":[{"CatId":1,"CatName":"Body","CatImage":"Upload/Category/girl3.png\r\n\r\n","OrgId":1,"SubCategories":[{"SubcatId":2,"SbCatName":"Cellulite Treatment","CatId":1},{"SubcatId":3,"SbCatName":"Moisturisers","CatId":1}]},{"CatId":2,"CatName":"Face","CatImage":"Upload/Category/girl4.png\r\n","OrgId":1,"SubCategories":[]}],"ResponseMessage":"Wow!! you are so passionate about your CommentRepository"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "My Shop"
+    }, {
+      "type": "post",
+      "url": "/Basket",
+      "title": "Add Item to Basket",
+      "version": "1.0.0",
+      "name": "Add Item to Basket",
+      "group": "My Shop",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Add Item to Basket</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "UserId",
+              "description": "<p>UserId of the User who is adding an Item(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ItemID",
+              "description": "<p>ItemID of the Item to be added in the Cart(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Quantity",
+              "description": "<p>Quantity of the Item(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Status",
+              "description": "<p>Status of the Item('P-Pending')(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "AddedTime",
+              "description": "<p>Time added(required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"data":{"ItemName":"Mobile","ItemDiscp":"An excellent phone","ItemPrice":"2000","subcatId":"2","ItemQuantity":"3","EstDelivery":"3 days","ItemCurrency":"Dollars","ItemOfferPrice":"1800","OfferValidTill":null,"Returns":"Accepted","OrgId":"12","ItemID":37},"ResponseMessage":"Added Item to the Cart successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "get",
+      "url": "/Basket/:UserID",
+      "title": "Get Items in my Cart",
+      "version": "1.0.0",
+      "name": "Get Items in my Cart",
+      "group": "Cart",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Get list of Items based on the User ID</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"clientlist":[{"ClientId":1,"OrgId":2,"UserId":177,"FavouriteId":80,"CreateDate":"2017-07-02T15:44:34.000Z","CreatedBy":200,"IsActive":1,"ModifiedDate":"2017-07-02T15:44:34.000Z","ModifiedBy":null,"FirstName":null,"LastName":null,"DOB":"0000-00-00 00:00:00","Address":null,"PostCode":null,"Town":null,"UserImage":null}],"ResponseMessage":"Wow!! you are so passionate about your Cart"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Cart"
+    }, {
+      "type": "delete",
+      "url": "/Basket/:BasketId",
+      "title": "Delete the Item from Basket",
+      "version": "1.0.0",
+      "name": "Delete Item from Basket",
+      "group": "Cart",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Delete Item from Basket</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Deleted Item from Cart Successfully"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "put",
+      "url": "/Basket",
+      "title": "Update Item Quantity in Basket",
+      "version": "1.0.0",
+      "name": "Update Item in Basket",
+      "group": "Cart",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows User to Update Item in Basket</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Quantity",
+              "description": "<p>Quantity of the Item(required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"data":{"ItemName":"Mobile","ItemDiscp":"An excellent phone","ItemPrice":"2000","subcatId":"2","ItemQuantity":"3","EstDelivery":"3 days","ItemCurrency":"Dollars","ItemOfferPrice":"1800","OfferValidTill":null,"Returns":"Accepted","OrgId":"12","ItemID":37},"ResponseMessage":"Updated Item Quantity in the Cart successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "get",
+      "url": "/ItemInBasket/:UserId/:ItemID",
+      "title": "Check Item in Basket",
+      "version": "1.0.0",
+      "name": "Check Item in Basket",
+      "group": "Cart",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Check whether the Item is in Basket or not</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{ "StatusCode": 200,"alreadyInCart": 1, "Message": "Fetched Item in Cart Status."}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Cart"
+    }, {
+      "type": "get",
+      "url": "/OrderPlaced/:UserId",
+      "title": "Orders placed",
+      "version": "1.0.0",
+      "name": "List the Orders placed by the User",
+      "group": "Cart",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>List the Orders placed by the User</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"data":[{"OrderId":1,"OrderDate":"2017-09-29T13:29:28.000Z","UserId":206,"OrgId":45,"OrderNo":null,"OrderStatus":"P","ModifyDate":"2017-08-31T22:41:00.000Z","TotalAmount":2000,"OrdDEtaild":1,"ItemId":37,"ItemName":"Mobile","ItemDiscp":"An excellent phone","ItemImage":null,"ItemCurrency":"Dollars"}],"ResponseMessage":"Listed your Orders"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Cart"
+    }, {
+      "type": "get",
+      "url": "/OrderRecevied/:OrgId",
+      "title": "Orders Received",
+      "version": "1.0.0",
+      "name": "List the Orders received by the Organization",
+      "group": "Cart",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>List the Orders received by the Organization</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"data":[{"OrderId":1,"OrderDate":"2017-09-29T13:29:28.000Z","UserId":206,"OrgId":46,"OrderNo":null,"OrderStatus":"P","ModifyDate":"2017-09-26T14:36:12.000Z","TotalAmount":2000,"UserImage":"Upload/user/UserDefault.png","FirstName":"Raja","LastName":"Guru","Password":"dUSFuC28mJkr4XxeocgzTA==","ConfirmPassword":"qwerty","EmailId":"dineshraja.fl@gmail.com","ConfirmEmail":"dineshraja.fl@gmail.com","Gender":null,"Town":null,"City":null,"Role":"business","CreateDate":"2017-09-26T14:36:12.000Z","Address":null,"PostCode":0,"Profile":null,"DOB":"0000-00-00 00:00:00","IsActive":null,"TagLine":null,"businessInfoFound":1}],"ResponseMessage":"Listed your Orders"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Cart"
+    }, {
+      "type": "get",
+      "url": "/OrderDetail/:OrderId",
+      "title": "Order Detail",
+      "version": "1.0.0",
+      "name": "List the Orders details",
+      "group": "Cart",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>List the Orders details</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"data":[{"OrderId":1,"OrderDate":"2017-09-29T13:29:28.000Z","UserId":206,"OrgId":45,"OrderNo":null,"OrderStatus":"P","ModifyDate":"2017-08-31T22:41:00.000Z","TotalAmount":2000,"OrdDEtaild":2,"ItemId":36,"ItemQuantity":1,"ItemRate":2000,"SellerID":45,"OrdDetailStatus":"P","PlaceOrderDate":"2017-09-28T22:47:00.000Z","OtherChargeID":null,"OtherChargeAmount":null,"Amount":2000,"ItemCurrency":"Dollar"},{"OrderId":1,"OrderDate":"2017-09-29T13:29:28.000Z","UserId":206,"OrgId":45,"OrderNo":null,"OrderStatus":"P","ModifyDate":"2017-08-31T22:41:00.000Z","TotalAmount":2000,"OrdDEtaild":2,"ItemId":36,"ItemQuantity":1,"ItemRate":2000,"SellerID":45,"OrdDetailStatus":"P","PlaceOrderDate":"2017-09-28T22:47:00.000Z","OtherChargeID":null,"OtherChargeAmount":null,"Amount":2000,"ItemCurrency":"Dollar"}],"ResponseMessage":"Listed your Order details"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Cart"
     }
   ]
 });

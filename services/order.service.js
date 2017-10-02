@@ -3,7 +3,9 @@ var Categories = require('../models/Categories.model'),
     Order = require('../models/Order.model'),
     Basket = require('../models/Basket.model'),
     orm = require('../orm'),
-    OrderDetail = require('../models/OrderDetail.model');
+    OrderDetail = require('../models/OrderDetail.model'),
+    Item = require('../models/Item.model'),
+    Promise = require("bluebird");
 
 exports.getAllOrders = function (OrgId) {
     var fetchParams = {
@@ -26,17 +28,86 @@ exports.getAllOrders = function (OrgId) {
 };
 
 exports.getAllOrdersofUser = function (UserId) {
-    
+
     return Order.forge().query(function (qb) {
-        qb.select('Order.*', 'OrderDetail.*','Item.*');
+        qb.select('Order.*');
+        /*qb.join('OrderDetail', function () {
+            this.on('Order.OrderId', '=', 'OrderDetail.OrderId')
+        });
+         qb.join('Item', function () {
+            this.on('Item.ItemId', '=', 'OrderDetail.ItemId')
+        }); */
+        if (UserId)
+            qb.where("Order.UserId", UserId);
+    }).fetchAll().then(function (result) {
+        // return result;
+        console.log('result:', result.length);
+        if (result.length) {
+            console.log('Hello')
+            return Promise.map(result.models, function (order) {
+
+                return OrderDetail.forge().query(function (qb) {
+                    qb.where('OrderId', order.get('OrderId'))
+                }).fetch().then(function (orderDetails) {
+                    order.set('OrdDEtaild', orderDetails.get('OrdDEtaild'));
+                    order.set('ItemId', orderDetails.get('ItemId'));
+                    return Item.forge().query(function (qb) {
+                        qb.where('ItemId', orderDetails.get('ItemId'))
+                    }).fetch().then(function (fetchedItem) {
+                        order.set('ItemName', fetchedItem.get('ItemName'));
+                        order.set('ItemDiscp', fetchedItem.get('ItemDiscp'));
+                        order.set('ItemImage', fetchedItem.get('ItemImage'));
+                        order.set('ItemCurrency', fetchedItem.get('ItemCurrency'));
+                        return order;
+                    }).catch(function (err) {
+                        console.log("error in comment");
+                        console.log(err);
+                    });
+                    return order;
+                }).catch(function (err) {
+                    console.log("error in comment");
+                    console.log(err);
+                });
+            })
+        }
+    }).catch(function (err) {
+        return err;
+    });
+};
+
+exports.getAllOrdersReceived = function (OrgId) {
+
+    return Order.forge().query(function (qb) {
+        qb.select('Order.*', 'UserAccount.*');
+        qb.join('UserAccount', function () {
+            this.on('Order.UserId', '=', 'UserAccount.UserId')
+        });
+        /*
+         qb.join('Item', function () {
+            this.on('Item.ItemId', '=', 'OrderDetail.ItemId')
+        }); */
+        if (OrgId)
+            qb.where("Order.OrgId", OrgId);
+    }).fetchAll().then(function (result) {
+        return result;
+    }).catch(function (err) {
+        return err;
+    });
+};
+
+exports.getOrderDetail = function (OrderId) {
+
+    return Order.forge().query(function (qb) {
+        qb.select('Order.*', 'OrderDetail.*');
         qb.join('OrderDetail', function () {
             this.on('Order.OrderId', '=', 'OrderDetail.OrderId')
         });
-        qb.join('Item', function () {
+        /*
+         qb.join('Item', function () {
             this.on('Item.ItemId', '=', 'OrderDetail.ItemId')
-        });
-        if (UserId)
-            qb.where("UserId", UserId);
+        }); */
+        if (OrderId)
+            qb.where("Order.OrderId", OrderId);
     }).fetchAll().then(function (result) {
         return result;
     }).catch(function (err) {
@@ -91,15 +162,15 @@ exports.saveItems = function (params) {
 }
 
 exports.removeItemsFromBasket = function (params) {
-    console.log('params:',params.items);
+    console.log('params:', params.items);
     var basketItemsToBeRemoved = [];
     for (var i = 0; i < params.items.length; i++) {
         var item = params.items[i];
         basketItemsToBeRemoved.push(item.BasketId);
-    }   
-    console.log('basketItemsToBeRemoved',basketItemsToBeRemoved); 
+    }
+    console.log('basketItemsToBeRemoved', basketItemsToBeRemoved);
     return Basket.forge().query(function (qb) {
-        qb.whereIn("BasketId",basketItemsToBeRemoved).del();
+        qb.whereIn("BasketId", basketItemsToBeRemoved).del();
     }).fetch().then(function (result) {
         return result;
     }).catch(function (err) {
