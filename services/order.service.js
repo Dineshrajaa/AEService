@@ -49,6 +49,7 @@ exports.getAllOrdersofUser = function (UserId) {
                 return OrderDetail.forge().query(function (qb) {
                     qb.where('OrderId', order.get('OrderId'))
                 }).fetch().then(function (orderDetails) {
+                    console.log('orderDetails:',orderDetails);
                     order.set('OrdDEtaild', orderDetails.get('OrdDEtaild'));
                     order.set('ItemId', orderDetails.get('ItemId'));
                     return Item.forge().query(function (qb) {
