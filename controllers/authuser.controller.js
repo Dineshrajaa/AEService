@@ -23,6 +23,7 @@ exports.login = function(req, res, next) {
             password = (req.body.Password)?req.body.Password:false;
            /* console.log("password");
             console.log(password);*/
+            req.body.EmailId=req.body.EmailId.toLowerCase();
             if(password)
                req.body.password = password;
             return Passport.authenticate('local',
@@ -30,7 +31,7 @@ exports.login = function(req, res, next) {
                     if(err) {
                         return errors.returnError(err,res);
                     }
-                   // console.log(user);
+                   console.log(user);
                     if(!user) {
                         if(info.error == true && info.statusCode == 201){
                             return res.json({"StatusCode": 404,"user": null,"ResponseMessage": "User doesn't exist."});

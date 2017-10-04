@@ -30,7 +30,11 @@ exports.getAllOrders = function (OrgId) {
 exports.getAllOrdersofUser = function (UserId) {
 
     return Order.forge().query(function (qb) {
-        qb.select('Order.*');
+        
+        qb.select('Order.*','Organization.*');
+        qb.join('Organization', function () {
+            this.on('Order.OrgId', '=', 'Organization.OrgId')
+        });
         /*qb.join('OrderDetail', function () {
             this.on('Order.OrderId', '=', 'OrderDetail.OrderId')
         });
