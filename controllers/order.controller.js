@@ -21,8 +21,8 @@ exports.getOrdersPlacedbyUser = function (req, res) {
 		console.log(result.models);
 		/* */
 		res.json({ "StatusCode": 200, "data": result, "ResponseMessage": 'Listed your Orders' });
-	}).catch(function () {
-		res.json({ "StatusCode": err.status, "lstCategories": [], "ResponseMessage": err.messages });
+	}).catch(function (err) {
+		res.json({ "StatusCode": 200, "data": [], "ResponseMessage": "Unable to fetch" });
 	});
 }
 
@@ -34,8 +34,8 @@ exports.getOrdersReceviedbyUser = function (req, res) {
 	orderServices.getAllOrdersReceived(OrgId).then(function (result) {
 		console.log(result.models);
 		res.json({ "StatusCode": 200, "data": result, "ResponseMessage": 'Listed your Orders' });
-	}).catch(function () {
-		res.json({ "StatusCode": err.status, "lstCategories": [], "ResponseMessage": err.messages });
+	}).catch(function (err) {
+		res.json({ "StatusCode": 200, "data": [], "ResponseMessage": "Unable to fetch" });
 	});
 }
 
