@@ -44,7 +44,7 @@ exports.GetAllPosts = function (postReqData) {
             console.log("OrgId is:", OrgId);
             qb.where('PostGet.OrgId', OrgId);
         }
-        qb.orderBy("date", 'ASC');
+        qb.orderBy("CreateDate", 'ASC');
 
 
     }).fetchPage(paginationSettings)
