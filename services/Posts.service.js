@@ -16,7 +16,7 @@ exports.GetAllPosts = function (postReqData) {
         'pageSize': postReqData.pageSize || 10,
         'page': postReqData.page
     };
-    return PostGet.forge().query(function (qb) {
+    return PostGet.forge().orderBy("CreateDate", "DESC").query(function (qb) {
         qb.select('UserAccount.FirstName', 'UserAccount.LastName', 'UserAccount.UserImage',
             'PostGet.PostId', 'PostGet.PostMessage', 'PostGet.PostTime', 'PostGet.PostImage', 'PostGet.CreateDate', 'PostGet.ModifyDate',
             'Organization.OrgName', 'Organization.OrgImage', 'Organization.OrgAddress', 'Organization.OrgId'
@@ -44,7 +44,7 @@ exports.GetAllPosts = function (postReqData) {
             console.log("OrgId is:", OrgId);
             qb.where('PostGet.OrgId', OrgId);
         }
-        qb.orderBy("CreateDate", 'ASC');
+        // qb.orderBy("CreateDate", 'DESC');
 
 
     }).fetchPage(paginationSettings)
