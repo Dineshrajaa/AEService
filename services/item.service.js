@@ -2,7 +2,7 @@ var Categories = require('../models/Categories.model'),
     Organization = require('../models/Organization.model'),
     Item = require('../models/Item.model');
 
-exports.GetAllItems = function (value, fieldname) {
+exports.GetAllItems = function (value, fieldname,orgId) {
     return Item.forge().query(function (qb) {
         qb.select('Item.ItemID as itemId', 'Item.OrgId as ItemOrgId', 'Item.ItemOfferPrice','Item.OfferValidTill','Item.ItemName', 'Item.ItemDiscp', 'Item.ItemImage', 'Item.ItemPrice', 'Item.subcatId', 'Item.ItemQuantity', 'Item.EstDelivery', 'Item.Returns', 'Item.ItemCurrency', 'SubCategory.SubcatId', 'SubCategory.SbCatName', 'SubCategory.CatId', 'Categories.catId', 'Categories.CatName', 'Categories.CatImage', 'Categories.OrgId', 'Organization.OrgName', 'Organization.OrgImage');
         /* qb.leftJoin('Item',function(){
@@ -19,6 +19,9 @@ exports.GetAllItems = function (value, fieldname) {
         });
         if (fieldname) {
             qb.where("Item." + fieldname, value);
+        }
+        if(orgId){
+            qb.where("Item.OrgId","<>",OrgId);
         }
     }).fetchAll().then(function (SellerList) {
         return SellerList;

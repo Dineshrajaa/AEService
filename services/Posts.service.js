@@ -3,7 +3,8 @@ var config = require('../config'),
     UserAccount = require('../models/UserAccount.model'),
     Comment = require('../models/Comment.model'),
     helperServices = require('../services/helper.service'),
-    Promise = require("bluebird");
+    Promise = require("bluebird"),
+    moment = require('moment-timezone');
 
 
 exports.GetAllPosts = function (postReqData) {
@@ -16,6 +17,7 @@ exports.GetAllPosts = function (postReqData) {
         'pageSize': postReqData.pageSize || 10,
         'page': postReqData.page
     };
+    var timeZoneToChange = postReqData.timeZone;
     return PostGet.forge().orderBy("CreateDate", "DESC").query(function (qb) {
         qb.select('UserAccount.FirstName', 'UserAccount.LastName', 'UserAccount.UserImage',
             'PostGet.PostId', 'PostGet.PostMessage', 'PostGet.PostTime', 'PostGet.PostImage', 'PostGet.CreateDate', 'PostGet.ModifyDate',
@@ -55,7 +57,8 @@ exports.GetAllPosts = function (postReqData) {
                         qb.count('CommentId as totalcomments');
                         qb.where('PostId', Fav.get('PostId'))
                     }).fetch().then(function (CountOfComment) {
-                        var DisplayTime = helperServices.getDisplayTime(Fav.get('PostTime'));
+                        var convertedTime = moment(Fav.get('PostTime')).tz(timeZoneToChange).format();
+                        var DisplayTime = helperServices.getDisplayTime(convertedTime);
                         Fav.set("DisplayTime", DisplayTime);
                         Fav.set('CountOfComment', CountOfComment.get('totalcomments'));
                         return Fav;

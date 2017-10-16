@@ -57,8 +57,9 @@ exports.GetAllItems = function (req, res) {
 exports.GetItemBySubcategoryId = function (req, res) {
 	console.log("GetItemBySubcategoryId");
 	var subcatId = (req.query.id) ? req.query.id : false;
+	var OrgId=(req.query.OrgId) ? req.query.OrgId : false;
 	if (subcatId) {
-		ItemServices.GetAllItems(subcatId, "subcatId").then(function (result) {
+		ItemServices.GetAllItems(subcatId, "subcatId",OrgId).then(function (result) {
 			if (result.length) {
 				return Promise.map(result.models, function (appo) {
 					return {

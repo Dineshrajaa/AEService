@@ -15,6 +15,6 @@ module.exports = function (router) {
     router.route('/Aesthetic/api/Posts')
         //   .get(middleware.authorizseUser,controller.getAllPost);
         .post(middleware.authorizseUser, controller.AddPost)
-    router.route('/Aesthetic/api/Posts/:OrgId/:input/:country/:pagenumber/:limit')
+    router.route('/Aesthetic/api/Posts/:OrgId/:input/:country/:pagenumber/:limit/:zone/:subzone')
         .get(middleware.authorizseUser, controller.GetAllPosts)
 }

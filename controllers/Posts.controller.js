@@ -10,7 +10,8 @@ exports.GetAllPosts = function (req, res) {
         'page': req.params.pagenumber,
         'pageSize': req.params.limit,
         'input': req.params.input,
-        'country': req.params.country
+        'country': req.params.country,
+        'timeZone':req.params.zone+'/'+req.params.subzone
     }
 
     PostsServices.GetAllPosts(postReqPara).then(function (Posts) {
