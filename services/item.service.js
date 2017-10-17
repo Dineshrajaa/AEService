@@ -21,7 +21,7 @@ exports.GetAllItems = function (value, fieldname,orgId) {
             qb.where("Item." + fieldname, value);
         }
         if(orgId){
-            qb.where("Item.OrgId","<>",OrgId);
+            qb.where("Item.OrgId","<>",orgId);
         }
     }).fetchAll().then(function (SellerList) {
         return SellerList;
