@@ -18,10 +18,11 @@ exports.getOrdersPlacedbyUser = function (req, res) {
 	 */
 	var UserId = (req.params.UserId) ? req.params.UserId : false;
 	orderServices.getAllOrdersofUser(UserId).then(function (result) {
-		console.log(result.models);
-		/* */
+		console.log(result);
+		
 		res.json({ "StatusCode": 200, "data": result, "ResponseMessage": 'Listed your Orders' });
 	}).catch(function (err) {
+		console.log('err in :',err)
 		res.json({ "StatusCode": 200, "data": [], "ResponseMessage": "Unable to fetch" });
 	});
 }

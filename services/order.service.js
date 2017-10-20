@@ -30,12 +30,13 @@ exports.getAllOrders = function (OrgId) {
 exports.getAllOrdersofUser = function (UserId) {
 
     return Order.forge().query(function (qb) {
-        
-        qb.select('Order.*','Organization.*');
-        qb.join('Organization', function () {
+
+        qb.select('Order.*');
+        // , 'Organization.*'
+        /*qb.join('Organization', function () {
             this.on('Order.OrgId', '=', 'Organization.OrgId')
         });
-        /*qb.join('OrderDetail', function () {
+        qb.join('OrderDetail', function () {
             this.on('Order.OrderId', '=', 'OrderDetail.OrderId')
         });
          qb.join('Item', function () {
@@ -53,7 +54,7 @@ exports.getAllOrdersofUser = function (UserId) {
                 return OrderDetail.forge().query(function (qb) {
                     qb.where('OrderId', order.get('OrderId'))
                 }).fetch().then(function (orderDetails) {
-                    console.log('orderDetails:',orderDetails);
+                    console.log('orderDetails:', orderDetails);
                     order.set('OrdDEtaild', orderDetails.get('OrdDEtaild'));
                     order.set('ItemId', orderDetails.get('ItemId'));
                     return Item.forge().query(function (qb) {
@@ -63,7 +64,14 @@ exports.getAllOrdersofUser = function (UserId) {
                         order.set('ItemDiscp', fetchedItem.get('ItemDiscp'));
                         order.set('ItemImage', fetchedItem.get('ItemImage'));
                         order.set('ItemCurrency', fetchedItem.get('ItemCurrency'));
-                        return order;
+                        return Organization.forge().query(function (qb) {
+                            qb.where('OrgId', fetchedItem.get('OrgId'))
+                        }).fetch().then(function(fetchedOrganization){
+                            order.set('OrgName', fetchedOrganization.get('OrgName'));
+                            order.set('OrgImage', fetchedOrganization.get('OrgImage'));
+                            return order;
+                        })
+                        // return order;
                     }).catch(function (err) {
                         console.log("error in comment");
                         console.log(err);
@@ -151,6 +159,7 @@ exports.saveItems = function (params) {
         itemObj.Amount = item.ItemQuantity * item.ItemRate;
         itemObj.ItemCurrency = item.ItemCurrency;
         itemObj.OrdDetailStatus = (item.OrdDetailStatus) ? item.OrdDetailStatus : 'P';
+        // itemObj.OrgId = (item.OrgId) ? item.OrgId : false;
         itemObj.OrderId = params.OrderId;
         console.warn('itemObj:', itemObj);
         orderTobeSaved.push(itemObj);
