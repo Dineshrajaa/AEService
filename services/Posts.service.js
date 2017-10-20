@@ -88,6 +88,7 @@ exports.GetAllPosts = function (postReqData) {
 
 exports.AddPost = function (params) {
     console.log("AddPost");
+    params.PostTime = moment(params.PostTime).tz(config.server.timeZone).format();
     var Post = new PostGet({
         OrgId: (params.OrgId) ? params.OrgId : null,
         PostMessage: (params.PostMessage) ? params.PostMessage : null,
