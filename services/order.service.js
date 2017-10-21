@@ -69,9 +69,9 @@ exports.getAllOrdersofUser = function (UserId) {
                         }).fetch().then(function(fetchedOrganization){
                             order.set('OrgName', fetchedOrganization.get('OrgName'));
                             order.set('OrgImage', fetchedOrganization.get('OrgImage'));
+                            order.set('OrgDesc',fetchedOrganization.get('OrgDesc'))
                             return order;
                         })
-                        // return order;
                     }).catch(function (err) {
                         console.log("error in comment");
                         console.log(err);
@@ -90,17 +90,17 @@ exports.getAllOrdersofUser = function (UserId) {
 
 exports.getAllOrdersReceived = function (OrgId) {
 
-    return Order.forge().query(function (qb) {
-        qb.select('Order.*', 'UserAccount.*');
-        qb.join('UserAccount', function () {
-            this.on('Order.UserId', '=', 'UserAccount.UserId')
+    return OrderDetail.forge().query(function (qb) {
+        qb.select('OrderDetail.*', 'Organization.*');
+        qb.join('Organization', function () {
+            this.on('OrderDetail.SellerID', '=', 'Organization.OrgId')
         });
         /*
          qb.join('Item', function () {
             this.on('Item.ItemId', '=', 'OrderDetail.ItemId')
         }); */
         if (OrgId)
-            qb.where("Order.OrgId", OrgId);
+            qb.where("OrderDetail.SellerID", OrgId);
     }).fetchAll().then(function (result) {
         return result;
     }).catch(function (err) {
@@ -159,7 +159,7 @@ exports.saveItems = function (params) {
         itemObj.Amount = item.ItemQuantity * item.ItemRate;
         itemObj.ItemCurrency = item.ItemCurrency;
         itemObj.OrdDetailStatus = (item.OrdDetailStatus) ? item.OrdDetailStatus : 'P';
-        // itemObj.OrgId = (item.OrgId) ? item.OrgId : false;
+        itemObj.SellerID = (item.OrgId) ? item.OrgId : false;
         itemObj.OrderId = params.OrderId;
         console.warn('itemObj:', itemObj);
         orderTobeSaved.push(itemObj);
