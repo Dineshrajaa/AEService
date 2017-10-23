@@ -41,7 +41,7 @@ exports.GetItemsFromMyBasket = function (req, res) {
                     "AddedTime": appo.get('AddedTime'),
                     "BasketId": appo.get('BasketId'),
                     "Status": appo.get('Status'),
-                    "OrgId": appo.get('ItemOrgId'),
+                    "OrgId": appo.get('OrgId'),
                 }
 
             });

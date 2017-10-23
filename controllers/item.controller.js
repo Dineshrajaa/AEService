@@ -92,7 +92,7 @@ exports.GetItemBySubcategoryId = function (req, res) {
 						"Status": appo.get('Status'),
 						"OrgImage": appo.get('OrgImage'),
 						"OrgName": appo.get('OrgName'),
-						"OrgId": appo.get('OrgId'),
+						"OrgId": appo.get('ItemOrgId'),
 						"SubcatId": appo.get('SubcatId')
 					}
 

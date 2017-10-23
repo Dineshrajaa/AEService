@@ -8,13 +8,13 @@ exports.GetAllItems = function (value, fieldname,orgId) {
         /* qb.leftJoin('Item',function(){
              this.on('Seller.ItemID', '=', 'Item.ItemID')
          });*/
-        qb.leftJoin('SubCategory', function () {
+        qb.join('SubCategory', function () {
             this.on('Item.subcatId', '=', 'SubCategory.SubcatId')
         });
-        qb.leftJoin('Categories', function () {
+        qb.join('Categories', function () {
             this.on('SubCategory.CatId', '=', 'Categories.CatId')
         });
-        qb.leftJoin('Organization', function () {
+        qb.join('Organization', function () {
             this.on('Item.OrgId', '=', 'Organization.OrgId')
         });
         if (fieldname) {

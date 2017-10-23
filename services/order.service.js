@@ -5,6 +5,7 @@ var Categories = require('../models/Categories.model'),
     orm = require('../orm'),
     OrderDetail = require('../models/OrderDetail.model'),
     Item = require('../models/Item.model'),
+    UserAccount = require('../models/UserAccount.model'),
     Promise = require("bluebird");
 
 exports.getAllOrders = function (OrgId) {
@@ -66,10 +67,10 @@ exports.getAllOrdersofUser = function (UserId) {
                         order.set('ItemCurrency', fetchedItem.get('ItemCurrency'));
                         return Organization.forge().query(function (qb) {
                             qb.where('OrgId', fetchedItem.get('OrgId'))
-                        }).fetch().then(function(fetchedOrganization){
+                        }).fetch().then(function (fetchedOrganization) {
                             order.set('OrgName', fetchedOrganization.get('OrgName'));
                             order.set('OrgImage', fetchedOrganization.get('OrgImage'));
-                            order.set('OrgDesc',fetchedOrganization.get('OrgDesc'))
+                            order.set('OrgDesc', fetchedOrganization.get('OrgDesc'))
                             return order;
                         })
                     }).catch(function (err) {
@@ -91,7 +92,7 @@ exports.getAllOrdersofUser = function (UserId) {
 exports.getAllOrdersReceived = function (OrgId) {
 
     return OrderDetail.forge().query(function (qb) {
-        qb.select('OrderDetail.*', 'Organization.*');
+        qb.select('OrderDetail.*', 'Organization.*,');
         qb.join('Organization', function () {
             this.on('OrderDetail.SellerID', '=', 'Organization.OrgId')
         });
@@ -159,7 +160,8 @@ exports.saveItems = function (params) {
         itemObj.Amount = item.ItemQuantity * item.ItemRate;
         itemObj.ItemCurrency = item.ItemCurrency;
         itemObj.OrdDetailStatus = (item.OrdDetailStatus) ? item.OrdDetailStatus : 'P';
-        itemObj.SellerID = (item.OrgId) ? item.OrgId : false;
+        itemObj.SellerID = item.OrgId;
+        itemObj.PlaceOrderDate=new Date();
         itemObj.OrderId = params.OrderId;
         console.warn('itemObj:', itemObj);
         orderTobeSaved.push(itemObj);
@@ -175,14 +177,36 @@ exports.saveItems = function (params) {
     })
 }
 
+findOrgIdOfItem = function (ItemId) {
+    /* Method to find OrgId of the selected ItemId not working */
+    console.log('ItemId:', ItemId);
+    var ItemOrgId;
+    ItemPromise = Item.forge().query(function (qb) {
+        if (ItemId != 0)
+            qb.where({
+                'ItemId': ItemId
+            });
+
+    }).fetchAll().then(function (Items) {
+        var ItemData = Items.toJSON();
+        console.log('Items OrgId:', ItemData[0].OrgId);
+        ItemOrgId = ItemData[0].OrgId;
+
+    }).catch(function (err) {
+        return err;
+    });
+    console.log('ItemOrgId:', ItemOrgId);
+    return ItemOrgId;
+}
+
 exports.removeItemsFromBasket = function (params) {
-    console.log('params:', params.items);
+    // console.log('params:', params.items);
     var basketItemsToBeRemoved = [];
     for (var i = 0; i < params.items.length; i++) {
         var item = params.items[i];
         basketItemsToBeRemoved.push(item.BasketId);
     }
-    console.log('basketItemsToBeRemoved', basketItemsToBeRemoved);
+    // console.log('basketItemsToBeRemoved', basketItemsToBeRemoved);
     return Basket.forge().query(function (qb) {
         qb.whereIn("BasketId", basketItemsToBeRemoved).del();
     }).fetch().then(function (result) {

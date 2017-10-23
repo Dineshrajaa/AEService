@@ -15,7 +15,8 @@ exports.saveToBasket = function (params) {
         "ItemID": (params.ItemID) ? params.ItemID : null,
         "Quantity": (params.Quantity) ? params.Quantity : null,
         "Status": (params.Status) ? params.Status : null,
-        "AddedTime": (params.AddedTime) ? params.AddedTime : new Date()
+        "AddedTime": (params.AddedTime) ? params.AddedTime : new Date(),
+        "OrgId": (params.OrgId) ? params.OrgId : null
     });
 
     return basketData.save(null).tap(function (model) {
