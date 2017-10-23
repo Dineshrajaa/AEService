@@ -92,7 +92,7 @@ exports.getAllOrdersofUser = function (UserId) {
 exports.getAllOrdersReceived = function (OrgId) {
 
     return OrderDetail.forge().query(function (qb) {
-        qb.select('OrderDetail.*', 'Organization.*,');
+        qb.select('OrderDetail.*', 'Organization.*');
         qb.join('Organization', function () {
             this.on('OrderDetail.SellerID', '=', 'Organization.OrgId')
         });
@@ -103,8 +103,27 @@ exports.getAllOrdersReceived = function (OrgId) {
         if (OrgId)
             qb.where("OrderDetail.SellerID", OrgId);
     }).fetchAll().then(function (result) {
-        return result;
+        if (result.length) {
+            return Promise.map(result.models, function (orderInfo) {
+                return Order.forge().query(function (qb) {
+                    qb.where('OrderId', orderInfo.get('OrderId'));
+                }).fetch().then(function (fetchedOrder) {
+                    orderInfo.set("UserId", fetchedOrder.get('UserId'));
+                    return UserAccount.forge().query(function (qb) {
+                        qb.where('UserId', fetchedOrder.get('UserId'))
+                    }).fetch().then(function (fetchedUser) {
+                        orderInfo.set('FirstName', fetchedUser.get('FirstName'));
+                        orderInfo.set('LastName', fetchedUser.get('LastName'));
+                        orderInfo.set('UserImage', fetchedUser.get('UserImage'))
+                        return orderInfo;
+                    })
+                    // return orderInfo;
+                })
+            })
+        }
+        // return result;
     }).catch(function (err) {
+        console.log('Err:', err);
         return err;
     });
 };
@@ -161,7 +180,7 @@ exports.saveItems = function (params) {
         itemObj.ItemCurrency = item.ItemCurrency;
         itemObj.OrdDetailStatus = (item.OrdDetailStatus) ? item.OrdDetailStatus : 'P';
         itemObj.SellerID = item.OrgId;
-        itemObj.PlaceOrderDate=new Date();
+        itemObj.PlaceOrderDate = new Date();
         itemObj.OrderId = params.OrderId;
         console.warn('itemObj:', itemObj);
         orderTobeSaved.push(itemObj);
