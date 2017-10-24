@@ -62,11 +62,16 @@ exports.DeleteFromBasket = function (BasketId) {
 
 
 exports.UpdateItemInBasket = function (basketData, basketId) {
-    return new Basket().where({ 'BasketId': basketId }).save(basketData, {
+    console.log('basketData:',basketData);
+    var BasketDataToUpdate={
+        'Quantity':basketData.Quantity
+    };
+    return new Basket().where({ 'BasketId': basketId }).save(BasketDataToUpdate, {
         patch: true
     }).then(function (result) {
         return result;
     }).catch(function (err) {
+        console.warn('err:',err);
         return err;
     });
 };
