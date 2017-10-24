@@ -92,10 +92,15 @@ exports.getAllOrdersofUser = function (UserId) {
 exports.getAllOrdersReceived = function (OrgId) {
 
     return OrderDetail.forge().query(function (qb) {
-        qb.select('OrderDetail.*', 'Organization.*');
-        qb.join('Organization', function () {
-            this.on('OrderDetail.SellerID', '=', 'Organization.OrgId')
+        qb.debug('true');
+        qb.select('OrderDetail.OrderId', 'OrderDetail.SellerID', 'Order.*');
+        qb.distinct();
+        qb.join('Order', function () {
+            this.on('OrderDetail.OrderId', '=', 'Order.OrderId')
         });
+        /* qb.join('Organization', function () {
+            this.on('OrderDetail.SellerID', '=', 'Organization.OrgId')
+        }); */
         /*
          qb.join('Item', function () {
             this.on('Item.ItemId', '=', 'OrderDetail.ItemId')
@@ -103,22 +108,32 @@ exports.getAllOrdersReceived = function (OrgId) {
         if (OrgId)
             qb.where("OrderDetail.SellerID", OrgId);
     }).fetchAll().then(function (result) {
+        console.log('result.models:', result.models);
         if (result.length) {
             return Promise.map(result.models, function (orderInfo) {
-                return Order.forge().query(function (qb) {
-                    qb.where('OrderId', orderInfo.get('OrderId'));
-                }).fetch().then(function (fetchedOrder) {
-                    orderInfo.set("UserId", fetchedOrder.get('UserId'));
-                    return UserAccount.forge().query(function (qb) {
-                        qb.where('UserId', fetchedOrder.get('UserId'))
-                    }).fetch().then(function (fetchedUser) {
-                        orderInfo.set('FirstName', fetchedUser.get('FirstName'));
-                        orderInfo.set('LastName', fetchedUser.get('LastName'));
-                        orderInfo.set('UserImage', fetchedUser.get('UserImage'))
-                        return orderInfo;
-                    })
-                    // return orderInfo;
+                return UserAccount.forge().query(function (qb) {
+                    qb.debug("true");
+                    qb.where('UserId', orderInfo.get('UserId'))
+                }).fetch().then(function (fetchedUser) {
+                    orderInfo.set('FirstName', fetchedUser.get('FirstName'));
+                    orderInfo.set('LastName', fetchedUser.get('LastName'));
+                    orderInfo.set('UserImage', fetchedUser.get('UserImage'))
+                    return orderInfo;
                 })
+                /*  return Order.forge().query(function (qb) {
+                     qb.where('OrderId', orderInfo.get('OrderId'));
+                 }).fetch().then(function (fetchedOrder) {
+                     orderInfo.set("UserId", fetchedOrder.get('UserId'));
+                     return UserAccount.forge().query(function (qb) {
+                         qb.where('UserId', fetchedOrder.get('UserId'))
+                     }).fetch().then(function (fetchedUser) {
+                         orderInfo.set('FirstName', fetchedUser.get('FirstName'));
+                         orderInfo.set('LastName', fetchedUser.get('LastName'));
+                         orderInfo.set('UserImage', fetchedUser.get('UserImage'))
+                         return orderInfo;
+                     })
+                     // return orderInfo;
+                 }) */
             })
         }
         // return result;
@@ -135,15 +150,43 @@ exports.getOrderDetail = function (OrderId) {
         qb.join('OrderDetail', function () {
             this.on('Order.OrderId', '=', 'OrderDetail.OrderId')
         });
-        /*
-         qb.join('Item', function () {
-            this.on('Item.ItemId', '=', 'OrderDetail.ItemId')
-        }); */
+
+        /* qb.join('Item', function () {
+           this.on('Item.ItemId', '=', 'OrderDetail.ItemId')
+       }); */
         if (OrderId)
             qb.where("Order.OrderId", OrderId);
     }).fetchAll().then(function (result) {
-        return result;
+        if (result.length) {
+            return Promise.map(result.models, function (orderInfo) {
+                return Item.forge().query(function (qb) {
+                    qb.where('ItemID', orderInfo.get('ItemId'));
+                }).fetch().then(function (fetchedItem) {
+                    orderInfo.set("ItemName", fetchedItem.get('ItemName'));
+                    orderInfo.set("ItemDiscp", fetchedItem.get('ItemDiscp'));
+                    orderInfo.set("ItemImage", fetchedItem.get('ItemImage'));
+                    orderInfo.set("ItemPrice", fetchedItem.get('ItemPrice'));
+                    orderInfo.set("ItemCurrency", fetchedItem.get('ItemCurrency'));
+                    orderInfo.set("ItemOfferPrice", fetchedItem.get('ItemOfferPrice'));
+                    return UserAccount.forge().query(function (qb) {
+                        qb.where('UserId', orderInfo.get('UserId'))
+                    }).fetch().then(function (fetchedUser) {
+                        orderInfo.set('FirstName', fetchedUser.get('FirstName'));
+                        orderInfo.set('LastName', fetchedUser.get('LastName'));
+                        orderInfo.set('UserImage', fetchedUser.get('UserImage'));
+                        orderInfo.set('Address', fetchedUser.get('Address'));
+                        orderInfo.set('PostCode', fetchedUser.get('PostCode'));
+                        orderInfo.set('City', fetchedUser.get('City'));
+                        orderInfo.set('Town', fetchedUser.get('Town'));
+                        return orderInfo;
+                    })
+                    // return orderInfo;
+                })
+            })
+        }
+        // return result;
     }).catch(function (err) {
+        console.log('err:', err);
         return err;
     });
 };
