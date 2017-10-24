@@ -18,7 +18,7 @@ exports.GetAllPosts = function (postReqData) {
         'page': postReqData.page
     };
     var timeZoneToChange = postReqData.timeZone;
-    return PostGet.forge().orderBy("CreateDate", "DESC").query(function (qb) {
+    return PostGet.forge().orderBy("PostTime", "DESC").query(function (qb) {
         qb.select('UserAccount.FirstName', 'UserAccount.LastName', 'UserAccount.UserImage',
             'PostGet.PostId', 'PostGet.PostMessage', 'PostGet.PostTime', 'PostGet.PostImage', 'PostGet.CreateDate', 'PostGet.ModifyDate',
             'Organization.OrgName', 'Organization.OrgImage', 'Organization.OrgAddress', 'Organization.OrgId'
