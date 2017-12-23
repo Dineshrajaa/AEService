@@ -43,7 +43,7 @@ exports.login = function (req, res, next) {
                 } else {
                     return req.logIn(user, function (err) {
                         console.log("login");
-                        console.log(err);
+                        console.log("err is here:",err);
                         /*if(err)
                         return res.json({"StatusCode": 404,"user":null,"ResponseMessage": err});
                         else*/

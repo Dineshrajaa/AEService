@@ -10,14 +10,15 @@ var config = require('../config'),
   distance = require('google-distance-matrix'),
   moment = require('moment');
 exports.decrypt = function (text, Email) {
+  console.log(Email);
+  console.log(text);
+  console.log('decrypt');
   var decipher = crypto.createDecipher('aes-256-cbc', Email);
   var dec = decipher.update(text, 'base64', 'utf8');
   dec += decipher.final('utf8');
   return dec;
 }
 exports.encryption = function (text, Email) {
-  	console.log(Email);
-    console.log(text);
   var cipher = crypto.createCipher('aes-256-cbc', Email);
   var crypted = cipher.update(text, 'utf8', 'base64');
   crypted += cipher.final('base64');
