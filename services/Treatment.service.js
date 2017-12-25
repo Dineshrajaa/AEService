@@ -33,3 +33,31 @@ exports.AddTreatment = function (params) {
         console.log(err);
     });
 };
+
+exports.DeleteTreatment = function (TreatmentId) {
+    return Treatment.forge().query(function (qb) {
+        qb.where({
+            'TreatmentId': TreatmentId
+        });
+        qb.del();
+    }).fetch().then(function (result) {
+        return result;
+    }).catch(function (err) {
+        return err;
+    });
+};
+
+exports.UpdateTreatment = function (treatmentId, treatmentData) {
+    var TreatmentInfo = {
+        'Desc': treatmentData.Desc,
+        'TreatmentName': treatmentData.TreatmentName,
+        'OrgId': treatmentData.DOB
+    };
+    return new Treatment().where({ 'TreatmentId': treatmentId }).save(TreatmentInfo, {
+        patch: true
+    }).then(function (result) {
+        return result;
+    }).catch(function (err) {
+        return err;
+    });
+};

@@ -2425,6 +2425,82 @@ define({
         ]
       },
       "groupTitle": "Cart"
+    }, {
+      "type": "put",
+      "url": "/Treatment/:TreatmentId",
+      "title": "Update Treatment",
+      "version": "1.0.0",
+      "name": "Update Treatment",
+      "group": "Treatment",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows user to Update Treatment</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "TreatmentId",
+              "description": "<p>TreatmentId of the Treatment to be updated. Need to be sent in URL(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Desc",
+              "description": "<p>Description about the Treatment (required)</p>"
+            }, {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "TreatmentName",
+              "description": "<p>Title of the Treatment(required)</p>"
+            }, {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "OrgId",
+              "description": "<p>OrgId of the User (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Updated Treatment info Successfully"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "delete",
+      "url": "/Treatment/:TreatmentId",
+      "title": "Delete a Treatment",
+      "version": "1.0.0",
+      "name": "Delete Treatment",
+      "group": "Treatment",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Delete Treatment</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Deleted Treatment Successfully"}',
+            "type": "json"
+          }
+        ]
+      }
     }
   ]
 });

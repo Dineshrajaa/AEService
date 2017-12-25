@@ -46,3 +46,50 @@ exports.addNewTreatment = function (req, res) {
 		});
 	}
 }
+
+exports.DeleteTreatment = function (req, res) {
+	console.log("Delete DeleteTreatment");
+	console.log("req.params.TreatmentId:", req.params.TreatmentId);
+	var TreatmentId = (req.params.TreatmentId) ? req.params.TreatmentId : false;
+	if (TreatmentId) {
+		TreatmentServices.DeleteTreatment(TreatmentId).then(function (result) {
+			if (result)
+				res.json({ "StatusCode": 200, "ResponseMessage": "Deleted Treatment Successfully" });
+			else
+				res.json({ "Message": "An error has occurred." });
+		}).catch(function (err) {
+			res.json({ "StatusCode": err.status, "deletetreatment": [], "ResponseMessage": err.messages });
+		});
+
+	} else {
+		res.json({ "Message": "No HTTP resource was found that matches the request URI '" + config.webUri + "/Aesthetic/api/Categories/Delete'." });
+	}
+};
+
+exports.UpdateTreatment = function (req, res) {
+	console.log("Update Treatment:", req.body);
+	console.log("req.params.TreatmentId:", req.params.TreatmentId);
+	var TreatmentId = (req.params.TreatmentId) ? req.params.TreatmentId : false;
+	if (TreatmentId) {
+		TreatmentServices.UpdateTreatment(TreatmentId, req.body).then(function (result) {
+			console.warn('result:', result);
+			if (result)
+				res.json({
+					"StatusCode": 200,
+					"ResponseMessage": "Updated Treatment info Successfully"
+				});
+			else
+				res.json({
+					"Message": "An error has occurred."
+				});
+		}).catch(function (err) {
+			res.json({
+				"StatusCode": err.status,
+				"treatments": [],
+				"ResponseMessage": err.messages
+			});
+		});
+	} else {
+		res.json({ "Message": "No HTTP resource was found that matches the request URI '" + config.webUri + "/Aesthetic/api/Categories/Delete'." });
+	}
+}
