@@ -15,4 +15,6 @@ module.exports = function (router) {
             .get(controller.GetGalleryById);
       router.route('/Aesthetic/api/Gallery')
             .post(controller.addPhotoToGallery);
+      router.route('/Aesthetic/api/Gallery/:GalleryId')
+            .delete(controller.deletePhotoFromGallery);
 }

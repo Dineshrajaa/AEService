@@ -29,3 +29,16 @@ exports.savePicture = function (params) {
         console.log(err);
     });
 }
+
+exports.DeletePhoto = function (GalleryId) {
+    return Gallery.forge().query(function (qb) {
+        qb.where({
+            'GalleryId': GalleryId
+        });
+        qb.del();
+    }).fetch().then(function (result) {
+        return result;
+    }).catch(function (err) {
+        return err;
+    });
+};

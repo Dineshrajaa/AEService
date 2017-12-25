@@ -1166,6 +1166,7 @@ define({
       "version": "1.0.0",
       "name": "Add Picture",
       "group": "Gallery",
+      "groupTitle": "Gallery",
       "permission": [
         {
           "name": "Universal"
@@ -1236,7 +1237,7 @@ define({
           }
         ]
       },
-      "groupTitle": "Treatment"
+      "groupTitle": "Gallery"
     }, {
       "type": "get",
       "url": "Client/treatment/:ClientId",
@@ -2497,6 +2498,29 @@ define({
           {
             "title": "Success-Response:",
             "content": '{"StatusCode":200,"ResponseMessage":"Deleted Treatment Successfully"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "delete",
+      "url": "/Gallery/:GalleryId",
+      "title": "Delete a Photo from Gallery",
+      "version": "1.0.0",
+      "name": "Delete Photo",
+      "group": "Gallery",
+      "groupTitle": "Gallery",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Delete Photo</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Deleted Photo Successfully"}',
             "type": "json"
           }
         ]

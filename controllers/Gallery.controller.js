@@ -52,7 +52,7 @@ exports.addPhotoToGallery = function (req, res) {
 			if (!err) {
 				GalleryServices.savePicture(req.body).then(function (picture) {
 					if (picture) {
-						res.json({ "StatusCode": 200,"data": picture,"ResponseMessage":"Uploaded Picture Successfully!" });
+						res.json({ "StatusCode": 200, "data": picture, "ResponseMessage": "Uploaded Picture Successfully!" });
 					}
 				})
 			}
@@ -61,3 +61,22 @@ exports.addPhotoToGallery = function (req, res) {
 		res.json({ 'Message': 'No Picture Attached' });
 	}
 }
+
+exports.deletePhotoFromGallery = function (req, res) {
+	console.log("Delete Photo");
+	console.log("req.params.PhotoId:", req.params.GalleryId);
+	var GalleryId = (req.params.GalleryId) ? req.params.GalleryId : false;
+	if (GalleryId) {
+		GalleryServices.DeletePhoto(GalleryId).then(function (result) {
+			if (result)
+				res.json({ "StatusCode": 200, "ResponseMessage": "Deleted Photo Successfully" });
+			else
+				res.json({ "Message": "An error has occurred." });
+		}).catch(function (err) {
+			res.json({ "StatusCode": err.status, "deletetreatment": [], "ResponseMessage": err.messages });
+		});
+
+	} else {
+		res.json({ "Message": "No HTTP resource was found that matches the request URI '" + config.webUri + "/Aesthetic/api/Categories/Delete'." });
+	}
+};
