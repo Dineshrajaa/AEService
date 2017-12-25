@@ -2525,6 +2525,70 @@ define({
           }
         ]
       }
+    }, {
+      "type": "delete",
+      "url": "/Review/:ReviewId",
+      "title": "Delete a Review",
+      "version": "1.0.0",
+      "name": "Delete Review",
+      "group": "Review",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows User to Delete Review</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Deleted Review Successfully"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "put",
+      "url": "/Review/:ReviewId",
+      "title": "Update Review",
+      "version": "1.0.0",
+      "name": "Update Review",
+      "group": "Review",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows user to Update Review</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ReviewId",
+              "description": "<p>TreatmentId of the Treatment to be updated. Need to be sent in URL(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ReviewComment",
+              "description": "<p>Review Comment updated (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Updated Review Successfully"}',
+            "type": "json"
+          }
+        ]
+      }
     }
   ]
 });
