@@ -85,7 +85,34 @@ exports.GetAllPosts = function (postReqData) {
             }); */
         })
 };
-
+exports.UpdatePost = function (PostData) {
+    var PostId = PostData.PostId;
+    PostData.ModifyDate = (PostData.ModifyDate) ?
+        moment(PostData.ModifyDate).tz(config.server.timeZone).format() : new Date();
+    var PostInfo = {
+        'PostMessage': PostData.PostMessage,
+        'ModifyDate': PostData.ModifyDate
+    };
+    return new PostGet().where({ 'PostId': PostId }).save(PostInfo, {
+        patch: true
+    }).then(function (result) {
+        return result;
+    }).catch(function (err) {
+        return err;
+    });
+};
+exports.DeletePost = function (PostId) {
+    return PostGet.forge().query(function (qb) {
+        qb.where({
+            'PostId': PostId
+        });
+        qb.del();
+    }).fetch().then(function (result) {
+        return result;
+    }).catch(function (err) {
+        return err;
+    });
+};
 exports.AddPost = function (params) {
     console.log("AddPost");
     params.PostTime = moment(params.PostTime).tz(config.server.timeZone).format();
@@ -107,18 +134,7 @@ exports.AddPost = function (params) {
 };
 
 
-exports.DeleteNote = function (NoteId) {
-    return Notes.forge().query(function (qb) {
-        qb.where({
-            'NoteId': NoteId
-        });
-        qb.del();
-    }).fetch().then(function (result) {
-        return result;
-    }).catch(function (err) {
-        return err;
-    });
-};
+
 
 exports.uploadImage = function (data, PostId) {
 

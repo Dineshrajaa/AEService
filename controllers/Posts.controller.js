@@ -11,7 +11,7 @@ exports.GetAllPosts = function (req, res) {
         'pageSize': req.params.limit,
         'input': req.params.input,
         'country': req.params.country,
-        'timeZone':req.params.zone+'/'+req.params.subzone
+        'timeZone': req.params.zone + '/' + req.params.subzone
     }
 
     PostsServices.GetAllPosts(postReqPara).then(function (Posts) {
@@ -65,22 +65,55 @@ exports.AddPost = function (req, res) {
     }
 };
 
+exports.updatePost = function (req, res) {
+    // Method to update posts
+    req.body.PostId = (req.params.PostId) ? req.params.PostId : false;
+    var image = (req.body.PostImage) ? req.body.PostImage : false;
+    if (req.body.PostId) {
+        PostsServices.UpdatePost(req.body).then(function (result) {
+            if (result) {
+                if (image) {
+                    helperServices.base64toimage(image, req.body.PostId, section);
+                }
+                res.json({
+                    "StatusCode": 200,
+                    "data": postSuccess,
+                    "ResponseMessage": "Added Post successfully!"
+                });
+            }
+            else
+                res.json({
+                    "Message": "An error has occurred."
+                });
+        }).catch(function (err) {
+            res.json({
+                "StatusCode": err.status,
+                "clients": [],
+                "ResponseMessage": err.messages
+            });
+        });
 
-/* exports.DeleteNote = function (req, res) {
-    console.log("Delete Note");
-    console.log("req.params.NoteId:", req.params.NoteId);
-    var NoteId = (req.params.NoteId) ? req.params.NoteId : false;
-    if (NoteId) {
-        NotesServices.DeleteNote(NoteId).then(function (result) {
+    } else {
+        res.json({
+            "Message": "No HTTP resource was found that matches the request URI '" + config.webUri + "/Aesthetic/api/Categories/Delete'."
+        });
+    }
+}
+
+exports.deletePost = function (req, res) {
+    console.log("Delete post");
+    var PostId = (req.params.PostId) ? req.params.PostId : false;
+    if (PostId) {
+        PostsServices.DeletePost(PostId).then(function (result) {
             if (result)
-                res.json({ "StatusCode": 200, "ResponseMessage": "Deleted Note Successfully" });
+                res.json({ "StatusCode": 200, "ResponseMessage": "Deleted Post Successfully" });
             else
                 res.json({ "Message": "An error has occurred." });
         }).catch(function (err) {
-            res.json({ "StatusCode": err.status, "deletenotes": [], "ResponseMessage": err.messages });
+            res.json({ "StatusCode": err.status, "deleteposts": [], "ResponseMessage": err.messages });
         });
 
     } else {
         res.json({ "Message": "No HTTP resource was found that matches the request URI '" + config.webUri + "/Aesthetic/api/Categories/Delete'." });
     }
-}; */
+};
