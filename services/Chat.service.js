@@ -31,7 +31,7 @@ exports.sendMessage = function (params) {
     var messageData = new Chat({
         "FromUserId": (params.FromUserId) ? params.FromUserId : null,
         "ToUserId": (params.ToUserId) ? params.ToUserId : null,
-        "IsViewed": (params.IsViewed) ? params.IsViewed : false,
+        // "IsViewed": (params.IsViewed) ? params.IsViewed : false,
         "Message": (params.Message) ? params.Message : null,
         "CreateDate": (params.CreateDate) ? params.ChatDate : null,
         "ChatDate": (params.ChatDate) ? params.ChatDate : new Date()
@@ -230,31 +230,36 @@ exports.getRecentConversation = function (UserId) {
     }); */
 
     // var convQuery = 'SELECT id,c.FromUserId,c.chatDate,c.Message FROM Chat as c WHERE c.FromUserId<>' + UserId + ' and  c.ToUserId=' + UserId + ' and c.id =(select d.id from Chat as d  where d.FromUserId=c.FromUserId and d.ToUserId=' + UserId + ' order by d.ChatDate desc limit 1)';
-    var convQuery='(SELECT id,c.FromUserId,c.chatDate,c.Message FROM Chat as c WHERE c.FromUserId<>179 and  c.ToUserId=179 and c.id =(select d.id from Chat as d  where d.FromUserId=c.FromUserId and d.ToUserId=179 order by d.ChatDate desc limit 1))UNION(SELECT id,c.ToUserId,c.chatDate,c.Message FROM Chat as c WHERE c.FromUserId=179 and  c.ToUserId<>179 and c.id =(select d.id from Chat as d  where d.ToUserId=c.ToUserId and d.FromUserId=179 order by d.ChatDate desc limit 1)) order by 3 desc'
+    var convQuery = 'SELECT c.id,c.FromUserId,c.ToUserId,c.CreateDate,c.Message,\
+     fuser.firstname ffirstname,fuser.lastname flastname,fuser.UserImage fuserimage,\
+     tuser.firstname tfirstname,tuser.lastname tlastname,tuser.UserImage tuserimage,\
+     time_format(time(c.CreateDate),"%h:%i %p")chattime,date_format(date(c.CreateDate),"%d-%m-%Y")chatdate\
+      from Chat as c,UserAccount fuser, UserAccount tuser where (c.FromUserId='+ UserId + ' or c.ToUserId=' + UserId + ') \
+      and fuser.UserId=c.FromUserId and tuser.UserId=ToUserId order by c.CreateDate';
     // console.warn('convQuery:', convQuery);
     return orm.knex.raw(convQuery).then(function (chatResults) {
         return chatResults[0];
     })
 
-/*     return Chat.forge().orderBy('Id', 'DESC').query(function (qb) {
-        qb.where({
-            'FromUserId': UserId
-        });
-        qb.orWhere({
-            'ToUserId': UserId
-        });
-
-    }).fetchAll().then(function (Messages) {
-        var uniqueConversations;
-        console.warn('I am here:',Messages);
-        if (Messages.length) {
-            
-            Promise.map(Messages.model, function (msg) {
-                console.log(msg.get('Message'));
-            })
-        }
-        // return Messages;
-    }).catch(function (err) {
-        return err;
-    }); */
+    /*     return Chat.forge().orderBy('Id', 'DESC').query(function (qb) {
+            qb.where({
+                'FromUserId': UserId
+            });
+            qb.orWhere({
+                'ToUserId': UserId
+            });
+    
+        }).fetchAll().then(function (Messages) {
+            var uniqueConversations;
+            console.warn('I am here:',Messages);
+            if (Messages.length) {
+                
+                Promise.map(Messages.model, function (msg) {
+                    console.log(msg.get('Message'));
+                })
+            }
+            // return Messages;
+        }).catch(function (err) {
+            return err;
+        }); */
 }

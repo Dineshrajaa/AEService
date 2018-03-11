@@ -2589,6 +2589,115 @@ define({
           }
         ]
       }
+    },{
+      "type": "get",
+      "url": "/Chat/:UserId",
+      "title": "Recent messages",
+      "version": "1.0.0",
+      "name": "Recent messages",
+      "group": "Chat",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>List recent messages</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"data":[{"id":5,"FromUserId":149,"ToUserId":150,"CreateDate":"2016-09-26T08:18:26.000Z","Message":"this is new messNLKFLKAFLKASMDKASxc","ffirstname":"Rajkumar","flastname":"rathore","fuserimage":"Upload/User/527575.png","tfirstname":"santosh","tlastname":"kundkar","tuserimage":"Upload/User/cecilcinross.png\r\n","chattime":"01:48 PM","chatdate":"26-09-2016"},{"id":6,"FromUserId":150,"ToUserId":149,"CreateDate":"2016-10-03T06:24:57.000Z","Message":"this is reply message from user 2 to user 1","ffirstname":"santosh","flastname":"kundkar","fuserimage":"Upload/User/cecilcinross.png\r\n","tfirstname":"Rajkumar","tlastname":"rathore","tuserimage":"Upload/User/527575.png","chattime":"11:54 AM","chatdate":"03-10-2016"},{"id":7,"FromUserId":150,"ToUserId":149,"CreateDate":"2016-10-03T14:50:52.000Z","Message":"jhsadhdshdhasdhasdhasdhashd","ffirstname":"santosh","flastname":"kundkar","fuserimage":"Upload/User/cecilcinross.png\r\n","tfirstname":"Rajkumar","tlastname":"rathore","tuserimage":"Upload/User/527575.png","chattime":"08:20 PM","chatdate":"03-10-2016"},{"id":8,"FromUserId":150,"ToUserId":149,"CreateDate":"2016-10-03T14:52:14.000Z","Message":"jhsadhdshdhasdhasdhasdhashd","ffirstname":"santosh","flastname":"kundkar","fuserimage":"Upload/User/cecilcinross.png\r\n","tfirstname":"Rajkumar","tlastname":"rathore","tuserimage":"Upload/User/527575.png","chattime":"08:22 PM","chatdate":"03-10-2016"},{"id":10,"FromUserId":151,"ToUserId":149,"CreateDate":"2017-08-18T18:30:00.000Z","Message":"stest","ffirstname":"Mo","flastname":"Test","fuserimage":"Upload/User/549d9faf-ec83-410c-8a14-c9fc2577c4b8.png","tfirstname":"Rajkumar","tlastname":"rathore","tuserimage":"Upload/User/527575.png","chattime":"12:00 AM","chatdate":"19-08-2017"}],"ResponseMessage":"Recent messages fetched successfully!"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Chat"
+    },{
+      "type": "post",
+      "url": "/Chat",
+      "title": "Send Message",
+      "version": "1.0.0",
+      "name": "Send Message",
+      "group": "Chat",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows users to Send Message</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": true,
+              "field": "Picture",
+              "description": "<p>Picture to be sent in base64(optional)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "FromUserId",
+              "description": "<p>UserID of the user sending message(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ToUserId",
+              "description": "<p>UserID of the user receiving message(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "Message",
+              "description": "<p>Message to be sent(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "ChatDate",
+              "description": "<p>Time message being sent(required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"chat":{"FromUserId":"151","ToUserId":"150","Message":"Testing message","CreateDate":null,"ChatDate":"2018-03-11T15:17:54.578Z","Id":11},"ResponseMessage":"Message sent successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
+    },{
+      "type": "get",
+      "url": "/Chat/:From/:To",
+      "title": "Direct messages",
+      "version": "1.0.0",
+      "name": "Direct messages",
+      "group": "Chat",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>List direct messages among two users</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{{"StatusCode":200,"data":[{"Id":5,"FromUserId":149,"ToUserId":150,"ConnectionId":null,"Message":"this is new messNLKFLKAFLKASMDKASxc","IsActive":0,"IsSend":0,"ChatDate":"2016-09-26T08:18:25.000Z","CreateDate":"2016-09-26T08:18:26.000Z","ModifyDate":"2016-09-26T08:18:26.000Z","FromUser_UserId":null,"ToUser_UserId":null},{"Id":6,"FromUserId":150,"ToUserId":149,"ConnectionId":null,"Message":"this is reply message from user 2 to user 1","IsActive":0,"IsSend":0,"ChatDate":"2016-10-03T06:24:57.000Z","CreateDate":"2016-10-03T06:24:57.000Z","ModifyDate":"2016-10-03T06:24:57.000Z","FromUser_UserId":null,"ToUser_UserId":null},{"Id":7,"FromUserId":150,"ToUserId":149,"ConnectionId":null,"Message":"jhsadhdshdhasdhasdhasdhashd","IsActive":0,"IsSend":0,"ChatDate":"2016-10-03T14:50:52.000Z","CreateDate":"2016-10-03T14:50:52.000Z","ModifyDate":"2016-10-03T14:50:52.000Z","FromUser_UserId":null,"ToUser_UserId":null},{"Id":8,"FromUserId":150,"ToUserId":149,"ConnectionId":null,"Message":"jhsadhdshdhasdhasdhasdhashd","IsActive":0,"IsSend":0,"ChatDate":"2016-10-03T14:52:14.000Z","CreateDate":"2016-10-03T14:52:14.000Z","ModifyDate":"2016-10-03T14:52:14.000Z","FromUser_UserId":null,"ToUser_UserId":null}],"ResponseMessage":"Message fetched successfully!"}',
+            "type": "json"
+          }
+        ]
+      },
+      "groupTitle": "Chat"
     }
   ]
 });

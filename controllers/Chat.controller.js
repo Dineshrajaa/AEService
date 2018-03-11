@@ -28,7 +28,7 @@ exports.sendMessageNew = function (req, res) {
     console.log("Send Message");
     var section = "chat";
     var image = (req.body.Picture) ? req.body.Picture : false;
-    ChatServices.sendMessageNew(req.body).then(function (chatSuccess) {
+    ChatServices.sendMessage(req.body).then(function (chatSuccess) {
         if (chatSuccess) {
             if (image) {
                 helperServices.base64toimage(image, chatSuccess.get("MessageId"), section);
@@ -58,11 +58,11 @@ exports.getConversation = function (req, res) {
                         if (participantSuccess) {
                             res.json({
                                 "StatusCode": 200, "data":
-                                {
-                                    'type': 'New Conversation',
-                                    'ConversationId': savedConv.get('ConversationId'),
-                                    'Messages': []
-                                }
+                                    {
+                                        'type': 'New Conversation',
+                                        'ConversationId': savedConv.get('ConversationId'),
+                                        'Messages': []
+                                    }
                             });
                         }
                     })
@@ -76,11 +76,11 @@ exports.getConversation = function (req, res) {
                 if (messages) {
                     res.json({
                         "StatusCode": 200, "data":
-                        {
-                            'type': 'Old Conversation',
-                            'ConversationId': conv,
-                            'Messages': messages
-                        }
+                            {
+                                'type': 'Old Conversation',
+                                'ConversationId': conv,
+                                'Messages': messages
+                            }
                     });
                 }
                 else {
@@ -95,7 +95,14 @@ exports.getConversationNew = function (req, res) {
     var FromUserId = req.params.From;
     var ToUserId = req.params.To;
     ChatServices.getConversationIdAmongUsersNew(FromUserId, ToUserId).then(function (conv) {
-        res.json({ 'conv': conv })
+        if (conv) {
+            res.json({
+                "StatusCode": 200, "data": conv, "ResponseMessage": "Message fetched successfully!"
+            });
+        }
+        else {
+            res.json({ "StatusCode": 404, "Message": "An error has occurred." });
+        }
     });
 
 }
@@ -103,6 +110,12 @@ exports.getConversationNew = function (req, res) {
 exports.getMyRecentConversation = function (req, res) {
     var UserId = req.params.UserId;
     ChatServices.getRecentConversation(UserId).then(function (conv) {
-        res.json({ 'conv': conv })
+        if (conv) {
+            res.json({
+                "StatusCode": 200, "data": conv, "ResponseMessage": "Recent messages fetched successfully!"
+            });
+        } else {
+            res.json({ "StatusCode": 404, "Message": "An error has occurred." });
+        }
     });
 }
