@@ -68,6 +68,7 @@ exports.AddPost = function (req, res) {
 exports.updatePost = function (req, res) {
     // Method to update posts
     req.body.PostId = (req.params.PostId) ? req.params.PostId : false;
+    var section = "post";
     var image = (req.body.PostImage) ? req.body.PostImage : false;
     if (req.body.PostId) {
         PostsServices.UpdatePost(req.body).then(function (result) {
