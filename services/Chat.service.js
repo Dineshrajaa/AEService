@@ -235,7 +235,7 @@ exports.getRecentConversation = function (UserId) {
      tuser.firstname tfirstname,tuser.lastname tlastname,tuser.UserImage tuserimage,\
      time_format(time(c.CreateDate),"%h:%i %p")chattime,date_format(date(c.CreateDate),"%d-%m-%Y")chatdate\
       from Chat as c,UserAccount fuser, UserAccount tuser where (c.FromUserId='+ UserId + ' or c.ToUserId=' + UserId + ') \
-      and fuser.UserId=c.FromUserId and tuser.UserId=ToUserId order by c.CreateDate';
+      and fuser.UserId=c.FromUserId and tuser.UserId=ToUserId order by c.CreateDate desc limit 1';
     // console.warn('convQuery:', convQuery);
     return orm.knex.raw(convQuery).then(function (chatResults) {
         return chatResults[0];

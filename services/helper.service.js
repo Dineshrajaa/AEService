@@ -7,6 +7,7 @@ var config = require('../config'),
   PostServices = require('../services/Posts.service'),
   ReviewServices = require('../services/Review.service'),
   ItemServices = require('../services/item.service'),
+  FeedbackServices = require('../services/Feedback.service'),
   distance = require('google-distance-matrix'),
   moment = require('moment');
 exports.decrypt = function (text, Email) {
@@ -121,8 +122,10 @@ exports.base64toimage = function (dataString, CommentId, section) {
     folder = "Post"
   if (section == "client")
     folder = "Client"
-  if(section=="item")
-    folder="Item"
+  if (section == "item")
+    folder = "Item"
+  if (section == "FeedBack")
+    folder = "Feedback"
   var filename = config.image_path_global + '/Upload/' + folder + "/" + name;
   var path = "Upload/" + folder + "/" + name;
 
@@ -218,6 +221,20 @@ exports.base64toimage = function (dataString, CommentId, section) {
         "ReviewCommentImage": path
       }
       return ReviewServices.uploadReviewCommentImage(data, CommentId).then(function () {
+        return path;
+      }).catch(function (err) {
+        return err;
+      })
+
+    });
+  }
+
+  if (section == "FeedBack") {
+    fs.writeFile(filename, new Buffer(dataString, "base64"), function (err) {
+      var data = {
+        "Attachment": path
+      }
+      return FeedbackServices.uploadFeedBackImage(data, CommentId).then(function () {
         return path;
       }).catch(function (err) {
         return err;

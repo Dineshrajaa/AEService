@@ -668,6 +668,84 @@ define({
         ]
       },
       "groupTitle": "MyPosts"
+    },{
+      "type": "put",
+      "url": "/Posts/:PostId",
+      "title": "Update Post",
+      "version": "1.0.0",
+      "name": "Update Post",
+      "group": "Posts",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Update Post</p>",
+      "parameter": {
+        "fields": {
+          "Parameter": [
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "PostId",
+              "description": "<p>ClientId of the Client to be sent in URL(required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": true,
+              "field": "PostImage",
+              "description": "<p>Picture if edited (optional)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "String",
+              "optional": false,
+              "field": "PostMessage",
+              "description": "<p>Post data (required)</p>"
+            },
+            {
+              "group": "Parameter",
+              "type": "Date",
+              "optional": false,
+              "field": "ModifyDate",
+              "description": "<p>Modified data of post (required)</p>"
+            }
+          ]
+        }
+      },
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Updated Post successfully!"}',
+            "type": "json"
+          }
+        ]
+      }
+    }, {
+      "type": "delete",
+      "url": "/Posts/:PostId",
+      "title": "Delete Post",
+      "version": "1.0.0",
+      "name": "Delete Post",
+      "group": "Posts",
+      "permission": [
+        {
+          "name": "Universal"
+        }
+      ],
+      "description": "<p>Allows Organization to Delete Post</p>",
+      "success": {
+        "examples": [
+          {
+            "title": "Success-Response:",
+            "content": '{"StatusCode":200,"ResponseMessage":"Deleted Post Successfully"}',
+            "type": "json"
+          }
+        ]
+      }
     }, {
       "type": "get",
       "url": "/Client/:ClientId",
@@ -2589,7 +2667,7 @@ define({
           }
         ]
       }
-    },{
+    }, {
       "type": "get",
       "url": "/Chat/:UserId",
       "title": "Recent messages",
@@ -2612,7 +2690,7 @@ define({
         ]
       },
       "groupTitle": "Chat"
-    },{
+    }, {
       "type": "post",
       "url": "/Chat",
       "title": "Send Message",
@@ -2675,7 +2753,7 @@ define({
           }
         ]
       }
-    },{
+    }, {
       "type": "get",
       "url": "/Chat/:From/:To",
       "title": "Direct messages",

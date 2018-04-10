@@ -79,7 +79,7 @@ exports.updatePost = function (req, res) {
                 res.json({
                     "StatusCode": 200,
                     "data": postSuccess,
-                    "ResponseMessage": "Added Post successfully!"
+                    "ResponseMessage": "Updated Post successfully!"
                 });
             }
             else

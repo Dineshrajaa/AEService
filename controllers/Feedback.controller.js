@@ -22,9 +22,10 @@ exports.postFeedBack = function (req, res) {
 	  Categories: null }
 	*/
 	//return res.json({"StatusCode":200,"lstCategories":req.body.Attachment,"ResponseMessage":"Wow!! you are so passionate about your Categories Repository"});
-	console.log("post FeedBack");
+	console.log("post FeedBack:", req.body);
 	var section = "FeedBack";
 	var image = (req.body.Attachment) ? req.body.Attachment : false;
+	console.warn('image:', image);
 	var UserId = (req.query.UserId) ? req.query.UserId : false;
 	if (!UserId) {
 
