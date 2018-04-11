@@ -230,13 +230,20 @@ exports.getRecentConversation = function (UserId) {
     }); */
 
     // var convQuery = 'SELECT id,c.FromUserId,c.chatDate,c.Message FROM Chat as c WHERE c.FromUserId<>' + UserId + ' and  c.ToUserId=' + UserId + ' and c.id =(select d.id from Chat as d  where d.FromUserId=c.FromUserId and d.ToUserId=' + UserId + ' order by d.ChatDate desc limit 1)';
-    var convQuery = 'SELECT c.id,c.FromUserId,c.ToUserId,c.CreateDate,c.Message,\
+    /* var convQuery = 'SELECT c.id,c.FromUserId,c.ToUserId,c.CreateDate,c.Message,\
      fuser.firstname ffirstname,fuser.lastname flastname,fuser.UserImage fuserimage,\
      tuser.firstname tfirstname,tuser.lastname tlastname,tuser.UserImage tuserimage,\
      time_format(time(c.CreateDate),"%h:%i %p")chattime,date_format(date(c.CreateDate),"%d-%m-%Y")chatdate\
       from Chat as c,UserAccount fuser, UserAccount tuser where (c.FromUserId='+ UserId + ' or c.ToUserId=' + UserId + ') \
-      and fuser.UserId=c.FromUserId and tuser.UserId=ToUserId order by c.CreateDate desc limit 1';
+      and fuser.UserId=c.FromUserId and tuser.UserId=ToUserId order by c.CreateDate desc limit 1'; */
     // console.warn('convQuery:', convQuery);
+    var convQuery = 'SELECT c.id,c.FromUserId,c.ToUserId,c.CreateDate,c.Message,\
+    fuser.firstname ffirstname,fuser.lastname flastname,fuser.UserImage fuserimage,\
+    tuser.firstname tfirstname,tuser.lastname tlastname,tuser.UserImage tuserimage,\
+    time_format(time(c.CreateDate),"%h:%i %p")chattime,date_format(date(c.CreateDate),"%d-%m-%Y")chatdate\
+     from Chat as c,UserAccount fuser, UserAccount tuser where (c.FromUserId='+ UserId + ' or c.ToUserId='+ UserId + ') \
+     and fuser.UserId=c.FromUserId and tuser.UserId=ToUserId and \
+     c.id=(select d.id from Chat as d where (d.FromUserId=c.FromUserId or d.ToUserId=c.ToUserId) order by c.createdate desc limit 1)';
     return orm.knex.raw(convQuery).then(function (chatResults) {
         return chatResults[0];
     })
