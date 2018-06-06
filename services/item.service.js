@@ -2,9 +2,9 @@ var Categories = require('../models/Categories.model'),
     Organization = require('../models/Organization.model'),
     Item = require('../models/Item.model');
 
-exports.GetAllItems = function (value, fieldname,orgId) {
+exports.GetAllItems = function (value, fieldname, orgId) {
     return Item.forge().query(function (qb) {
-        qb.select('Item.ItemID as itemId', 'Item.OrgId as ItemOrgId', 'Item.ItemOfferPrice','Item.OfferValidTill','Item.ItemName', 'Item.ItemDiscp', 'Item.ItemImage', 'Item.ItemPrice', 'Item.subcatId', 'Item.ItemQuantity', 'Item.EstDelivery', 'Item.Returns', 'Item.ItemCurrency', 'SubCategory.SubcatId', 'SubCategory.SbCatName', 'SubCategory.CatId', 'Categories.catId', 'Categories.CatName', 'Categories.CatImage', 'Categories.OrgId', 'Organization.OrgName', 'Organization.OrgImage');
+        qb.select('Item.ItemID as itemId', 'Item.OrgId as ItemOrgId', 'Item.ItemOfferPrice', 'Item.OfferValidTill', 'Item.ItemName', 'Item.ItemDiscp', 'Item.ItemImage', 'Item.ItemPrice', 'Item.subcatId', 'Item.ItemQuantity', 'Item.EstDelivery', 'Item.Returns', 'Item.ItemCurrency', 'SubCategory.SubcatId', 'SubCategory.SbCatName', 'SubCategory.CatId', 'Categories.catId', 'Categories.CatName', 'Categories.CatImage', 'Categories.OrgId', 'Organization.OrgName', 'Organization.OrgImage');
         /* qb.leftJoin('Item',function(){
              this.on('Seller.ItemID', '=', 'Item.ItemID')
          });*/
@@ -20,8 +20,8 @@ exports.GetAllItems = function (value, fieldname,orgId) {
         if (fieldname) {
             qb.where("Item." + fieldname, value);
         }
-        if(orgId){
-            qb.where("Item.OrgId","<>",orgId);
+        if (orgId) {
+            qb.where("Item.OrgId", "<>", orgId);
         }
     }).fetchAll().then(function (SellerList) {
         return SellerList;
@@ -59,6 +59,7 @@ exports.UpdateItem = function (params) {
     console.log("Update Item");
     var ItemId = params.ItemID;
     var ItemToUpdate = {
+        ItemId:ItemId,
         ItemName: (params.ItemName) ? params.ItemName : null,
         ItemDiscp: (params.ItemDiscp) ? params.ItemDiscp : null,
         ItemPrice: (params.ItemPrice) ? params.ItemPrice : null,
@@ -94,7 +95,6 @@ exports.DeleteItem = function (ItemId) {
 };
 
 exports.uploadImage = function (data, ItemID) {
-
     var authUpdateParams = {
         patch: true
     };

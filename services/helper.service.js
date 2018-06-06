@@ -105,7 +105,6 @@ function decodeBase64Image(dataString) {
   return response;
 }
 exports.base64toimage = function (dataString, CommentId, section) {
-  console.log("dataString");
   var min = 100000;
   var max = 999999;
   var name = Math.floor(Math.random() * (max - min + 1)) + min + ".png";

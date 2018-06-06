@@ -210,9 +210,9 @@ exports.UpdateItem = function (req, res) {
 	var image = (req.body.ItemImage) ? req.body.ItemImage : false;
 	ItemServices.UpdateItem(req.body).then(function (itemSuccess) {
 		console.log('itemSuccess:', itemSuccess);
-		if (itemSuccess.get("ItemID") !== null) {
+		if (itemSuccess.get("ItemId") !== null) {
 			if (image) {
-				helperServices.base64toimage(image, itemSuccess.get("ItemID"), section);
+				helperServices.base64toimage(image, itemSuccess.get("ItemId"), section);
 			}
 			res.json({
 				"StatusCode": 200,
